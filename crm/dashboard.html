@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard — CRM</title>
+<link rel="stylesheet" href="crm-style.css">
+</head>
+<body>
+  <nav id="crm-nav"></nav>
+  <div class="crm-page">
+    <h1 class="crm-h1">Dashboard</h1>
+    <div class="crm-grid" id="cards">
+      <div class="crm-card"><div class="label">Today's Sales</div><div class="value" id="c-sales-today">—</div></div>
+      <div class="crm-card"><div class="label">Today's Revenue</div><div class="value" id="c-revenue-today">—</div></div>
+      <div class="crm-card"><div class="label">Repairs In Progress</div><div class="value" id="c-repairs-progress">—</div></div>
+      <div class="crm-card"><div class="label">Repairs Ready for Pickup</div><div class="value" id="c-repairs-ready">—</div></div>
+      <div class="crm-card"><div class="label">Total Customers</div><div class="value" id="c-customers">—</div></div>
+      <div class="crm-card"><div class="label">Devices In Stock</div><div class="value" id="c-devices-stock">—</div></div>
+      <div class="crm-card"><div class="label">Low Stock Items</div><div class="value" id="c-low-stock">—</div></div>
+      <div class="crm-card"><div class="label">This Month's Revenue</div><div class="value" id="c-revenue-month">—</div></div>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Recent Sales</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Receipt</th><th>Customer</th><th>Total</th><th>Balance</th><th>Date</th></tr></thead>
+        <tbody id="recent-sales"><tr><td colspan="5">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Repairs Needing Attention</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Repair #</th><th>Customer</th><th>Device</th><th>Status</th><th>Received</th></tr></thead>
+        <tbody id="active-repairs"><tr><td colspan="5">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm-shared.js"></script>
+  <script>
+    (async () => {
+      await requireAuth();
+      renderNav("dashboard.html");
+      loadDashboard();
+    })();
+
+    async function loadDashboard() {
+      const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+      const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
+
+      const [salesToday, salesMonth, repairsProgress, repairsReady, customersCount, devicesStock, lowStock, recentSales, activeRepairs] =
+        await Promise.all([
+          SB.from("sales").select("total", { count: "exact" }).gte("created_at", todayStart.toISOString()),
+          SB.from("sales").select("total").gte("created_at", monthStart.toISOString()),
+          SB.from("repairs").select("id", { count: "exact", head: true }).in("status", ["diagnosing","in_progress","awaiting_parts"]),
+          SB.from("repairs").select("id", { count: "exact", head: true }).eq("status", "ready"),
+          SB.from("customers").select("id", { count: "exact", head: true }),
+          SB.from("inventory_items").select("id", { count: "exact", head: true }).eq("status", "in_stock"),
+          SB.from("inventory_stock").select("product_id, quantity_on_hand, reorder_level"),
+          SB.from("sales").select("receipt_number, total, balance, created_at, customers(name)").order("created_at", { ascending: false }).limit(8),
+          SB.from("repairs").select("repair_number, device_description, status, date_received, customers(name)").in("status", ["received","diagnosing","in_progress","awaiting_parts","ready"]).order("date_received", { ascending: false }).limit(8),
+        ]);
+
+      document.getElementById("c-sales-today").textContent = salesToday.count ?? 0;
+      document.getElementById("c-revenue-today").textContent = fmtUGX((salesToday.data||[]).reduce((s,r)=>s+Number(r.total||0),0));
+      document.getElementById("c-repairs-progress").textContent = repairsProgress.count ?? 0;
+      document.getElementById("c-repairs-ready").textContent = repairsReady.count ?? 0;
+      document.getElementById("c-customers").textContent = customersCount.count ?? 0;
+      document.getElementById("c-devices-stock").textContent = devicesStock.count ?? 0;
+      document.getElementById("c-revenue-month").textContent = fmtUGX((salesMonth.data||[]).reduce((s,r)=>s+Number(r.total||0),0));
+
+      const low = (lowStock.data||[]).filter(r => Number(r.quantity_on_hand) <= Number(r.reorder_level));
+      document.getElementById("c-low-stock").textContent = low.length;
+
+      const salesRows = recentSales.data||[];
+      document.getElementById("recent-sales").innerHTML = salesRows.length ? salesRows.map(s => `
+        <tr><td>${s.receipt_number}</td><td>${s.customers?.name || "Walk-in"}</td>
+        <td>${fmtUGX(s.total)}</td><td>${fmtUGX(s.balance)}</td>
+        <td>${new Date(s.created_at).toLocaleDateString()}</td></tr>`).join("")
+        : `<tr><td colspan="5">No sales recorded yet</td></tr>`;
+
+      const repairRows = activeRepairs.data||[];
+      document.getElementById("active-repairs").innerHTML = repairRows.length ? repairRows.map(r => `
+        <tr><td>${r.repair_number}</td><td>${r.customers?.name || "—"}</td><td>${r.device_description}</td>
+        <td><span class="badge ${r.status}">${r.status.replace("_"," ")}</span></td>
+        <td>${new Date(r.date_received).toLocaleDateString()}</td></tr>`).join("")
+        : `<tr><td colspan="5">No active repairs</td></tr>`;
+    }
+  </script>
+</body>
+</html>
