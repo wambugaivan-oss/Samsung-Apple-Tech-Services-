@@ -694,7 +694,8 @@ const tickerTrack = document.getElementById('tickerTrack');
 const promoSlides = document.getElementById('promoSlides');
 const promoDots = document.getElementById('promoDots');
 PROMOS.forEach((p,i)=>{
-  promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}">
+  const bg = p.image ? `background-image:linear-gradient(0deg, rgba(11,15,20,.55), rgba(11,15,20,.15)), url('${p.image}');background-size:cover;background-position:center;` : '';
+  promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}" style="${bg}">
     <div><span class="promo-tag">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div>
     <div class="promo-price">${p.price}</div></div>`);
   promoDots.insertAdjacentHTML('beforeend', `<button class="${i===0?'active':''}" data-i="${i}"></button>`);
