@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%274%27 fill=%27%230B0F14%27/%3E%3Crect x=%2710%27 y=%275%27 width=%274%27 height=%2714%27 rx=%271%27 fill=%27%23C1622C%27/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Brand Repairs | Samsung Apple Tech Services Uganda</title>
+<meta name="description" id="pageDesc" content="Professional device repair in Kampala.">
+<link rel="canonical" id="pageCanonical" href="https://www.samsungappletechservices.site/brand/">
+<meta name="theme-color" content="#0B0F14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<script src="db.js"></script>
+<script src="inventory-data.js"></script>
+<script src="inventory.js"></script>
+<script src="icons.js"></script>
+<script type="application/ld+json" id="brandSchema"></script>
+<style>
+:root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--signal-dim:#0E9370;--copper:#C1622C;--copper-2:#A8501F;--steel:#4A5568;--line:rgba(11,15,20,.10);--line-dark:rgba(255,255,255,.08);
+  --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);line-height:1.55;}
+a{color:inherit;text-decoration:none;}
+.container{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,48px);}
+header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;}
+.nav-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
+.chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
+.back-link{font-size:.78rem;font-weight:700;color:var(--steel);}
+.breadcrumb{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);padding:18px 0 0;letter-spacing:.5px;}
+.breadcrumb a{color:var(--copper);}
+.brand-hero{background:var(--ink);color:#fff;padding:52px 0 44px;margin-top:18px;position:relative;overflow:hidden;}
+.brand-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px;}
+.brand-hero .inner{position:relative;z-index:2;}
+.eyebrow{font-family:var(--font-mono);font-size:.68rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--signal);margin-bottom:14px;}
+.brand-hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,3.6vw,2.7rem);letter-spacing:-1px;}
+.brand-hero p{margin-top:16px;color:rgba(255,255,255,.6);max-width:560px;font-size:.92rem;line-height:1.7;}
+.stat-strip{display:flex;gap:28px;margin-top:28px;flex-wrap:wrap;}
+.stat-strip div{font-family:var(--font-display);font-size:1.4rem;font-weight:800;}
+.stat-strip span{display:block;font-family:var(--font-mono);font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:3px;}
+.hero-cta{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;font-weight:700;font-size:.8rem;border:none;border-radius:1px;cursor:pointer;}
+.btn-copper{background:var(--copper);color:#fff;}
+.btn-copper:hover{background:var(--copper-2);}
+.btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);}
+.section{padding:48px 0;}
+.section h2{font-family:var(--font-display);font-weight:800;font-size:1.35rem;letter-spacing:-.5px;margin-bottom:20px;}
+.ticket-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.ticket{background:var(--paper);border:1px solid var(--line);transition:box-shadow .2s,transform .2s;}
+.ticket:hover{box-shadow:0 16px 36px rgba(11,15,20,.09);transform:translateY(-3px);}
+.ticket-body{padding:20px;}
+.ticket-cat{font-family:var(--font-mono);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel);}
+.ticket-body h3{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-top:6px;}
+.ticket-meta{display:flex;gap:14px;margin-top:12px;font-size:.7rem;color:var(--steel);}
+.ticket-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);}
+.ticket-price{font-family:var(--font-mono);font-weight:700;font-size:.95rem;}
+.ticket-price small{display:block;font-size:.6rem;font-weight:500;color:var(--steel);text-transform:uppercase;letter-spacing:1px;}
+.view-btn{background:var(--ink);color:#fff;border:none;padding:8px 14px;font-size:.68rem;font-weight:700;letter-spacing:.5px;}
+.view-btn:hover{background:var(--copper);}
+.other-brands{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px;}
+.other-brands a{padding:9px 15px;border:1.5px solid var(--line);background:var(--paper);font-size:.74rem;font-weight:600;border-radius:20px;}
+.other-brands a:hover{border-color:var(--ink);background:var(--ink);color:#fff;}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
+.model-card{background:var(--paper);border:1px solid var(--line);transition:box-shadow .2s,transform .2s;}
+.model-card:hover{box-shadow:0 14px 32px rgba(11,15,20,.09);transform:translateY(-2px);}
+.mc-media{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;}
+.mc-media .icon-wrap{width:36px;height:36px;color:rgba(255,255,255,.9);}
+.mc-body{padding:13px;}
+.mc-body h4{font-family:var(--font-display);font-size:.82rem;font-weight:700;}
+.mc-body .count{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);margin-top:5px;}
+.mc-body .range{font-family:var(--font-mono);font-size:.76rem;color:var(--signal-dim);margin-top:6px;font-weight:700;}
+.model-search{width:100%;max-width:360px;padding:10px 14px;border:1.5px solid var(--line);font-size:.82rem;margin-bottom:18px;}
+.esimu-inline{margin-top:36px;background:var(--copper);color:#fff;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-radius:2px;}
+.esimu-inline p{font-size:.82rem;color:rgba(255,255,255,.85);}
+footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0 24px;margin-top:20px;}
+.foot-social{display:flex;gap:12px;justify-content:center;margin-bottom:18px;}
+.foot-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.foot-social a:hover{background:var(--copper);}
+.foot-social svg{width:16px;height:16px;fill:#fff;}
+footer .copy{text-align:center;font-size:.72rem;}
+.float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
+.float-wa svg{width:27px;height:27px;fill:#fff;}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav-row">
+    <a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
+    <a href="index.html#brands" class="back-link">← All Brands</a>
+  </div>
+</header>
+
+<div class="container breadcrumb" id="breadcrumb"></div>
+
+<section class="brand-hero">
+  <div class="container inner">
+    <div class="eyebrow">Kampala · Certified Technicians</div>
+    <h1 id="brandTitle">Brand Repairs</h1>
+    <p id="brandDesc"></p>
+    <div class="stat-strip">
+      <div id="repCount">0<span>Repairs Offered</span></div>
+      <div>30-day<span>Warranty</span></div>
+      <div>Same-day<span>Turnaround</span></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-copper" id="brandWaBtn">Book a Repair on WhatsApp</a>
+      <a href="index.html#estimator" class="btn btn-outline">Get Free Estimate</a>
+    </div>
+  </div>
+</section>
+
+<div class="container section" id="modelSection" style="display:none;">
+  <h2 id="modelSectionTitle">Models We Repair</h2>
+  <input type="text" class="model-search" id="modelSearch" placeholder="Search a model…">
+  <div class="model-grid" id="modelGrid"></div>
+  <div class="esimu-inline" id="esimuInline" style="display:none;">
+    <p>Looking to <strong>buy</strong> a device instead of repairing one? Browse verified phones on our partner marketplace, Esimu Uganda.</p>
+    <a href="https://essimuuganda.site/" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:#fff;">Browse Phones →</a>
+  </div>
+</div>
+
+<div class="container section" id="ticketSection">
+  <h2 id="repairListTitle">Available Repairs</h2>
+  <div class="ticket-grid" id="brandTicketGrid"></div>
+</div>
+
+<div class="container section" style="padding-top:0;">
+  <h2>Repair another brand</h2>
+  <div class="other-brands" id="otherBrands"></div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-social">
+      <a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+      <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
+      <a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+    </div>
+    <div class="copy">© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala</div>
+  </div>
+</footer>
+
+<a href="#" class="float-wa" id="floatWa" aria-label="WhatsApp us">
+  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35"/></svg>
+</a>
+
+<script>
+const WA_NUMBER = "256756922058";
+function fmt(n){ return "UGX "+n.toLocaleString(); }
+function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
+
+/* All 24 brands from the brief. Repairs available "for every brand" plus brand-specific extras. */
+const ALL_BRANDS = ["Samsung","Apple","Google Pixel","Huawei","Oppo","Vivo","Redmi","Xiaomi","Tecno","Infinix","Nokia","Sony","Motorola","OnePlus","Realme","Honor","Nothing","Asus","Lenovo","HP","Dell","Acer","Microsoft Surface","MacBook"];
+const LAPTOP_BRANDS = ["Asus","Lenovo","HP","Dell","Acer","Microsoft Surface","MacBook"];
+
+const UNIVERSAL_REPAIRS_PHONE = [
+  {id:"screen",name:"Screen Replacement",cat:"Screen",time:"30–45 min",warranty:"30 days",price:{Apple:220000,Samsung:190000,default:120000}},
+  {id:"battery",name:"Battery Replacement",cat:"Battery",time:"20–30 min",warranty:"30 days",price:{Apple:135000,default:65000}},
+  {id:"charging",name:"Charging Port Repair",cat:"Charging",time:"20–30 min",warranty:"30 days",price:{default:65000}},
+  {id:"camera",name:"Camera Repair",cat:"Camera",time:"20–30 min",warranty:"30 days",price:{default:110000}},
+  {id:"backglass",name:"Back Glass Replacement",cat:"Back Glass",time:"20–30 min",warranty:"30 days",price:{default:95000}},
+  {id:"water",name:"Water Damage Recovery",cat:"Water",time:"2–24 hrs",warranty:"14 days",price:{default:95000}},
+  {id:"software",name:"Software Repair & Unlocking",cat:"Software",time:"20–60 min",warranty:"7 days",price:{default:40000}},
+  {id:"data",name:"Data Recovery",cat:"Data",time:"1–3 hrs",warranty:"—",price:{default:75000}},
+  {id:"diagnostic",name:"Full Diagnostics",cat:"Diagnostics",time:"15–20 min",warranty:"—",price:{default:0}},
+];
+const UNIVERSAL_REPAIRS_LAPTOP = [
+  {id:"lscreen",name:"Screen Replacement",cat:"Screen",time:"45–60 min",warranty:"30 days",price:{MacBook:280000,default:190000}},
+  {id:"lbattery",name:"Battery Replacement",cat:"Battery",time:"30–45 min",warranty:"30 days",price:{default:130000}},
+  {id:"lkeyboard",name:"Keyboard Replacement",cat:"Charging",time:"45–60 min",warranty:"30 days",price:{default:110000}},
+  {id:"lcharging",name:"Charging Port / DC Jack Repair",cat:"Charging",time:"30–45 min",warranty:"30 days",price:{default:90000}},
+  {id:"ldata",name:"Data Recovery",cat:"Data",time:"1–4 hrs",warranty:"—",price:{default:95000}},
+  {id:"lsoftware",name:"OS Reinstall & Software Repair",cat:"Software",time:"30–90 min",warranty:"7 days",price:{default:50000}},
+  {id:"ldiagnostic",name:"Full Diagnostics",cat:"Diagnostics",time:"20–30 min",warranty:"—",price:{default:0}},
+];
+
+const params = new URLSearchParams(window.location.search);
+const brand = params.get('brand') || 'Samsung';
+const isLaptop = LAPTOP_BRANDS.includes(brand);
+const pool = isLaptop ? UNIVERSAL_REPAIRS_LAPTOP : UNIVERSAL_REPAIRS_PHONE;
+const deviceWord = isLaptop ? "laptop" : "phone";
+
+/* Maps a brand pill to real rows in the Excel-sourced inventory, where they exist.
+   Nothing here is invented — brands with no matching data (OnePlus, Realme, Honor,
+   Nothing, Acer, Microsoft Surface) simply fall back to the generic estimate pool above,
+   exactly as before. */
+const INV_MAP = {
+  "Samsung": [{b:"Samsung", t:"Phone"}, {b:"Samsung", t:"TV"}],
+  "Apple": [{b:"Apple", t:"Phone"}, {b:"Apple", t:"Laptop"}],
+  "MacBook": [{b:"Apple", t:"Laptop"}],
+  "Google Pixel": [{b:"Google Pixel", t:"Phone"}],
+  "Huawei": [{b:"Huawei", t:"Phone"}],
+  "Oppo": [{b:"Oppo", t:"Phone"}],
+  "Vivo": [{b:"Vivo", t:"Phone"}],
+  "Xiaomi": [{b:"Xiaomi", t:"Phone"}],
+  "Redmi": [{b:"Xiaomi", t:"Phone", modelPrefix:"Redmi"}],
+  "Tecno": [{b:"Tecno", t:"Phone"}],
+  "Infinix": [{b:"Infinix", t:"Phone"}],
+  "Nokia": [{b:"Nokia", t:"Phone"}],
+  "Sony": [{b:"Sony Xperia", t:"Phone"}, {b:"Sony", t:"TV"}, {b:"Sony", t:"Gaming Console"}],
+  "Motorola": [{b:"Motorola", t:"Phone"}],
+  "Asus": [{b:"Asus", t:"Laptop"}],
+  "Lenovo": [{b:"Lenovo", t:"Laptop"}],
+  "HP": [{b:"HP", t:"Laptop"}],
+  "Dell": [{b:"Dell", t:"Laptop"}],
+};
+
+const invSources = INV_MAP[brand];
+let invItems = [];
+if(invSources && window.SATSU_INV){
+  invSources.forEach(src=>{
+    let items = SATSU_INV.all().filter(i=>i.brand===src.b && i.type===src.t);
+    if(src.modelPrefix) items = items.filter(i=>i.model.startsWith(src.modelPrefix));
+    invItems.push(...items);
+  });
+}
+const usingRealData = invItems.length > 0;
+
+document.getElementById('pageTitle').textContent = `${brand} Repair in Kampala | Samsung Apple Tech Services Uganda`;
+document.getElementById('pageDesc').setAttribute('content', `Professional ${brand} ${deviceWord} repair in Kampala — screen, battery, charging port, water damage & software repair. Same-day service, 30-day warranty.`);
+document.getElementById('pageCanonical').href = `https://www.samsungappletechservices.site/brand.html?brand=${encodeURIComponent(brand)}`;
+document.getElementById('breadcrumb').innerHTML = `<a href="index.html">Home</a> / <a href="index.html#brands">Brands</a> / ${brand}`;
+document.getElementById('brandTitle').textContent = `${brand} Repair Specialists`;
+document.getElementById('brandDesc').textContent = `Certified ${brand} repair in Kampala — from cracked screens to water damage — backed by a 30-day warranty and same-day turnaround.`;
+document.getElementById('brandWaBtn').href = waLink(`Hello, I have a ${brand} ${deviceWord} that needs repair.`);
+document.getElementById('floatWa').href = waLink(`Hello, I have a ${brand} ${deviceWord} that needs repair.`);
+
+if(usingRealData){
+  /* REAL-DATA MODE: group into models, show a browsable model grid backed by the Excel catalogue */
+  document.getElementById('repCount').firstChild.textContent = new Set(invItems.map(i=>i.brand+i.model)).size;
+  document.getElementById('ticketSection').style.display = 'none';
+  document.getElementById('modelSection').style.display = 'block';
+  document.getElementById('modelSectionTitle').textContent = `${brand} Models We Repair`;
+  const hasPhoneSource = invSources.some(s=>s.t==='Phone');
+  if(hasPhoneSource) document.getElementById('esimuInline').style.display = 'flex';
+
+  const byModel = {};
+  invItems.forEach(i=>{
+    const key = i.brand+'||'+i.model;
+    if(!byModel[key]) byModel[key] = {brand:i.brand, model:i.model, type:i.type, items:[]};
+    byModel[key].items.push(i);
+  });
+  const modelList = Object.values(byModel).sort((a,b)=>a.model.localeCompare(b.model));
+
+  function renderModels(filterText){
+    const q = (filterText||'').toLowerCase();
+    const filtered = modelList.filter(m=>m.model.toLowerCase().includes(q));
+    document.getElementById('modelGrid').innerHTML = filtered.map(m=>{
+      const prices = m.items.map(i=>i.total);
+      const min = Math.min(...prices), max = Math.max(...prices);
+      const key = SATSU_INV.iconKey(m.items[0]);
+      const bg = SATSU_ICON_TILE_BG(m.brand+m.model, key);
+      const rangeLabel = min===max ? fmt(min) : `${fmt(min)} – ${fmt(max)}`;
+      return `<a class="model-card" href="catalogue.html?b=${encodeURIComponent(m.brand)}&t=${encodeURIComponent(m.type)}&q=${encodeURIComponent(m.model)}">
+        <div class="mc-media" style="background:${bg}"><div class="icon-wrap">${SATSU_ICON(key, m.model, m.brand+m.model)}</div></div>
+        <div class="mc-body"><h4>${m.model}</h4><div class="count">${m.items.length} repair option${m.items.length!==1?'s':''}</div><div class="range">${rangeLabel}</div></div>
+      </a>`;
+    }).join('') || '<p style="color:var(--steel);font-size:.85rem;grid-column:1/-1;">No models match that search.</p>';
+  }
+  renderModels('');
+  document.getElementById('modelSearch').addEventListener('input', e=>renderModels(e.target.value));
+
+} else {
+  /* FALLBACK MODE (unchanged): generic per-category estimate pricing */
+  document.getElementById('repCount').firstChild.textContent = pool.length;
+  document.getElementById('repairListTitle').textContent = `${brand} Repairs We Offer`;
+  document.getElementById('brandTicketGrid').innerHTML = pool.map(r=>{
+    const price = r.price[brand] ?? r.price.default;
+    const priceLabel = price===0 ? "Free" : fmt(price);
+    return `<div class="ticket">
+      <div class="ticket-body">
+        <div class="ticket-cat">${brand} · ${r.cat}</div>
+        <h3>${brand} ${r.name}</h3>
+        <div class="ticket-meta"><span>⏱ ${r.time}</span><span>🛡 ${r.warranty}</span></div>
+        <div class="ticket-foot">
+          <div class="ticket-price"><small>Estimated from</small>${priceLabel}</div>
+          <a class="view-btn" href="${waLink(`Hello, I'd like to book ${brand} ${r.name}.`)}" target="_blank" data-book-name="${brand} ${r.name}" data-book-price="${price}">Book Now</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('[data-book-name]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      SATSU_DB.addBooking({customer_name:null, customer_phone:null,
+        items:[{name:btn.dataset.bookName, price:Number(btn.dataset.bookPrice)}],
+        total_price:Number(btn.dataset.bookPrice), notes:"Submitted via brand page: "+brand});
+    });
+  });
+}
+
+document.getElementById('otherBrands').innerHTML = ALL_BRANDS.filter(b=>b!==brand)
+  .map(b=>`<a href="brand.html?brand=${encodeURIComponent(b)}">${b}</a>`).join('');
+
+document.getElementById('brandSchema').textContent = JSON.stringify({
+  "@context":"https://schema.org","@type":"Service",
+  "name":`${brand} Repair Services`,"serviceType":`${brand} ${deviceWord} repair`,
+  "provider":{"@type":"ElectronicsStore","name":"Samsung Apple Tech Services Uganda","telephone":"+256756922058",
+    "address":{"@type":"PostalAddress","streetAddress":"Kisa Kyaparamara Building, William Street","addressLocality":"Kampala","addressCountry":"UG"}},
+  "areaServed":"Kampala, Uganda"
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%274%27 fill=%27%230B0F14%27/%3E%3Crect x=%2710%27 y=%275%27 width=%274%27 height=%2714%27 rx=%271%27 fill=%27%23C1622C%27/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Samsung Apple Tech Services Uganda</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<script src="db.js"></script>
+<script src="inventory-data.js"></script>
+<script src="inventory.js"></script>
+<style>
+:root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--copper:#C1622C;--steel:#4A5568;--line:rgba(11,15,20,.10);
+  --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);display:flex;min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+/* LOGIN SCREEN */
+#loginScreen{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:1000;}
+.login-box{background:var(--paper);width:min(380px,90vw);padding:36px;border-radius:2px;}
+.login-box h1{font-family:var(--font-display);font-weight:800;font-size:1.2rem;margin-bottom:6px;}
+.login-box p{font-size:.8rem;color:var(--steel);margin-bottom:24px;}
+.login-box .field{margin-bottom:14px;}
+.login-box label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);display:block;margin-bottom:5px;}
+.login-box input{width:100%;padding:11px;border:1.5px solid var(--line);font-size:.85rem;}
+.login-err{color:#d64545;font-size:.76rem;margin-top:10px;min-height:16px;}
+.demo-banner{background:rgba(193,98,44,.1);border-left:3px solid var(--copper);padding:14px 16px;font-size:.8rem;margin:16px 36px 0;line-height:1.6;}
+/* SIDEBAR */
+.sidebar{width:220px;background:var(--ink);color:rgba(255,255,255,.7);flex-shrink:0;display:flex;flex-direction:column;padding:24px 0;}
+.sidebar .logo{font-family:var(--font-display);font-weight:800;color:#fff;font-size:.9rem;padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
+.sidebar .logo small{display:block;font-family:var(--font-mono);font-size:.6rem;color:var(--signal);margin-top:4px;letter-spacing:1px;}
+.nav-item{padding:12px 20px;font-size:.8rem;font-weight:600;cursor:pointer;border-left:3px solid transparent;transition:all .2s;}
+.nav-item:hover{background:rgba(255,255,255,.05);color:#fff;}
+.nav-item.active{border-color:var(--copper);color:#fff;background:rgba(255,255,255,.06);}
+.sidebar-foot{margin-top:auto;padding:16px 20px;font-size:.68rem;color:rgba(255,255,255,.35);}
+.sidebar-foot a{display:block;margin-bottom:6px;}
+#signOutBtn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.72rem;cursor:pointer;margin-top:8px;text-decoration:underline;}
+/* MAIN */
+main{flex:1;padding:36px clamp(20px,4vw,48px);max-width:1100px;}
+.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+h1{font-family:var(--font-display);font-weight:800;font-size:1.5rem;letter-spacing:-.5px;}
+.sub{font-size:.82rem;color:var(--steel);margin-top:4px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-weight:700;font-size:.78rem;border:none;border-radius:2px;cursor:pointer;}
+.btn-copper{background:var(--copper);color:#fff;}
+.btn-dark{background:var(--ink);color:#fff;}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);}
+th,td{text-align:left;padding:12px 14px;font-size:.8rem;border-bottom:1px solid var(--line);}
+th{font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:1px;color:var(--steel);background:rgba(11,15,20,.02);}
+td.price{font-family:var(--font-mono);font-weight:700;}
+.row-actions{display:flex;gap:8px;}
+.row-actions button{background:none;border:none;font-size:.72rem;font-weight:700;cursor:pointer;color:var(--copper);}
+.row-actions button.del{color:#d64545;}
+.card{background:var(--paper);border:1px solid var(--line);padding:22px;margin-bottom:16px;}
+.card h3{font-family:var(--font-display);font-size:.95rem;margin-bottom:14px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);display:block;margin-bottom:5px;}
+input,select,textarea{width:100%;padding:9px 11px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:.82rem;border-radius:2px;}
+textarea{resize:vertical;min-height:70px;}
+.field{margin-bottom:12px;}
+.empty-state{background:var(--paper);border:1px dashed var(--line);padding:40px;text-align:center;color:var(--steel);font-size:.85rem;}
+.note{background:rgba(193,98,44,.08);border-left:3px solid var(--copper);padding:14px 16px;font-size:.78rem;color:var(--ink);margin-bottom:24px;line-height:1.6;}
+.note.good{background:rgba(18,184,134,.08);border-left-color:var(--signal);}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:28px;}
+.stat{background:var(--paper);padding:18px;}
+.stat span{font-family:var(--font-mono);font-size:.6rem;text-transform:uppercase;color:var(--steel);letter-spacing:1px;}
+.stat b{display:block;font-family:var(--font-display);font-size:1.4rem;margin-top:6px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:2px;font-size:.8rem;font-weight:600;z-index:700;opacity:0;pointer-events:none;transition:all .3s;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.status-pill{font-family:var(--font-mono);font-size:.62rem;font-weight:700;text-transform:uppercase;padding:4px 9px;border-radius:10px;}
+.status-new{background:rgba(193,98,44,.12);color:var(--copper);}
+.status-contacted{background:rgba(18,184,134,.12);color:#0E9370;}
+.status-completed{background:rgba(11,15,20,.08);color:var(--steel);}
+@media(max-width:800px){.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:300;transition:transform .3s;}.sidebar.open{transform:translateX(0);}.form-grid{grid-template-columns:1fr;}.menu-btn{display:block;}}
+.menu-btn{display:none;background:var(--ink);color:#fff;border:none;padding:8px 12px;border-radius:2px;margin-bottom:16px;}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>Admin Login</h1>
+    <p id="loginSub">Sign in with the email/password you created in Supabase Authentication.</p>
+    <div class="field"><label>Email</label><input id="loginEmail" type="email"></div>
+    <div class="field"><label>Password</label><input id="loginPassword" type="password"></div>
+    <button class="btn btn-copper" id="loginBtn" style="width:100%;justify-content:center;">Sign In</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">Samsung Apple Tech<small id="modeIndicator">● Checking backend…</small></div>
+  <div class="nav-item active" data-panel="overview">Overview</div>
+  <div class="nav-item" data-panel="services">Services &amp; Pricing</div>
+  <div class="nav-item" data-panel="banners">Homepage Banners</div>
+  <div class="nav-item" data-panel="reviews">Reviews</div>
+  <div class="nav-item" data-panel="blog">Blog Posts</div>
+  <div class="nav-item" data-panel="bookings">Bookings</div>
+  <div class="nav-item" data-panel="sell">Sell Requests</div>
+  <div class="nav-item" data-panel="customers">Customers</div>
+  <div class="sidebar-foot">
+    <a href="index.html">← Back to site</a>
+    <a href="blog.html">View blog →</a>
+    <button id="signOutBtn" style="display:none;">Sign out</button>
+  </div>
+</aside>
+
+<main>
+  <button class="menu-btn" id="menuBtn">☰ Menu</button>
+
+  <section class="panel active" id="panel-overview">
+    <div class="top-row"><div><h1>Overview</h1><p class="sub" id="overviewSub"></p></div></div>
+    <div class="note" id="backendNote"></div>
+    <div class="stat-row" id="statRow"></div>
+    <div class="card"><h3>Quick actions</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-copper" onclick="go('services')">+ Add a service</button>
+        <button class="btn btn-dark" onclick="go('banners')">Edit homepage banners</button>
+        <button class="btn btn-ghost" onclick="go('bookings')">View bookings</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-services">
+    <div class="top-row"><div><h1>Services &amp; Pricing</h1><p class="sub">These are the curated "Popular Repairs" shown on the homepage — add, edit or remove them and changes appear instantly.</p></div>
+      <button class="btn btn-copper" id="addServiceBtn">+ Add Service</button></div>
+    <div class="note" id="catalogueNote"></div>
+    <div class="card" id="serviceFormCard" style="display:none;">
+      <h3 id="serviceFormTitle">Add Service</h3>
+      <div class="form-grid">
+        <div class="field"><label>Service Name</label><input id="f-name" placeholder="e.g. iPhone Screen Replacement"></div>
+        <div class="field"><label>Brand</label><input id="f-brand" placeholder="e.g. Apple"></div>
+        <div class="field"><label>Category</label>
+          <select id="f-cat"><option>Screen</option><option>Battery</option><option>Charging</option><option>Water</option><option>Software</option><option>Data</option><option>Camera</option></select></div>
+        <div class="field"><label>Price (UGX)</label><input id="f-price" type="number" placeholder="220000"></div>
+        <div class="field"><label>Repair Time</label><input id="f-time" placeholder="e.g. 30–45 min"></div>
+        <div class="field"><label>Warranty</label><input id="f-warranty" placeholder="e.g. 30 days"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button class="btn btn-copper" id="saveServiceBtn">Save Service</button>
+        <button class="btn btn-ghost" id="cancelServiceBtn">Cancel</button>
+      </div>
+    </div>
+    <table><thead><tr><th>Service</th><th>Brand</th><th>Category</th><th>Price</th><th>Time</th><th>Warranty</th><th></th></tr></thead><tbody id="serviceTableBody"></tbody></table>
+  </section>
+
+  <section class="panel" id="panel-banners">
+    <div class="top-row"><div><h1>Homepage Banners</h1><p class="sub">These are the rotating slides in the hero section.</p></div>
+      <button class="btn btn-copper" id="addBannerBtn">+ Add Banner</button></div>
+    <div class="card" id="bannerFormCard" style="display:none;">
+      <h3 id="bannerFormTitle">Add Banner</h3>
+      <div class="field"><label>Tag</label><input id="b-tag" placeholder="e.g. This Week"></div>
+      <div class="field"><label>Headline</label><input id="b-title" placeholder="e.g. iPhone Screens From UGX 220,000"></div>
+      <div class="field"><label>Description</label><textarea id="b-desc" placeholder="Short supporting line"></textarea></div>
+      <div class="field"><label>Price / CTA line</label><input id="b-price" placeholder="e.g. From UGX 220,000"></div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button class="btn btn-copper" id="saveBannerBtn">Save Banner</button>
+        <button class="btn btn-ghost" id="cancelBannerBtn">Cancel</button>
+      </div>
+    </div>
+    <table><thead><tr><th>Tag</th><th>Headline</th><th>CTA Line</th><th></th></tr></thead><tbody id="bannerTableBody"></tbody></table>
+  </section>
+
+  <section class="panel" id="panel-reviews">
+    <div class="top-row"><div><h1>Reviews</h1><p class="sub">Shown in the "What Customers Say" carousel.</p></div>
+      <button class="btn btn-copper" id="addReviewBtn">+ Add Review</button></div>
+    <div class="card" id="reviewFormCard" style="display:none;">
+      <h3 id="reviewFormTitle">Add Review</h3>
+      <div class="field"><label>Customer Name</label><input id="r-name" placeholder="e.g. Nakato Judith"></div>
+      <div class="field"><label>Review Text</label><textarea id="r-text" placeholder="What did they say?"></textarea></div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button class="btn btn-copper" id="saveReviewBtn">Save Review</button>
+        <button class="btn btn-ghost" id="cancelReviewBtn">Cancel</button>
+      </div>
+    </div>
+    <table><thead><tr><th>Name</th><th>Review</th><th></th></tr></thead><tbody id="reviewTableBody"></tbody></table>
+  </section>
+
+  <section class="panel" id="panel-blog">
+    <div class="top-row"><div><h1>Blog Posts</h1><p class="sub">Repair guides and articles for SEO — publish, edit or remove.</p></div>
+      <button class="btn btn-copper" id="addPostBtn">+ New Post</button></div>
+    <div class="card" id="postFormCard" style="display:none;">
+      <h3 id="postFormTitle">New Post</h3>
+      <div class="field"><label>Title</label><input id="p-title" placeholder="e.g. 5 Signs Your Phone Battery Needs Replacing"></div>
+      <div class="field"><label>Slug (URL)</label><input id="p-slug" placeholder="e.g. signs-battery-needs-replacing"></div>
+      <div class="field"><label>Excerpt</label><textarea id="p-excerpt" placeholder="Short summary for search engines"></textarea></div>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button class="btn btn-copper" id="savePostBtn">Publish</button>
+        <button class="btn btn-ghost" id="cancelPostBtn">Cancel</button>
+      </div>
+    </div>
+    <table><thead><tr><th>Title</th><th>Slug</th><th></th></tr></thead><tbody id="postTableBody"></tbody></table>
+  </section>
+
+  <section class="panel" id="panel-bookings">
+    <div class="top-row"><div><h1>Bookings</h1><p class="sub">Repair requests submitted through the site (cart, service &amp; brand pages).</p></div></div>
+    <table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="bookingTableBody"></tbody></table>
+  </section>
+
+  <section class="panel" id="panel-sell">
+    <div class="top-row"><div><h1>Sell / Trade-In Requests</h1><p class="sub">Submitted from the marketplace "Sell / Trade-In" form.</p></div></div>
+    <table><thead><tr><th>Date</th><th>Customer</th><th>Device</th><th>Condition</th><th>Status</th></tr></thead><tbody id="sellTableBody"></tbody></table>
+  </section>
+
+  <section class="panel" id="panel-customers">
+    <div class="top-row"><div><h1>Customers</h1><p class="sub">Built automatically from bookings and sell requests.</p></div></div>
+    <table><thead><tr><th>Name</th><th>Phone</th><th>Total Requests</th></tr></thead><tbody id="customerTableBody"></tbody></table>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+function fmt(n){ return n || n===0 ? "UGX "+Number(n).toLocaleString() : "—"; }
+
+/* ============================= AUTH GATE ============================= */
+async function boot(){
+  const configured = SATSU_DB.isConfigured();
+  document.getElementById('modeIndicator').textContent = configured ? "● Connected to Supabase" : "● Local demo mode";
+  document.getElementById('overviewSub').textContent = configured ? "Live data, synced across every device." : "Editing local demo data in this browser only.";
+
+  if(!configured){
+    document.getElementById('backendNote').textContent = "⚠️ No backend connected yet. You're editing demo data stored only in this browser (see config.js to connect Supabase for real, cross-device syncing and a real Bookings/Customers log).";
+    document.getElementById('loginScreen').style.display = 'none';
+    initApp();
+    return;
+  }
+
+  const user = await SATSU_DB.currentUser();
+  if(user){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('signOutBtn').style.display = 'block';
+    document.getElementById('backendNote').classList.add('good');
+    document.getElementById('backendNote').textContent = "✅ Connected to your Supabase backend — changes here are live for every visitor and device.";
+    initApp();
+  } else {
+    document.getElementById('loginScreen').style.display = 'flex';
+  }
+}
+document.getElementById('loginBtn').addEventListener('click', async ()=>{
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const {error} = await SATSU_DB.signIn(email, password);
+  if(error){ document.getElementById('loginErr').textContent = error; return; }
+  boot();
+});
+document.getElementById('signOutBtn').addEventListener('click', async ()=>{ await SATSU_DB.signOut(); location.reload(); });
+boot();
+
+/* ============================= APP (runs once authenticated / in demo mode) ============================= */
+let services=[], banners=[], reviews=[], posts=[], bookings=[], sellRequests=[], customers=[];
+
+async function initApp(){
+  document.querySelectorAll('.nav-item').forEach(item=>item.addEventListener('click', ()=>go(item.dataset.panel)));
+  document.getElementById('menuBtn').addEventListener('click', ()=>document.getElementById('sidebar').classList.toggle('open'));
+  await refreshAll();
+  wireForms();
+  go('overview');
+}
+async function refreshAll(){
+  services = (await SATSU_DB.getServices()) || [];
+  banners = (await SATSU_DB.getBanners()) || [];
+  reviews = (await SATSU_DB.getReviews()) || [];
+  posts = (await SATSU_DB.getPosts()) || [];
+  bookings = (await SATSU_DB.getBookings()) || [];
+  sellRequests = (await SATSU_DB.getSellRequests()) || [];
+  customers = (await SATSU_DB.getCustomers()) || [];
+  renderOverview(); renderServices(); renderBanners(); renderReviews(); renderPosts(); renderBookings(); renderSell(); renderCustomers();
+}
+
+function go(panel){
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.toggle('active', i.dataset.panel===panel));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+panel));
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+async function renderOverview(){
+  document.getElementById('statRow').innerHTML = `
+    <div class="stat"><span>Popular Repairs (Homepage)</span><b>${services.length}</b></div>
+    <div class="stat"><span>Homepage Banners</span><b>${banners.length}</b></div>
+    <div class="stat"><span>Bookings</span><b>${bookings.length}</b></div>
+    <div class="stat"><span>Sell Requests</span><b>${sellRequests.length}</b></div>` +
+    (window.SATSU_INV ? `<div class="stat"><span>Full Catalogue Items</span><b>${SATSU_INV.stats().total.toLocaleString()}</b></div>
+    <div class="stat"><span>Catalogue Brands</span><b>${SATSU_INV.stats().brands}</b></div>` : '');
+  const note = document.getElementById('catalogueNote');
+  if(note && window.SATSU_INV){
+    note.textContent = `ℹ️ This panel only manages the small curated "Popular Repairs" list on the homepage. The full ${SATSU_INV.stats().total.toLocaleString()}-item repair catalogue (screens, batteries, parts for every brand/model in catalogue.html) comes from inventory-data.js, generated from your Excel price list — to update those prices, update the spreadsheet and regenerate that file rather than editing here.`;
+  }
+}
+
+/* ---------- SERVICES ---------- */
+function renderServices(){
+  document.getElementById('serviceTableBody').innerHTML = services.map(s=>`
+    <tr><td>${s.name}</td><td>${s.brand||''}</td><td>${s.cat||''}</td><td class="price">${fmt(s.price)}</td><td>${s.time||''}</td><td>${s.warranty||''}</td>
+    <td class="row-actions"><button data-edit="${s.id}">Edit</button><button class="del" data-del="${s.id}">Delete</button></td></tr>`).join('')
+    || '<tr><td colspan="7" style="text-align:center;color:var(--steel);">No services yet.</td></tr>';
+}
+let editingServiceId = null;
+document.getElementById('addServiceBtn').addEventListener('click', ()=>{ editingServiceId=null; ['f-name','f-brand','f-price','f-time','f-warranty'].forEach(id=>document.getElementById(id).value=''); document.getElementById('f-cat').value='Screen'; document.getElementById('serviceFormTitle').textContent='Add Service'; document.getElementById('serviceFormCard').style.display='block'; });
+document.getElementById('cancelServiceBtn').addEventListener('click', ()=>document.getElementById('serviceFormCard').style.display='none');
+
+function wireForms(){
+  document.getElementById('saveServiceBtn').addEventListener('click', async ()=>{
+    const name=document.getElementById('f-name').value.trim();
+    const brand=document.getElementById('f-brand').value.trim();
+    const cat=document.getElementById('f-cat').value;
+    const price=Number(document.getElementById('f-price').value)||0;
+    const time=document.getElementById('f-time').value.trim();
+    const warranty=document.getElementById('f-warranty').value.trim();
+    if(!name||!price){ showToast('Name and price are required'); return; }
+    const svc = editingServiceId ? services.find(x=>x.id===editingServiceId) : {};
+    Object.assign(svc,{name,brand,cat,price,time,warranty});
+    const {error} = await SATSU_DB.saveService(svc);
+    if(error){ showToast('Error: '+error); return; }
+    await refreshAll();
+    document.getElementById('serviceFormCard').style.display='none';
+    showToast('Service saved — live on the site now');
+  });
+  document.getElementById('serviceTableBody').addEventListener('click', async e=>{
+    if(e.target.dataset.edit){
+      const s = services.find(x=>x.id===e.target.dataset.edit); editingServiceId=s.id;
+      document.getElementById('f-name').value=s.name; document.getElementById('f-brand').value=s.brand||'';
+      document.getElementById('f-cat').value=s.cat||'Screen'; document.getElementById('f-price').value=s.price;
+      document.getElementById('f-time').value=s.time||''; document.getElementById('f-warranty').value=s.warranty||'';
+      document.getElementById('serviceFormTitle').textContent='Edit Service';
+      document.getElementById('serviceFormCard').style.display='block';
+    }
+    if(e.target.dataset.del){
+      const {error} = await SATSU_DB.deleteService(e.target.dataset.del);
+      if(error){ showToast('Error: '+error); return; }
+      await refreshAll(); showToast('Service deleted');
+    }
+  });
+
+  /* ---------- BANNERS ---------- */
+  let editingBannerIdx = null, editingBannerId = null;
+  document.getElementById('addBannerBtn').addEventListener('click', ()=>{ editingBannerIdx=null; editingBannerId=null; ['b-tag','b-title','b-desc','b-price'].forEach(id=>document.getElementById(id).value=''); document.getElementById('bannerFormTitle').textContent='Add Banner'; document.getElementById('bannerFormCard').style.display='block'; });
+  document.getElementById('cancelBannerBtn').addEventListener('click', ()=>document.getElementById('bannerFormCard').style.display='none');
+  document.getElementById('saveBannerBtn').addEventListener('click', async ()=>{
+    const b = {tag:document.getElementById('b-tag').value.trim(), title:document.getElementById('b-title').value.trim(), desc:document.getElementById('b-desc').value.trim(), price:document.getElementById('b-price').value.trim()};
+    if(!b.title){ showToast('Headline is required'); return; }
+    if(editingBannerId) b.id = editingBannerId;
+    const {error} = await SATSU_DB.saveBanner(b, editingBannerIdx);
+    if(error){ showToast('Error: '+error); return; }
+    await refreshAll();
+    document.getElementById('bannerFormCard').style.display='none';
+    showToast('Banner saved — live on the site now');
+  });
+  document.getElementById('bannerTableBody').addEventListener('click', async e=>{
+    const i = e.target.dataset.edit ?? e.target.dataset.del;
+    if(e.target.dataset.edit!==undefined){
+      const idx=+e.target.dataset.edit; const b=banners[idx]; editingBannerIdx=idx; editingBannerId=b.id||null;
+      document.getElementById('b-tag').value=b.tag||''; document.getElementById('b-title').value=b.title;
+      document.getElementById('b-desc').value=b.desc||''; document.getElementById('b-price').value=b.price||'';
+      document.getElementById('bannerFormTitle').textContent='Edit Banner';
+      document.getElementById('bannerFormCard').style.display='block';
+    }
+    if(e.target.dataset.del!==undefined){
+      const idx=+e.target.dataset.del; const b=banners[idx];
+      const {error} = await SATSU_DB.deleteBanner(b.id!==undefined ? b.id : idx);
+      if(error){ showToast('Error: '+error); return; }
+      await refreshAll(); showToast('Banner deleted');
+    }
+  });
+
+  /* ---------- REVIEWS ---------- */
+  let editingReviewIdx = null, editingReviewId = null;
+  document.getElementById('addReviewBtn').addEventListener('click', ()=>{ editingReviewIdx=null; editingReviewId=null; document.getElementById('r-name').value=''; document.getElementById('r-text').value=''; document.getElementById('reviewFormTitle').textContent='Add Review'; document.getElementById('reviewFormCard').style.display='block'; });
+  document.getElementById('cancelReviewBtn').addEventListener('click', ()=>document.getElementById('reviewFormCard').style.display='none');
+  document.getElementById('saveReviewBtn').addEventListener('click', async ()=>{
+    const r = {name:document.getElementById('r-name').value.trim(), text:document.getElementById('r-text').value.trim()};
+    if(!r.name||!r.text){ showToast('Name and review text are required'); return; }
+    if(editingReviewId) r.id = editingReviewId;
+    const {error} = await SATSU_DB.saveReview(r, editingReviewIdx);
+    if(error){ showToast('Error: '+error); return; }
+    await refreshAll();
+    document.getElementById('reviewFormCard').style.display='none';
+    showToast('Review saved — live on the site now');
+  });
+  document.getElementById('reviewTableBody').addEventListener('click', async e=>{
+    if(e.target.dataset.edit!==undefined){
+      const idx=+e.target.dataset.edit; const r=reviews[idx]; editingReviewIdx=idx; editingReviewId=r.id||null;
+      document.getElementById('r-name').value=r.name; document.getElementById('r-text').value=r.text;
+      document.getElementById('reviewFormTitle').textContent='Edit Review';
+      document.getElementById('reviewFormCard').style.display='block';
+    }
+    if(e.target.dataset.del!==undefined){
+      const idx=+e.target.dataset.del; const r=reviews[idx];
+      const {error} = await SATSU_DB.deleteReview(r.id!==undefined ? r.id : idx);
+      if(error){ showToast('Error: '+error); return; }
+      await refreshAll(); showToast('Review deleted');
+    }
+  });
+
+  /* ---------- BLOG ---------- */
+  let editingPostId = null;
+  document.getElementById('addPostBtn').addEventListener('click', ()=>{ editingPostId=null; ['p-title','p-slug','p-excerpt'].forEach(id=>document.getElementById(id).value=''); document.getElementById('postFormTitle').textContent='New Post'; document.getElementById('postFormCard').style.display='block'; });
+  document.getElementById('cancelPostBtn').addEventListener('click', ()=>document.getElementById('postFormCard').style.display='none');
+  document.getElementById('savePostBtn').addEventListener('click', async ()=>{
+    const title=document.getElementById('p-title').value.trim();
+    const slug=document.getElementById('p-slug').value.trim();
+    const excerpt=document.getElementById('p-excerpt').value.trim();
+    if(!title){ showToast('Title is required'); return; }
+    const post = editingPostId ? posts.find(x=>x.id===editingPostId) : {};
+    Object.assign(post,{title,slug,excerpt});
+    const {error} = await SATSU_DB.savePost(post);
+    if(error){ showToast('Error: '+error); return; }
+    await refreshAll();
+    document.getElementById('postFormCard').style.display='none';
+    showToast('Post saved');
+  });
+  document.getElementById('postTableBody').addEventListener('click', async e=>{
+    if(e.target.dataset.edit){
+      const p = posts.find(x=>x.id===e.target.dataset.edit); editingPostId=p.id;
+      document.getElementById('p-title').value=p.title; document.getElementById('p-slug').value=p.slug||''; document.getElementById('p-excerpt').value=p.excerpt||'';
+      document.getElementById('postFormTitle').textContent='Edit Post';
+      document.getElementById('postFormCard').style.display='block';
+    }
+    if(e.target.dataset.del){
+      const {error} = await SATSU_DB.deletePost(e.target.dataset.del);
+      if(error){ showToast('Error: '+error); return; }
+      await refreshAll(); showToast('Post deleted');
+    }
+  });
+}
+
+function renderBanners(){
+  document.getElementById('bannerTableBody').innerHTML = banners.map((p,i)=>`
+    <tr><td>${p.tag||''}</td><td>${p.title}</td><td>${p.price||''}</td>
+    <td class="row-actions"><button data-edit="${i}">Edit</button><button class="del" data-del="${i}">Delete</button></td></tr>`).join('')
+    || '<tr><td colspan="4" style="text-align:center;color:var(--steel);">No banners yet.</td></tr>';
+}
+function renderReviews(){
+  document.getElementById('reviewTableBody').innerHTML = reviews.map((r,i)=>`
+    <tr><td>${r.name}</td><td>${(r.text||'').slice(0,70)}${(r.text||'').length>70?'…':''}</td>
+    <td class="row-actions"><button data-edit="${i}">Edit</button><button class="del" data-del="${i}">Delete</button></td></tr>`).join('')
+    || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No reviews yet.</td></tr>';
+}
+function renderPosts(){
+  document.getElementById('postTableBody').innerHTML = posts.map(p=>`
+    <tr><td>${p.title}</td><td>/blog.html?post=${p.slug}</td>
+    <td class="row-actions"><button data-edit="${p.id}">Edit</button><button class="del" data-del="${p.id}">Delete</button></td></tr>`).join('')
+    || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No posts yet.</td></tr>';
+}
+function renderBookings(){
+  document.getElementById('bookingTableBody').innerHTML = bookings.map(b=>{
+    const items = (b.items||[]).map(i=>i.name).join(', ');
+    const date = b.created_at ? new Date(b.created_at).toLocaleDateString() : '—';
+    return `<tr><td>${date}</td><td>${b.customer_name||'—'}${b.customer_phone?' · '+b.customer_phone:''}</td><td>${items}</td><td class="price">${fmt(b.total_price)}</td>
+    <td><span class="status-pill status-${b.status||'new'}">${b.status||'new'}</span></td></tr>`;
+  }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--steel);">No bookings yet — they will appear here as customers book through the site.</td></tr>';
+}
+function renderSell(){
+  document.getElementById('sellTableBody').innerHTML = sellRequests.map(r=>{
+    const date = r.created_at ? new Date(r.created_at).toLocaleDateString() : '—';
+    return `<tr><td>${date}</td><td>${r.customer_name||'—'} · ${r.customer_phone||''}</td><td>${r.device||''}</td><td>${r.condition||''}</td>
+    <td><span class="status-pill status-${r.status||'new'}">${r.status||'new'}</span></td></tr>`;
+  }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--steel);">No sell requests yet.</td></tr>';
+}
+function renderCustomers(){
+  document.getElementById('customerTableBody').innerHTML = customers.map(c=>
+    `<tr><td>${c.name||'—'}</td><td>${c.phone||'—'}</td><td>${c.total_bookings||1}</td></tr>`).join('')
+    || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No customers logged yet.</td></tr>';
+}
+</script>
+</body>
+</html>
