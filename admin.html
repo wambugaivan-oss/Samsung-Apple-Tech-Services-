@@ -200,6 +200,9 @@ textarea{resize:vertical;min-height:70px;}
       <div class="field"><label>Title</label><input id="p-title" placeholder="e.g. 5 Signs Your Phone Battery Needs Replacing"></div>
       <div class="field"><label>Slug (URL)</label><input id="p-slug" placeholder="e.g. signs-battery-needs-replacing"></div>
       <div class="field"><label>Excerpt</label><textarea id="p-excerpt" placeholder="Short summary for search engines"></textarea></div>
+      <div class="field"><label>Article Text</label>
+        <textarea id="p-body" placeholder="Write the full article here. Leave a blank line between paragraphs — each becomes its own paragraph automatically." style="min-height:220px;"></textarea>
+      </div>
       <div class="field"><label>Featured Photo (optional)</label><input id="p-image-file" type="file" accept="image/*">
         <img id="p-image-preview" style="display:none;max-width:140px;margin-top:8px;border:1px solid var(--line);">
       </div>
@@ -466,15 +469,18 @@ function wireForms(){
 
   /* ---------- BLOG ---------- */
   let editingPostId = null;
-  document.getElementById('addPostBtn').addEventListener('click', ()=>{ editingPostId=null; ['p-title','p-slug','p-excerpt'].forEach(id=>document.getElementById(id).value=''); resetFileField('p-image-file','p-image-preview'); document.getElementById('postFormTitle').textContent='New Post'; document.getElementById('postFormCard').style.display='block'; });
+  document.getElementById('addPostBtn').addEventListener('click', ()=>{ editingPostId=null; ['p-title','p-slug','p-excerpt','p-body'].forEach(id=>document.getElementById(id).value=''); resetFileField('p-image-file','p-image-preview'); document.getElementById('postFormTitle').textContent='New Post'; document.getElementById('postFormCard').style.display='block'; });
   document.getElementById('cancelPostBtn').addEventListener('click', ()=>document.getElementById('postFormCard').style.display='none');
   document.getElementById('savePostBtn').addEventListener('click', async ()=>{
     const title=document.getElementById('p-title').value.trim();
     const slug=document.getElementById('p-slug').value.trim();
     const excerpt=document.getElementById('p-excerpt').value.trim();
+    const bodyRaw=document.getElementById('p-body').value.trim();
+    // Turn plain text into paragraphs: blank line = new <p>
+    const body = bodyRaw ? bodyRaw.split(/\n\s*\n/).map(para=>`<p>${para.trim().replace(/\n/g,'<br>')}</p>`).join('') : '';
     if(!title){ showToast('Title is required'); return; }
     const post = editingPostId ? posts.find(x=>x.id===editingPostId) : {};
-    Object.assign(post,{title,slug,excerpt});
+    Object.assign(post,{title,slug,excerpt,body});
     showToast('Saving…');
     const img = await uploadIfPicked('p-image-file','blog', post.image_url);
     if(img.error){ showToast('Photo upload error: '+img.error); return; }
@@ -489,6 +495,9 @@ function wireForms(){
     if(e.target.dataset.edit){
       const p = posts.find(x=>x.id===e.target.dataset.edit); editingPostId=p.id;
       document.getElementById('p-title').value=p.title; document.getElementById('p-slug').value=p.slug||''; document.getElementById('p-excerpt').value=p.excerpt||'';
+      // Convert saved HTML paragraphs back into plain text for editing
+      const plain = (p.body||'').replace(/<br\s*\/?>/gi,'\n').replace(/<\/p>\s*<p>/gi,'\n\n').replace(/<\/?p>/gi,'').trim();
+      document.getElementById('p-body').value = plain;
       resetFileField('p-image-file','p-image-preview'); showExistingPreview('p-image-preview', p.image_url);
       document.getElementById('postFormTitle').textContent='Edit Post';
       document.getElementById('postFormCard').style.display='block';
