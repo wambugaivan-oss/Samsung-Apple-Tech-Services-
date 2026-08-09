@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Customers — CRM</title>
+<link rel="stylesheet" href="crm-style.css">
+</head>
+<body>
+  <nav id="crm-nav"></nav>
+  <div class="crm-page">
+    <h1 class="crm-h1">Customers</h1>
+
+    <div class="crm-panel">
+      <h2>Add Customer</h2>
+      <form id="add-form">
+        <div class="crm-form-row">
+          <input id="f-name" placeholder="Full name" required>
+          <input id="f-phone" placeholder="Phone (e.g. 0700 000000)" required>
+          <input id="f-whatsapp" placeholder="WhatsApp (optional)">
+          <input id="f-email" placeholder="Email (optional)" type="email">
+        </div>
+        <button class="btn" type="submit">Add Customer</button>
+      </form>
+    </div>
+
+    <div class="crm-panel">
+      <input id="search" placeholder="Search by name, phone, WhatsApp, email or customer code…" style="margin-bottom:14px">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>Phone</th><th>WhatsApp</th><th>Added</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="4">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm-shared.js"></script>
+  <script>
+    (async () => {
+      await requireAuth();
+      renderNav("customers.html");
+      loadCustomers();
+    })();
+
+    async function loadCustomers(q) {
+      let query = SB.from("customers").select("*").order("first_seen", { ascending: false }).limit(100);
+      if (q) {
+        query = query.or(`name.ilike.%${q}%,phone.ilike.%${q}%,whatsapp.ilike.%${q}%,email.ilike.%${q}%,customer_code.ilike.%${q}%`);
+      }
+      const { data, error } = await query;
+      if (error) { toast(error.message, true); return; }
+      document.getElementById("rows").innerHTML = (data && data.length) ? data.map(c => `
+        <tr><td>${c.name || "—"}</td><td>${c.phone || "—"}</td><td>${c.whatsapp || "—"}</td>
+        <td>${c.first_seen ? new Date(c.first_seen).toLocaleDateString() : "—"}</td></tr>`).join("")
+        : `<tr><td colspan="4">No customers found</td></tr>`;
+    }
+
+    let searchTimer;
+    document.getElementById("search").addEventListener("input", (e) => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => loadCustomers(e.target.value.trim()), 300);
+    });
+
+    document.getElementById("add-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById("f-name").value.trim(),
+        phone: document.getElementById("f-phone").value.trim(),
+        whatsapp: document.getElementById("f-whatsapp").value.trim() || null,
+        email: document.getElementById("f-email").value.trim() || null,
+      };
+      const { error } = await SB.from("customers").insert(payload);
+      if (error) { toast(error.message, true); return; }
+      toast("Customer added");
+      e.target.reset();
+      loadCustomers();
+    });
+  </script>
+</body>
+</html>
