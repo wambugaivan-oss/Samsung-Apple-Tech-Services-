@@ -720,7 +720,7 @@ function renderRepairs(filter){
   repairGrid.innerHTML = list.map(r=>`
     <div class="ticket" data-id="${r.id}">
       <div class="ticket-media">
-        ${ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera']}
+        ${r.image_url ? `<img src="${r.image_url}" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:2;" alt="${r.name}">` : ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera']}
         <button class="wish-btn" data-wish="${r.id}" aria-label="Add to wishlist">
           <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"/></svg>
         </button>
