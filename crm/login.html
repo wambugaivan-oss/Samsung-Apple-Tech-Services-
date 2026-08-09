@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>CRM Login — Samsung Apple Tech Services</title>
+<link rel="stylesheet" href="crm-style.css">
+</head>
+<body>
+  <div class="crm-login-wrap">
+    <div class="crm-login-card">
+      <h1>Samsung Apple Tech <span style="color:var(--accent)">CRM</span></h1>
+      <p>Staff login — private business system</p>
+      <form id="login-form">
+        <label>Email</label>
+        <input type="email" id="email" required autocomplete="username">
+        <label>Password</label>
+        <input type="password" id="password" required autocomplete="current-password">
+        <button type="submit" class="btn" style="width:100%;margin-top:20px" id="login-btn">Log in</button>
+        <p id="login-error" style="color:var(--bad);font-size:13px;margin-top:12px;display:none"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm-shared.js"></script>
+  <script>
+    (async () => {
+      const { data: { session } } = await SB.auth.getSession();
+      if (session) window.location.href = "dashboard.html";
+    })();
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("login-btn");
+      const errEl = document.getElementById("login-error");
+      errEl.style.display = "none";
+      btn.disabled = true; btn.textContent = "Logging in...";
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const { error } = await SB.auth.signInWithPassword({ email, password });
+      btn.disabled = false; btn.textContent = "Log in";
+      if (error) {
+        errEl.textContent = error.message;
+        errEl.style.display = "block";
+        return;
+      }
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>
