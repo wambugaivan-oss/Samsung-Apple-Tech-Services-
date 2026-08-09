@@ -1,19 +1,7 @@
 /* ============================================================================
-   CONFIG — Paste your Supabase credentials below.
-   ----------------------------------------------------------------------------
-   Where to find them:
-     1. Go to https://supabase.com/dashboard → your project
-     2. Project Settings (gear icon) → API
-     3. Copy "Project URL" into SUPABASE_URL below
-     4. Copy the "anon public" key into SUPABASE_ANON_KEY below
-   Never paste the "service_role" key here — that one is secret and must never
-   go into a website's front-end code.
-
-   If you leave these as-is (empty), the whole site keeps working exactly as
-   before using your browser's local storage as a demo data store — nothing
-   breaks, you just won't get cross-device syncing until these are filled in.
+   CONFIG — Your Supabase credentials are filled in below.
 ============================================================================ */
 window.SATSU_CONFIG = {
-  SUPABASE_URL: "",        // e.g. "https://abcdefgh.supabase.co"
-  SUPABASE_ANON_KEY: "",   // e.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  SUPABASE_URL: "https://qlqtfwyohgqjbqnoesev.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFscXRmd3lvaGdxamJxbm9lc2V2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyNjEyNTQsImV4cCI6MjEwMTgzNzI1NH0.P9fH4iS0rAy2DKRUQDWN8Oq7nFzqcPbeOuLEslKCYiE",
 };
