@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Sales (POS) — CRM</title>
+<link rel="stylesheet" href="crm-style.css">
+</head>
+<body>
+  <nav id="crm-nav"></nav>
+  <div class="crm-page">
+    <h1 class="crm-h1">New Sale</h1>
+
+    <div class="crm-panel">
+      <h2>Customer</h2>
+      <div class="crm-form-row">
+        <select id="customer-select"><option value="">Walk-in (no customer)</option></select>
+        <input id="customer-quickadd-name" placeholder="Or type new customer name">
+        <input id="customer-quickadd-phone" placeholder="Phone">
+        <button class="btn secondary" id="quickadd-btn" type="button">Add & Select</button>
+      </div>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Add Item</h2>
+      <div class="crm-form-row">
+        <select id="item-product"><option value="">Select product…</option></select>
+        <select id="item-serial"><option value="">— (quantity item) —</option></select>
+        <input id="item-qty" type="number" placeholder="Qty" value="1" min="1">
+        <input id="item-price" type="number" placeholder="Unit price (UGX)">
+        <button class="btn secondary" id="add-item-btn" type="button">Add to Sale</button>
+      </div>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Cart</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Item</th><th>Qty</th><th>Unit Price</th><th>Total</th><th></th></tr></thead>
+        <tbody id="cart-rows"><tr><td colspan="5">No items added</td></tr></tbody>
+      </table></div>
+
+      <div class="crm-form-row" style="margin-top:16px">
+        <div><div class="label" style="color:var(--muted);font-size:13px">Discount (UGX)</div><input id="discount" type="number" value="0"></div>
+        <div><div class="label" style="color:var(--muted);font-size:13px">Amount Paid (UGX)</div><input id="amount-paid" type="number" value="0"></div>
+        <div>
+          <div class="label" style="color:var(--muted);font-size:13px">Payment Method</div>
+          <select id="payment-method">
+            <option>Cash</option><option>MTN Mobile Money</option><option>Airtel Money</option>
+            <option>Bank Transfer</option><option>Card</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="text-align:right;font-size:16px;margin:14px 0">
+        <div>Subtotal: <b id="sum-subtotal">UGX 0</b></div>
+        <div>Total after discount: <b id="sum-total">UGX 0</b></div>
+        <div>Balance: <b id="sum-balance">UGX 0</b></div>
+      </div>
+      <button class="btn" id="complete-sale-btn" type="button" style="width:100%">Complete Sale</button>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm-shared.js"></script>
+  <script>
+    let PRODUCTS = [], cart = [], selectedCustomerId = null;
+
+    (async () => {
+      await requireAuth();
+      renderNav("sales.html");
+      await Promise.all([loadCustomers(), loadProducts()]);
+    })();
+
+    async function loadCustomers() {
+      const { data } = await SB.from("customers").select("id,name,phone").order("name");
+      document.getElementById("customer-select").innerHTML = `<option value="">Walk-in (no customer)</option>` +
+        (data||[]).map(c => `<option value="${c.id}">${c.name} — ${c.phone||""}</option>`).join("");
+    }
+    document.getElementById("customer-select").addEventListener("change", (e) => selectedCustomerId = e.target.value || null);
+
+    document.getElementById("quickadd-btn").addEventListener("click", async () => {
+      const name = document.getElementById("customer-quickadd-name").value.trim();
+      const phone = document.getElementById("customer-quickadd-phone").value.trim();
+      if (!name || !phone) { toast("Enter name and phone", true); return; }
+      const { data, error } = await SB.from("customers").insert({ name, phone }).select().single();
+      if (error) { toast(error.message, true); return; }
+      await loadCustomers();
+      document.getElementById("customer-select").value = data.id;
+      selectedCustomerId = data.id;
+      toast("Customer added and selected");
+    });
+
+    async function loadProducts() {
+      const { data } = await SB.from("products").select("*").order("name");
+      PRODUCTS = data || [];
+      document.getElementById("item-product").innerHTML = `<option value="">Select product…</option>` +
+        PRODUCTS.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+    }
+
+    document.getElementById("item-product").addEventListener("change", async (e) => {
+      const pid = e.target.value;
+      const serialSelect = document.getElementById("item-serial");
+      const product = PRODUCTS.find(p => p.id === pid);
+      document.getElementById("item-price").value = product?.selling_price || "";
+      if (!pid) { serialSelect.innerHTML = `<option value="">— (quantity item) —</option>`; return; }
+      const { data } = await SB.from("inventory_items").select("id, imei_serial").eq("product_id", pid).eq("status", "in_stock");
+      serialSelect.innerHTML = `<option value="">— (quantity item) —</option>` +
+        (data||[]).map(i => `<option value="${i.id}">${i.imei_serial || i.id.slice(0,8)}</option>`).join("");
+    });
+
+    document.getElementById("add-item-btn").addEventListener("click", () => {
+      const pid = document.getElementById("item-product").value;
+      const product = PRODUCTS.find(p => p.id === pid);
+      if (!product) { toast("Select a product", true); return; }
+      const inventory_item_id = document.getElementById("item-serial").value || null;
+      const qty = Number(document.getElementById("item-qty").value || 1);
+      const price = Number(document.getElementById("item-price").value || product.selling_price || 0);
+      cart.push({
+        product_id: pid, inventory_item_id, description: product.name,
+        quantity: inventory_item_id ? 1 : qty, unit_price: price, total: price * (inventory_item_id ? 1 : qty),
+      });
+      renderCart();
+    });
+
+    function renderCart() {
+      document.getElementById("cart-rows").innerHTML = cart.length ? cart.map((it, i) => `
+        <tr><td>${it.description}${it.inventory_item_id ? " (serialized)" : ""}</td><td>${it.quantity}</td>
+        <td>${fmtUGX(it.unit_price)}</td><td>${fmtUGX(it.total)}</td>
+        <td><button class="btn secondary" onclick="removeItem(${i})" type="button">Remove</button></td></tr>`).join("")
+        : `<tr><td colspan="5">No items added</td></tr>`;
+      updateTotals();
+    }
+    function removeItem(i) { cart.splice(i, 1); renderCart(); }
+
+    function updateTotals() {
+      const subtotal = cart.reduce((s, it) => s + it.total, 0);
+      const discount = Number(document.getElementById("discount").value || 0);
+      const total = Math.max(subtotal - discount, 0);
+      const paid = Number(document.getElementById("amount-paid").value || 0);
+      document.getElementById("sum-subtotal").textContent = fmtUGX(subtotal);
+      document.getElementById("sum-total").textContent = fmtUGX(total);
+      document.getElementById("sum-balance").textContent = fmtUGX(Math.max(total - paid, 0));
+    }
+    document.getElementById("discount").addEventListener("input", updateTotals);
+    document.getElementById("amount-paid").addEventListener("input", updateTotals);
+
+    document.getElementById("complete-sale-btn").addEventListener("click", async () => {
+      if (!cart.length) { toast("Add at least one item", true); return; }
+      const subtotal = cart.reduce((s, it) => s + it.total, 0);
+      const discount = Number(document.getElementById("discount").value || 0);
+      const total = Math.max(subtotal - discount, 0);
+      const amount_paid = Number(document.getElementById("amount-paid").value || 0);
+      const balance = Math.max(total - amount_paid, 0);
+      const payment_method = document.getElementById("payment-method").value;
+
+      const { data: sale, error } = await SB.from("sales").insert({
+        receipt_number: genReceiptNumber(), customer_id: selectedCustomerId,
+        subtotal, discount, total, amount_paid, balance, payment_method,
+        status: balance > 0 ? "partial" : "completed",
+      }).select().single();
+      if (error) { toast(error.message, true); return; }
+
+      for (const it of cart) {
+        await SB.from("sale_items").insert({ sale_id: sale.id, ...it });
+        if (it.inventory_item_id) {
+          await SB.from("inventory_items").update({ status: "sold" }).eq("id", it.inventory_item_id);
+        } else {
+          const { data: stock } = await SB.from("inventory_stock").select("*").eq("product_id", it.product_id).maybeSingle();
+          if (stock) await SB.from("inventory_stock").update({ quantity_on_hand: Math.max(stock.quantity_on_hand - it.quantity, 0) }).eq("product_id", it.product_id);
+        }
+        await SB.from("stock_movements").insert({
+          product_id: it.product_id, inventory_item_id: it.inventory_item_id, movement_type: "sale_out",
+          quantity: it.quantity, reference_type: "sale", reference_id: sale.id,
+        });
+      }
+
+      if (amount_paid > 0) {
+        await SB.from("payments").insert({
+          reference_type: "sale", reference_id: sale.id, customer_id: selectedCustomerId,
+          amount: amount_paid, direction: "in", method: payment_method,
+        });
+      }
+
+      toast(`Sale completed — receipt ${sale.receipt_number}`);
+      cart = []; renderCart();
+      document.getElementById("discount").value = 0;
+      document.getElementById("amount-paid").value = 0;
+      loadProducts();
+    });
+  </script>
+</body>
+</html>
