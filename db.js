@@ -1,9 +1,5 @@
 /* ============================================================================
    DB.JS — shared data layer for the whole site.
-   Every page includes config.js then this file. All pages call the same
-   functions below (SATSU_DB.getServices(), SATSU_DB.addBooking(), etc.)
-   without needing to know whether data is coming from Supabase or from
-   browser storage — this file decides that once, based on config.js.
 ============================================================================ */
 (function(){
   const cfg = window.SATSU_CONFIG || {};
@@ -37,7 +33,6 @@
   const DB = {
     isConfigured(){ return CONFIGURED; },
 
-    /* ---------- AUTH (admin only) ---------- */
     async signIn(email, password){
       const c = await ensureClient(); if(!c) return {error:"Backend not configured yet — see config.js"};
       const {data,error} = await c.auth.signInWithPassword({email,password});
@@ -46,7 +41,18 @@
     async signOut(){ const c = await ensureClient(); if(c) await c.auth.signOut(); },
     async currentUser(){ const c = await ensureClient(); if(!c) return null; const {data} = await c.auth.getUser(); return data?.user || null; },
 
-    /* ---------- SERVICES ---------- */
+    async uploadMedia(file, folder){
+      if(!CONFIGURED) return {url:null, error:"Backend not configured yet — see config.js"};
+      if(!file) return {url:null, error:"No file selected"};
+      const c = await ensureClient();
+      const ext = (file.name.split('.').pop() || 'bin').toLowerCase();
+      const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+      const {error} = await c.storage.from('media').upload(path, file, {cacheControl:'3600', upsert:false});
+      if(error) return {url:null, error: error.message};
+      const {data} = c.storage.from('media').getPublicUrl(path);
+      return {url: data.publicUrl, error:null};
+    },
+
     async getServices(){
       if(CONFIGURED){ const c=await ensureClient(); const {data,error}=await c.from('services').select('*').order('name'); if(error){console.error(error);return [];} return data; }
       return loadLocal().services || null;
@@ -66,16 +72,15 @@
       setLocal('satsu_admin_services', list); return {error:null};
     },
 
-    /* ---------- BANNERS ---------- */
     async getBanners(){
       if(CONFIGURED){ const c=await ensureClient(); const {data,error}=await c.from('banners').select('*').order('sort_order');
         if(error){console.error(error);return [];}
-        return data.map(b=>({id:b.id,tag:b.tag,title:b.title,desc:b.description,price:b.cta_text})); }
+        return data.map(b=>({id:b.id,tag:b.tag,title:b.title,desc:b.description,price:b.cta_text,image:b.image_url})); }
       return loadLocal().banners || null;
     },
     async saveBanner(b, idx){
       if(CONFIGURED){ const c=await ensureClient();
-        const row = {tag:b.tag, title:b.title, description:b.desc, cta_text:b.price};
+        const row = {tag:b.tag, title:b.title, description:b.desc, cta_text:b.price, image_url:b.image||null};
         if(b.id) row.id = b.id;
         const {error}=await c.from('banners').upsert(row); return {error: error?.message||null}; }
       const list = loadLocal().banners || [];
@@ -88,7 +93,6 @@
       setLocal('satsu_admin_promos', list); return {error:null};
     },
 
-    /* ---------- REVIEWS ---------- */
     async getReviews(){
       if(CONFIGURED){ const c=await ensureClient(); const {data,error}=await c.from('reviews').select('*').order('created_at',{ascending:false});
         if(error){console.error(error);return [];}
@@ -109,7 +113,6 @@
       setLocal('satsu_admin_reviews', list); return {error:null};
     },
 
-    /* ---------- BLOG POSTS ---------- */
     async getPosts(){
       if(CONFIGURED){ const c=await ensureClient(); const {data,error}=await c.from('blog_posts').select('*').order('created_at',{ascending:false});
         if(error){console.error(error);return [];} return data; }
@@ -131,9 +134,7 @@
       setLocal('satsu_admin_posts', list); return {error:null};
     },
 
-    /* ---------- BOOKINGS (customer-submitted) ---------- */
     async addBooking(booking){
-      // booking: {customer_name, customer_phone, items: [{name,price}], total_price, notes}
       const payload = {...booking, items: JSON.stringify(booking.items||[])};
       if(CONFIGURED){ const c=await ensureClient(); const {error}=await c.from('bookings').insert(payload); return {error: error?.message||null}; }
       const list = loadLocal().bookings || [];
@@ -152,7 +153,6 @@
       setLocal('satsu_local_bookings', list); return {error:null};
     },
 
-    /* ---------- SELL / TRADE-IN REQUESTS ---------- */
     async addSellRequest(req){
       if(CONFIGURED){ const c=await ensureClient(); const {error}=await c.from('sell_requests').insert(req); return {error: error?.message||null}; }
       const list = loadLocal().sellRequests || [];
@@ -165,14 +165,12 @@
       return loadLocal().sellRequests || [];
     },
 
-    /* ---------- CUSTOMERS (derived from bookings + sell requests) ---------- */
     async getCustomers(){
       if(CONFIGURED){
         const c=await ensureClient();
         const {data,error}=await c.from('customers').select('*').order('last_seen',{ascending:false});
         if(!error && data) return data;
       }
-      // Fallback / derived view: build a simple customer list from local bookings + sell requests
       const {bookings=[], sellRequests=[]} = loadLocal();
       const map = {};
       [...bookings, ...sellRequests].forEach(r=>{
