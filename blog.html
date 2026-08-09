@@ -10,10 +10,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<script src="db.js"></script>
 <style>
 :root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--copper:#C1622C;--steel:#4A5568;--line:rgba(11,15,20,.10);
   --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
 *{margin:0;padding:0;box-sizing:border-box;}
+html{overflow-x:hidden;}
+body{overflow-x:hidden;max-width:100vw;}
 body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);line-height:1.6;}
 a{color:inherit;text-decoration:none;}
 .container{max-width:940px;margin:0 auto;padding:0 clamp(18px,4vw,48px);}
@@ -28,7 +32,9 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .page-head p{margin-top:14px;color:var(--steel);max-width:560px;font-size:.92rem;}
 #listView{padding:36px 0 60px;}
 .post-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
-.post-card{background:var(--paper);border:1px solid var(--line);padding:22px;transition:box-shadow .2s,transform .2s;}
+.post-card{background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.post-card-img{width:100%;height:150px;object-fit:cover;display:block;}
+.post-card-body{padding:22px;}
 .post-card:hover{box-shadow:0 16px 36px rgba(11,15,20,.08);transform:translateY(-3px);}
 .post-tag{font-family:var(--font-mono);font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--copper);}
 .post-card h3{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-top:10px;letter-spacing:-.2px;}
@@ -37,6 +43,7 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 #articleView{display:none;padding:36px 0 60px;}
 #articleView .breadcrumb{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);margin-bottom:22px;}
 #articleView .breadcrumb a{color:var(--copper);}
+#articleView .art-img{width:100%;max-height:360px;object-fit:cover;margin-top:24px;}
 #articleView h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.6rem,3.2vw,2.3rem);letter-spacing:-1px;line-height:1.15;}
 #articleView .meta{font-family:var(--font-mono);font-size:.7rem;color:var(--steel);margin-top:14px;}
 #articleView .body{margin-top:28px;font-size:.95rem;color:var(--ink);}
@@ -125,37 +132,48 @@ const DEFAULT_POSTS = [
 ];
 
 function getAdminPosts(){ try{ return JSON.parse(localStorage.getItem('satsu_admin_posts')||'[]'); }catch(e){ return []; } }
-const adminPosts = getAdminPosts().map(p=>({...p, tag:"From The Shop", excerpt:p.excerpt || "", body:`<p>${p.excerpt||''}</p>`}));
-const ALL_POSTS = [...adminPosts, ...DEFAULT_POSTS];
 
-const listView = document.getElementById('listView');
-const articleView = document.getElementById('articleView');
-const postGrid = document.getElementById('postGrid');
-postGrid.innerHTML = ALL_POSTS.map(p=>`
-  <div class="post-card">
-    <div class="post-tag">${p.tag}</div>
-    <h3>${p.title}</h3>
-    <p>${p.excerpt}</p>
-    <a class="read-link" href="blog.html?post=${p.slug}">Read guide →</a>
-  </div>`).join('') || '<p style="color:var(--steel);">No articles yet — check back soon.</p>';
+(async function(){
+  // Pull posts from Supabase if configured, otherwise fall back to this browser's local demo storage
+  const livePosts = (window.SATSU_DB && SATSU_DB.isConfigured()) ? await SATSU_DB.getPosts() : getAdminPosts();
+  const adminPosts = (livePosts||[]).map(p=>({...p, tag: p.tag || "From The Shop", excerpt: p.excerpt || "", body: p.body || `<p>${p.excerpt||''}</p>`}));
+  const ALL_POSTS = [...adminPosts, ...DEFAULT_POSTS];
 
-const params = new URLSearchParams(window.location.search);
-const postSlug = params.get('post');
-if(postSlug){
-  const post = ALL_POSTS.find(p=>p.slug===postSlug);
-  if(post){
-    listView.style.display='none';
-    articleView.style.display='block';
-    document.getElementById('pageTitle').textContent = `${post.title} | Samsung Apple Tech Services Uganda`;
-    document.getElementById('pageDesc').setAttribute('content', post.excerpt);
-    document.getElementById('pageCanonical').href = `https://www.samsungappletechservices.site/blog.html?post=${post.slug}`;
-    document.getElementById('artCrumb').textContent = post.title;
-    document.getElementById('artTitle').textContent = post.title;
-    document.getElementById('artMeta').textContent = post.tag + " · Samsung Apple Tech Services Uganda";
-    document.getElementById('artBody').innerHTML = post.body;
-    document.getElementById('artWaBtn').href = waLink(`Hello, I read your article "${post.title}" and I'd like help with my device.`);
+  const listView = document.getElementById('listView');
+  const articleView = document.getElementById('articleView');
+  const postGrid = document.getElementById('postGrid');
+  postGrid.innerHTML = ALL_POSTS.map(p=>`
+    <div class="post-card">
+      ${p.image_url ? `<img class="post-card-img" src="${p.image_url}" alt="${p.title}">` : ''}
+      <div class="post-card-body">
+        <div class="post-tag">${p.tag}</div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <a class="read-link" href="blog.html?post=${p.slug}">Read guide →</a>
+      </div>
+    </div>`).join('') || '<p style="color:var(--steel);">No articles yet — check back soon.</p>';
+
+  const params = new URLSearchParams(window.location.search);
+  const postSlug = params.get('post');
+  if(postSlug){
+    const post = ALL_POSTS.find(p=>p.slug===postSlug);
+    if(post){
+      listView.style.display='none';
+      articleView.style.display='block';
+      document.getElementById('pageTitle').textContent = `${post.title} | Samsung Apple Tech Services Uganda`;
+      document.getElementById('pageDesc').setAttribute('content', post.excerpt);
+      document.getElementById('pageCanonical').href = `https://www.samsungappletechservices.site/blog.html?post=${post.slug}`;
+      document.getElementById('artCrumb').textContent = post.title;
+      document.getElementById('artTitle').textContent = post.title;
+      document.getElementById('artMeta').textContent = post.tag + " · Samsung Apple Tech Services Uganda";
+      if(post.image_url){
+        document.getElementById('artTitle').insertAdjacentHTML('beforebegin', `<img class="art-img" src="${post.image_url}" alt="${post.title}">`);
+      }
+      document.getElementById('artBody').innerHTML = post.body;
+      document.getElementById('artWaBtn').href = waLink(`Hello, I read your article "${post.title}" and I'd like help with my device.`);
+    }
   }
-}
+})();
 </script>
 </body>
 </html>
