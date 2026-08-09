@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Products & Inventory — CRM</title>
+<link rel="stylesheet" href="crm-style.css">
+</head>
+<body>
+  <nav id="crm-nav"></nav>
+  <div class="crm-page">
+    <h1 class="crm-h1">Products & Inventory</h1>
+
+    <div class="crm-panel">
+      <h2>New Brand / Category</h2>
+      <div class="crm-form-row">
+        <input id="new-brand" placeholder="New brand name (e.g. Tecno)">
+        <button class="btn secondary" id="add-brand-btn" type="button">Add Brand</button>
+        <input id="new-category" placeholder="New category name (e.g. Phones)">
+        <select id="new-category-parent"><option value="">— top level —</option></select>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)">
+          <input type="checkbox" id="new-category-serial" style="width:auto"> Track by IMEI/Serial
+        </label>
+        <button class="btn secondary" id="add-category-btn" type="button">Add Category</button>
+      </div>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Add Product</h2>
+      <form id="product-form">
+        <div class="crm-form-row">
+          <input id="p-name" placeholder="Product name (e.g. Galaxy S24 Ultra 256GB)" required>
+          <select id="p-brand" required><option value="">Brand…</option></select>
+          <select id="p-category" required><option value="">Category…</option></select>
+          <input id="p-model" placeholder="Model (optional)">
+        </div>
+        <div class="crm-form-row">
+          <input id="p-cost" type="number" placeholder="Cost price (UGX)" required>
+          <input id="p-selling" type="number" placeholder="Selling price (UGX)" required>
+          <input id="p-lowstock" type="number" placeholder="Low stock threshold" value="3">
+        </div>
+        <button class="btn" type="submit">Add Product</button>
+      </form>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Add Stock</h2>
+      <div class="crm-form-row">
+        <select id="s-product"><option value="">Select product…</option></select>
+        <input id="s-imei" placeholder="IMEI/Serial (leave blank for quantity-based)">
+        <input id="s-qty" type="number" placeholder="Quantity (if no IMEI)" value="1">
+        <input id="s-supplier" placeholder="Supplier name (optional)">
+      </div>
+      <button class="btn secondary" id="add-stock-btn" type="button">Add Stock</button>
+    </div>
+
+    <div class="crm-panel">
+      <input id="search" placeholder="Search products by name or model…" style="margin-bottom:14px">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Product</th><th>Brand</th><th>Category</th><th>Selling Price</th><th>Stock</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm-shared.js"></script>
+  <script>
+    let BRANDS = [], CATEGORIES = [], PRODUCTS = [];
+
+    (async () => {
+      await requireAuth();
+      renderNav("products.html");
+      await loadLookups();
+      await loadProducts();
+    })();
+
+    async function loadLookups() {
+      const [b, c] = await Promise.all([
+        SB.from("brands").select("*").order("name"),
+        SB.from("categories").select("*").order("name"),
+      ]);
+      BRANDS = b.data || []; CATEGORIES = c.data || [];
+      document.getElementById("p-brand").innerHTML = `<option value="">Brand…</option>` +
+        BRANDS.map(x => `<option value="${x.id}">${x.name}</option>`).join("");
+      document.getElementById("p-category").innerHTML = `<option value="">Category…</option>` +
+        CATEGORIES.map(x => `<option value="${x.id}">${x.name}</option>`).join("");
+      document.getElementById("new-category-parent").innerHTML = `<option value="">— top level —</option>` +
+        CATEGORIES.map(x => `<option value="${x.id}">${x.name}</option>`).join("");
+    }
+
+    async function loadProducts(q) {
+      let query = SB.from("products").select("*, brands(name), categories(name)").order("created_at", { ascending: false }).limit(100);
+      if (q) query = query.or(`name.ilike.%${q}%,model.ilike.%${q}%`);
+      const { data, error } = await query;
+      if (error) { toast(error.message, true); return; }
+      PRODUCTS = data || [];
+      document.getElementById("s-product").innerHTML = `<option value="">Select product…</option>` +
+        PRODUCTS.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+
+      const withStock = await Promise.all(PRODUCTS.map(async (p) => {
+        const [items, qty] = await Promise.all([
+          SB.from("inventory_items").select("id", { count: "exact", head: true }).eq("product_id", p.id).eq("status", "in_stock"),
+          SB.from("inventory_stock").select("quantity_on_hand").eq("product_id", p.id).maybeSingle(),
+        ]);
+        return { ...p, stockCount: (items.count || 0) + (qty.data?.quantity_on_hand || 0) };
+      }));
+
+      document.getElementById("rows").innerHTML = withStock.length ? withStock.map(p => `
+        <tr><td>${p.name}${p.model ? " ("+p.model+")" : ""}</td><td>${p.brands?.name || "—"}</td>
+        <td>${p.categories?.name || "—"}</td><td>${fmtUGX(p.selling_price)}</td><td>${p.stockCount}</td></tr>`).join("")
+        : `<tr><td colspan="5">No products yet — add your first one above</td></tr>`;
+    }
+
+    let searchTimer;
+    document.getElementById("search").addEventListener("input", (e) => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => loadProducts(e.target.value.trim()), 300);
+    });
+
+    document.getElementById("add-brand-btn").addEventListener("click", async () => {
+      const name = document.getElementById("new-brand").value.trim();
+      if (!name) return;
+      const { error } = await SB.from("brands").insert({ name });
+      if (error) { toast(error.message, true); return; }
+      toast("Brand added");
+      document.getElementById("new-brand").value = "";
+      await loadLookups();
+    });
+
+    document.getElementById("add-category-btn").addEventListener("click", async () => {
+      const name = document.getElementById("new-category").value.trim();
+      if (!name) return;
+      const parent_id = document.getElementById("new-category-parent").value || null;
+      const track_serial = document.getElementById("new-category-serial").checked;
+      const { error } = await SB.from("categories").insert({ name, parent_id, track_serial });
+      if (error) { toast(error.message, true); return; }
+      toast("Category added");
+      document.getElementById("new-category").value = "";
+      await loadLookups();
+    });
+
+    document.getElementById("product-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById("p-name").value.trim(),
+        brand_id: document.getElementById("p-brand").value || null,
+        category_id: document.getElementById("p-category").value || null,
+        model: document.getElementById("p-model").value.trim() || null,
+        cost_price: Number(document.getElementById("p-cost").value || 0),
+        selling_price: Number(document.getElementById("p-selling").value || 0),
+        low_stock_threshold: Number(document.getElementById("p-lowstock").value || 3),
+      };
+      const { error } = await SB.from("products").insert(payload);
+      if (error) { toast(error.message, true); return; }
+      toast("Product added");
+      e.target.reset();
+      await loadProducts();
+    });
+
+    document.getElementById("add-stock-btn").addEventListener("click", async () => {
+      const product_id = document.getElementById("s-product").value;
+      const imei = document.getElementById("s-imei").value.trim();
+      const qty = Number(document.getElementById("s-qty").value || 1);
+      const supplierName = document.getElementById("s-supplier").value.trim();
+      if (!product_id) { toast("Select a product first", true); return; }
+
+      let supplier_id = null;
+      if (supplierName) {
+        const { data: existing } = await SB.from("suppliers").select("id").eq("name", supplierName).maybeSingle();
+        if (existing) supplier_id = existing.id;
+        else {
+          const { data: created } = await SB.from("suppliers").insert({ name: supplierName }).select().single();
+          supplier_id = created?.id || null;
+        }
+      }
+
+      const product = PRODUCTS.find(p => p.id === product_id);
+
+      if (imei) {
+        const { error } = await SB.from("inventory_items").insert({
+          product_id, imei_serial: imei, supplier_id,
+          cost_price: product?.cost_price || 0, selling_price: product?.selling_price || 0,
+          status: "in_stock",
+        });
+        if (error) { toast(error.message, true); return; }
+      } else {
+        const { data: existingStock } = await SB.from("inventory_stock").select("*").eq("product_id", product_id).maybeSingle();
+        if (existingStock) {
+          await SB.from("inventory_stock").update({ quantity_on_hand: existingStock.quantity_on_hand + qty, updated_at: new Date().toISOString() }).eq("product_id", product_id);
+        } else {
+          await SB.from("inventory_stock").insert({ product_id, quantity_on_hand: qty });
+        }
+      }
+      await SB.from("stock_movements").insert({
+        product_id, movement_type: "purchase_in", quantity: imei ? 1 : qty, reference_type: "manual", notes: "Added via Products page",
+      });
+      toast("Stock added");
+      document.getElementById("s-imei").value = "";
+      document.getElementById("s-supplier").value = "";
+      await loadProducts();
+    });
+  </script>
+</body>
+</html>
