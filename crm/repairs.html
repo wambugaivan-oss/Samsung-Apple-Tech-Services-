@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Repairs — CRM</title>
+<link rel="stylesheet" href="crm-style.css">
+</head>
+<body>
+  <nav id="crm-nav"></nav>
+  <div class="crm-page">
+    <h1 class="crm-h1">Repairs</h1>
+
+    <div class="crm-panel">
+      <h2>New Repair Job</h2>
+      <form id="repair-form">
+        <div class="crm-form-row">
+          <select id="r-customer" required><option value="">Select customer…</option></select>
+          <input id="r-device" placeholder="Device (e.g. iPhone 13 Pro)" required>
+          <input id="r-imei" placeholder="IMEI/Serial (optional)">
+        </div>
+        <div class="crm-form-row">
+          <input id="r-problem" placeholder="Problem reported" required>
+          <input id="r-type" placeholder="Repair type (e.g. Screen Replacement)" required>
+        </div>
+        <div class="crm-form-row">
+          <input id="r-parts-cost" type="number" placeholder="Parts cost (UGX)" value="0">
+          <input id="r-labour-cost" type="number" placeholder="Labour cost (UGX)" value="0">
+          <input id="r-paid" type="number" placeholder="Amount paid now (UGX)" value="0">
+          <input id="r-warranty" type="number" placeholder="Warranty days" value="30">
+        </div>
+        <button class="btn" type="submit">Create Repair Job</button>
+      </form>
+    </div>
+
+    <div class="crm-panel">
+      <h2>Active & Recent Repairs</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Repair #</th><th>Customer</th><th>Device</th><th>Cost</th><th>Balance</th><th>Status</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="6">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm-shared.js"></script>
+  <script>
+    const STATUSES = ["received","diagnosing","in_progress","awaiting_parts","ready","collected","cancelled"];
+
+    (async () => {
+      await requireAuth();
+      renderNav("repairs.html");
+      await loadCustomers();
+      await loadRepairs();
+    })();
+
+    async function loadCustomers() {
+      const { data } = await SB.from("customers").select("id,name,phone").order("name");
+      document.getElementById("r-customer").innerHTML = `<option value="">Select customer…</option>` +
+        (data||[]).map(c => `<option value="${c.id}">${c.name} — ${c.phone||""}</option>`).join("");
+    }
+
+    async function loadRepairs() {
+      const { data, error } = await SB.from("repairs").select("*, customers(name)").order("created_at", { ascending: false }).limit(100);
+      if (error) { toast(error.message, true); return; }
+      document.getElementById("rows").innerHTML = (data && data.length) ? data.map(r => `
+        <tr>
+          <td>${r.repair_number}</td><td>${r.customers?.name || "—"}</td><td>${r.device_description}</td>
+          <td>${fmtUGX(r.total_cost)}</td><td>${fmtUGX(r.balance)}</td>
+          <td><select onchange="updateStatus('${r.id}', this.value)">
+            ${STATUSES.map(s => `<option value="${s}" ${s===r.status?"selected":""}>${s.replace("_"," ")}</option>`).join("")}
+          </select></td>
+        </tr>`).join("") : `<tr><td colspan="6">No repairs yet</td></tr>`;
+    }
+
+    async function updateStatus(id, status) {
+      const patch = { status, updated_at: new Date().toISOString() };
+      if (status === "collected") patch.actual_completion = new Date().toISOString().slice(0,10);
+      const { error } = await SB.from("repairs").update(patch).eq("id", id);
+      if (error) { toast(error.message, true); return; }
+      toast("Status updated");
+    }
+
+    document.getElementById("repair-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const parts = Number(document.getElementById("r-parts-cost").value || 0);
+      const labour = Number(document.getElementById("r-labour-cost").value || 0);
+      const total = parts + labour;
+      const paid = Number(document.getElementById("r-paid").value || 0);
+      const customer_id = document.getElementById("r-customer").value;
+
+      const { data: repair, error } = await SB.from("repairs").insert({
+        repair_number: genRepairNumber(),
+        customer_id,
+        device_description: document.getElementById("r-device").value.trim(),
+        imei_serial: document.getElementById("r-imei").value.trim() || null,
+        problem_reported: document.getElementById("r-problem").value.trim(),
+        repair_type: document.getElementById("r-type").value.trim(),
+        parts_cost: parts, labour_cost: labour, total_cost: total,
+        amount_paid: paid, balance: Math.max(total - paid, 0),
+        warranty_days: Number(document.getElementById("r-warranty").value || 30),
+        status: "received",
+      }).select().single();
+      if (error) { toast(error.message, true); return; }
+
+      if (paid > 0) {
+        await SB.from("payments").insert({
+          reference_type: "repair", reference_id: repair.id, customer_id,
+          amount: paid, direction: "in", method: "Cash",
+        });
+      }
+
+      toast(`Repair job created — ${repair.repair_number}`);
+      e.target.reset();
+      await loadRepairs();
+    });
+  </script>
+</body>
+</html>
