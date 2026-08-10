@@ -181,6 +181,64 @@
       });
       return Object.values(map);
     },
+
+    /* ---------- SHOP PRODUCTS (bridges the CRM's "Products & Inventory" into the public site) ---------- */
+    /* Read-only from the public side — products are added via /crm/products.html by staff.
+       Only returns products that actually have stock, so nothing "out of stock" is shown. */
+    async getShopProducts(){
+      if(!CONFIGURED) return []; // this feature only exists once Supabase is connected
+      const c = await ensureClient();
+      const {data, error} = await c.from('products')
+        .select('*, brands(name), categories(name), inventory_stock(quantity_on_hand)')
+        .order('created_at', {ascending:false});
+      if(error){ console.error(error); return []; }
+      const withStock = await Promise.all((data||[]).map(async p=>{
+        const {count} = await c.from('inventory_items').select('id',{count:'exact',head:true}).eq('product_id', p.id).eq('status','in_stock');
+        const onHand = (p.inventory_stock && p.inventory_stock[0] && p.inventory_stock[0].quantity_on_hand) || 0;
+        return {
+          id: p.id, name: p.name, model: p.model, brand: p.brands ? p.brands.name : null,
+          category: p.categories ? p.categories.name : null, price: p.selling_price,
+          image: p.image_url || null, stock: (count||0) + onHand,
+        };
+      }));
+      return withStock.filter(p => p.stock > 0);
+    },
+
+    /* ---------- CRM OVERVIEW (for the admin.html Overview dashboard) ---------- */
+    /* Pulls live business numbers from the CRM's tables (Products, Sales, Repairs,
+       Customers). Read-only from this side — everything is managed in /crm/. */
+    async getCrmOverview(){
+      if(!CONFIGURED) return null;
+      const c = await ensureClient();
+      const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+      const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
+      try{
+        const [products, lowStockCheck, salesToday, salesMonth, activeRepairs, readyRepairs, crmCustomers] = await Promise.all([
+          c.from('products').select('id', {count:'exact', head:true}),
+          c.from('inventory_stock').select('product_id, quantity_on_hand, reorder_level'),
+          c.from('sales').select('total', {count:'exact'}).gte('created_at', todayStart.toISOString()),
+          c.from('sales').select('total').gte('created_at', monthStart.toISOString()),
+          c.from('repairs').select('id', {count:'exact', head:true}).in('status', ['received','diagnosing','in_progress','awaiting_parts']),
+          c.from('repairs').select('id', {count:'exact', head:true}).eq('status','ready'),
+          c.from('customers').select('id', {count:'exact', head:true}),
+        ]);
+        const lowStockCount = (lowStockCheck.data||[]).filter(s => s.quantity_on_hand <= (s.reorder_level ?? 3)).length;
+        const salesTodayTotal = (salesToday.data||[]).reduce((s,r)=>s+(r.total||0),0);
+        const salesMonthTotal = (salesMonth.data||[]).reduce((s,r)=>s+(r.total||0),0);
+        return {
+          productCount: products.count || 0,
+          lowStockCount,
+          salesTodayCount: salesToday.count || 0,
+          salesTodayTotal, salesMonthTotal,
+          activeRepairs: activeRepairs.count || 0,
+          readyRepairs: readyRepairs.count || 0,
+          crmCustomers: crmCustomers.count || 0,
+        };
+      }catch(e){
+        console.error('CRM overview fetch failed — have you run crm-full-bridge.sql yet?', e);
+        return null;
+      }
+    },
   };
 
   function safeParse(v){ try{ return JSON.parse(v); }catch(e){ return []; } }

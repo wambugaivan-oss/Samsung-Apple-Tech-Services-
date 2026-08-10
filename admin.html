@@ -126,6 +126,16 @@ textarea{resize:vertical;min-height:70px;}
         <button class="btn btn-ghost" onclick="go('bookings')">View bookings</button>
       </div>
     </div>
+    <div class="card" id="crmOverviewCard" style="display:none;">
+      <h3>Business Overview <span style="font-weight:400;font-size:.76rem;color:var(--steel);">— live from your CRM</span></h3>
+      <div class="stat-row" id="crmStatRow" style="margin-bottom:0;"></div>
+      <div style="margin-top:16px;">
+        <a href="crm/dashboard.html" class="btn btn-dark" style="text-decoration:none;">Open Full CRM →</a>
+      </div>
+    </div>
+    <div class="note" id="crmNotConnectedNote" style="display:none;">
+      Your CRM (Products, Sales, Repairs, Customers) isn't showing here yet — this usually means <code>crm-full-bridge.sql</code> hasn't been run in Supabase yet, or your CRM doesn't have any data logged so far. <a href="crm/dashboard.html" style="color:var(--copper);font-weight:700;">Open the CRM directly →</a>
+    </div>
   </section>
 
   <section class="panel" id="panel-services">
@@ -345,6 +355,24 @@ async function renderOverview(){
   if(note && window.SATSU_INV){
     note.textContent = `ℹ️ This panel only manages the small curated "Popular Repairs" list on the homepage. The full ${SATSU_INV.stats().total.toLocaleString()}-item repair catalogue (screens, batteries, parts for every brand/model in catalogue.html) comes from inventory-data.js, generated from your Excel price list — to update those prices, update the spreadsheet and regenerate that file rather than editing here.`;
   }
+
+  if(window.SATSU_DB && SATSU_DB.isConfigured()){
+    const crm = await SATSU_DB.getCrmOverview();
+    if(crm){
+      document.getElementById('crmOverviewCard').style.display = 'block';
+      document.getElementById('crmNotConnectedNote').style.display = 'none';
+      document.getElementById('crmStatRow').innerHTML = `
+        <div class="stat"><span>Products in Stock</span><b>${crm.productCount}</b></div>
+        <div class="stat"><span>Low Stock Alerts</span><b style="${crm.lowStockCount>0?'color:#C1622C;':''}">${crm.lowStockCount}</b></div>
+        <div class="stat"><span>Sales Today</span><b>${crm.salesTodayCount} · UGX ${crm.salesTodayTotal.toLocaleString()}</b></div>
+        <div class="stat"><span>Sales This Month</span><b>UGX ${crm.salesMonthTotal.toLocaleString()}</b></div>
+        <div class="stat"><span>Active Repair Jobs</span><b>${crm.activeRepairs}</b></div>
+        <div class="stat"><span>Ready for Pickup</span><b>${crm.readyRepairs}</b></div>
+        <div class="stat"><span>CRM Customers</span><b>${crm.crmCustomers}</b></div>`;
+    } else {
+      document.getElementById('crmNotConnectedNote').style.display = 'block';
+    }
+  }
 }
 
 /* ---------- SERVICES ---------- */
@@ -550,4 +578,5 @@ function renderCustomers(){
 }
 </script>
 </body>
+<a href="crm/dashboard.html" style="display:inline-block;background:#3ea6ff;color:#00131f;padding:10px 18px;border-radius:8px;font-weight:600;text-decoration:none;margin:10px 0">Open Full CRM →</a>
 </html>
