@@ -32,6 +32,11 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
 .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);}
+.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
+.identity-strip .container{text-align:center;}
+.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
+.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
+@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .breadcrumb{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);padding:18px 0 0;letter-spacing:.5px;}
 .breadcrumb a{color:var(--copper);}
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:28px 0 50px;align-items:start;}
@@ -74,6 +79,8 @@ h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.5rem,3vw,2.
 .esimu-inline{margin-top:36px;background:var(--ink);color:#fff;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
 .esimu-inline p{font-size:.8rem;color:rgba(255,255,255,.6);}
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0 24px;margin-top:20px;}
+.legal-disclaimer{margin-top:24px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;margin-left:auto;margin-right:auto;}
+.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 .foot-social{display:flex;gap:12px;justify-content:center;margin-bottom:18px;}
 .foot-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:background .2s;}
 .foot-social a:hover{background:var(--copper);}
@@ -92,6 +99,13 @@ footer .copy{text-align:center;font-size:.72rem;}
 <a href="catalogue.html" class="back-link">← All Products</a>
 </div>
 </header>
+
+<div class="identity-strip">
+  <div class="container">
+    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
+    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
+  </div>
+</div>
 
 <div class="container breadcrumb" id="breadcrumb"></div>
 
@@ -140,6 +154,9 @@ footer .copy{text-align:center;font-size:.72rem;}
 <a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
 <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
 <a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+</div>
+<div class="legal-disclaimer">
+  <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
 </div>
 <div class="copy">© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala</div>
 </div>
