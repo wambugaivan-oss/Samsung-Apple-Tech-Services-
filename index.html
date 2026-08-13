@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%274%27 fill=%27%230B0F14%27/%3E%3Crect x=%2710%27 y=%275%27 width=%274%27 height=%2714%27 rx=%271%27 fill=%27%23C1622C%27/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Samsung Apple Tech Services Uganda | Phone, Tablet & Laptop Repair — Kampala</title>
+<title>Samsung Apple Tech Services Uganda | Independent Phone, Tablet & Laptop Repair — Kampala</title>
 <meta name="description" content="Kampala's premium device repair specialist. Screens, batteries, charging ports, water damage, software & data recovery for every brand. Same-day repair, 30-day warranty. We also buy & sell devices.">
 <link rel="canonical" href="https://www.samsungappletechservices.site/">
 <meta name="theme-color" content="#0B0F14">
@@ -115,6 +115,11 @@ header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdr
 .cat-row a{font-size:.72rem;font-weight:600;letter-spacing:.3px;text-decoration:none;color:var(--steel);white-space:nowrap;text-transform:uppercase;transition:color .2s;}
 .cat-row a:hover{color:var(--copper);}
 .ham{display:none;background:none;border:none;width:38px;height:38px;flex-direction:column;justify-content:center;gap:5px;align-items:center;}
+.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
+.identity-strip .container{text-align:center;}
+.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
+.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
+@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .ham span{width:20px;height:2px;background:var(--ink);}
 
 /* ============================= HERO ============================= */
@@ -245,6 +250,9 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:64px 0 26px;}
 .newsletter{display:flex;gap:0;margin-top:16px;max-width:280px;}
 .newsletter input{flex:1;padding:10px 12px;border:1px solid var(--line-dark);background:transparent;color:#fff;font-size:.78rem;}
 .newsletter button{background:var(--copper);border:none;color:#fff;padding:0 14px;font-weight:700;font-size:.75rem;}
+/* ── LEGAL / TRADEMARK DISCLAIMER ── */
+.legal-disclaimer{margin-top:28px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;margin-left:auto;margin-right:auto;}
+.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 
 /* ============================= FLOATING WHATSAPP + CART DRAWER ============================= */
 .float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
@@ -369,6 +377,13 @@ body{overflow-x:hidden;max-width:100vw;}
     </div>
   </div>
 </header>
+
+<div class="identity-strip">
+  <div class="container">
+    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
+    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
+  </div>
+</div>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu" style="display:none;position:fixed;inset:0;background:var(--ink);z-index:900;flex-direction:column;padding:80px 30px;gap:22px;">
@@ -537,6 +552,11 @@ body{overflow-x:hidden;max-width:100vw;}
       <a href="tel:+256756922058">+256 756 922 058</a><a href="mailto:wambugaivan@gmail.com">wambugaivan@gmail.com</a><a href="#">William Street, Kampala</a>
     </div>
   </div>
+  <div class="container">
+    <div class="legal-disclaimer">
+      <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
+    </div>
+  </div>
   <div class="container foot-bottom">
     <span>© 2025 Samsung Apple Tech Services Uganda. All rights reserved.</span>
     <span>Not affiliated with Samsung Electronics or Apple Inc.</span>
@@ -545,36 +565,8 @@ body{overflow-x:hidden;max-width:100vw;}
 
 <!-- FLOATING WHATSAPP -->
 <a href="#" class="float-wa" id="floatWaBtn" aria-label="WhatsApp us">
-  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.8h0a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26C2.17 6.47 6.6 2.04 12.05 2.04c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 012.89 6.99c0 5.45-4.44 9.88-9.88 9.88"/></svg>
+  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.8h0a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26C2.17 6.47 6.6 2.04 12.05 2.04c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 012.89 6.99c0 5.45-4.44 9.88-9.88 9.88M20.46 3.55A11.86 11.86 0 0012.05.98C5.66.98.45 6.19.45 12.58c0 2.02.53 3.99 1.53 5.73L.34 24l5.83-1.53a11.6 11.6 0 005.86 1.5h.01c6.39 0 11.6-5.2 11.6-11.6a11.55 11.55 0 00-3.18-8.02" fill-opacity="0"/></svg>
 </a>
-
-<!-- CART DRAWER -->
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<div class="drawer" id="cartDrawer">
-  <div class="drawer-head"><h3>Your Cart</h3><button class="drawer-close" id="cartCloseBtn">✕</button></div>
-  <div class="drawer-body" id="cartBody"></div>
-  <div class="drawer-foot">
-    <div class="drawer-total"><span>Estimated total</span><span id="cartTotal">UGX 0</span></div>
-    <input type="text" id="cartName" placeholder="Your name" style="width:100%;padding:9px 11px;border:1.5px solid var(--line);margin-bottom:8px;font-family:inherit;font-size:.8rem;">
-    <input type="tel" id="cartPhone" placeholder="Your phone number" style="width:100%;padding:9px 11px;border:1.5px solid var(--line);margin-bottom:10px;font-family:inherit;font-size:.8rem;">
-    <a href="#" class="btn btn-copper" style="width:100%;justify-content:center;" id="cartWaBtn">Send Booking on WhatsApp</a>
-  </div>
-</div>
-<div class="drawer" id="wishDrawer">
-  <div class="drawer-head"><h3>Wishlist</h3><button class="drawer-close" id="wishCloseBtn">✕</button></div>
-  <div class="drawer-body" id="wishBody"></div>
-</div>
-
-<!-- SEARCH MODAL -->
-<div class="search-modal" id="searchModal">
-  <div class="search-box">
-    <input type="text" id="searchModalInput" placeholder="Search repairs, brands, models…" autofocus>
-    <div class="search-results" id="searchModalResults"></div>
-    <div class="search-hint">Try "iPhone battery", "Samsung screen" or "water damage"</div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
 /* ============================= DATA LAYER ============================= */
@@ -694,8 +686,7 @@ const tickerTrack = document.getElementById('tickerTrack');
 const promoSlides = document.getElementById('promoSlides');
 const promoDots = document.getElementById('promoDots');
 PROMOS.forEach((p,i)=>{
-  const bg = p.image ? `background-image:linear-gradient(0deg, rgba(11,15,20,.55), rgba(11,15,20,.15)), url('${p.image}');background-size:cover;background-position:center;` : '';
-  promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}" style="${bg}">
+  promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}">
     <div><span class="promo-tag">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div>
     <div class="promo-price">${p.price}</div></div>`);
   promoDots.insertAdjacentHTML('beforeend', `<button class="${i===0?'active':''}" data-i="${i}"></button>`);
@@ -720,7 +711,7 @@ function renderRepairs(filter){
   repairGrid.innerHTML = list.map(r=>`
     <div class="ticket" data-id="${r.id}">
       <div class="ticket-media">
-        ${r.image_url ? `<img src="${r.image_url}" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:2;" alt="${r.name}">` : ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera']}
+        ${ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera']}
         <button class="wish-btn" data-wish="${r.id}" aria-label="Add to wishlist">
           <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"/></svg>
         </button>
@@ -864,7 +855,7 @@ function doSearch(q){
   const popular = REPAIRS.filter(r=> r.name.toLowerCase().includes(q) || r.brand.toLowerCase().includes(q) || r.cat.toLowerCase().includes(q));
   const popularHTML = popular.slice(0,4).map(r=>`<a href="#repairs" data-goto="${r.id}"><span>${r.name}</span><span>${fmt(r.price)}</span></a>`).join('');
 
-  // Full catalogue matches (the real 3,181-item inventory)
+  // Full catalogue matches (the real inventory)
   let catalogueHTML = '';
   let catalogueCount = 0;
   if(window.SATSU_INV){
@@ -894,7 +885,7 @@ function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURICompon
 document.getElementById('waTopLink').href = waLink("Hello, I need a device repaired.");
 document.getElementById('heroWaBtn').href = waLink("Hello, I'd like to book a repair.");
 document.getElementById('floatWaBtn').href = waLink("Hello, I need a device repaired.");
-document.getElementById('cartWaBtn').addEventListener('click', async e=>{
+document.getElementById('cartWaBtn') && document.getElementById('cartWaBtn').addEventListener('click', async e=>{
   e.preventDefault();
   const cart = getStore('satsu_cart');
   if(!cart.length){ showToast("Your cart is empty"); return; }
@@ -904,7 +895,6 @@ document.getElementById('cartWaBtn').addEventListener('click', async e=>{
   const total = cart.reduce((s,c)=>s+c.price,0);
   const greeting = name ? `Hello, my name is ${name}.` : "Hello,";
   window.open(waLink(`${greeting} I'd like to book these repairs:\n${lines}\n\nEstimated total: ${fmt(total)}${phone ? '\nMy number: '+phone : ''}`), '_blank');
-  // Log the booking so it shows up in the admin dashboard
   await SATSU_DB.addBooking({
     customer_name: name || null, customer_phone: phone || null,
     items: cart.map(c=>({name:c.name, price:c.price})),
