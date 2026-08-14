@@ -14,7 +14,7 @@
 <script src="db.js"></script>
 <style>
 :root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--copper:#C1622C;--steel:#4A5568;--line:rgba(11,15,20,.10);
-  --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
+--font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{overflow-x:hidden;}
 body{overflow-x:hidden;max-width:100vw;}
@@ -26,6 +26,11 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
 .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);}
+.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
+.identity-strip .container{text-align:center;}
+.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
+.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
+@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .page-head{padding:48px 0 8px;}
 .eyebrow{font-family:var(--font-mono);font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--copper);margin-bottom:12px;}
 .page-head h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-1px;}
@@ -54,49 +59,62 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .cta-box p{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:4px;}
 .btn{display:inline-flex;padding:12px 20px;background:var(--copper);color:#fff;font-weight:700;font-size:.78rem;border:none;}
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-top:20px;text-align:center;font-size:.72rem;}
+.legal-disclaimer{margin:0 auto 22px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;}
+.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="container nav-row">
-    <a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
-    <a href="index.html" class="back-link">← Back to site</a>
-  </div>
+<div class="container nav-row">
+<a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
+<a href="index.html" class="back-link">← Back to site</a>
+</div>
 </header>
 
+<div class="identity-strip">
+  <div class="container">
+    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
+    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
+  </div>
+</div>
+
 <div id="listView">
-  <div class="container page-head">
-    <div class="eyebrow">Repair Guides &amp; Tips</div>
-    <h1>The Tech Care Journal</h1>
-    <p>Practical advice on keeping your devices running longer — written by the technicians who repair them every day in Kampala.</p>
-  </div>
-  <div class="container" style="margin-top:30px;">
-    <div class="post-grid" id="postGrid"></div>
-  </div>
+<div class="container page-head">
+<div class="eyebrow">Repair Guides &amp; Tips</div>
+<h1>The Tech Care Journal</h1>
+<p>Practical advice on keeping your devices running longer — written by the technicians who repair them every day in Kampala.</p>
+</div>
+<div class="container" style="margin-top:30px;">
+<div class="post-grid" id="postGrid"></div>
+</div>
 </div>
 
 <div id="articleView">
-  <div class="container">
-    <div class="breadcrumb"><a href="blog.html">Blog</a> / <span id="artCrumb"></span></div>
-    <h1 id="artTitle"></h1>
-    <div class="meta" id="artMeta"></div>
-    <div class="body" id="artBody"></div>
-    <div class="cta-box">
-      <div><h4>Need this fixed today?</h4><p>Book a free diagnosis — most repairs are done same day.</p></div>
-      <a href="#" class="btn" id="artWaBtn">WhatsApp Us</a>
-    </div>
-  </div>
+<div class="container">
+<div class="breadcrumb"><a href="blog.html">Blog</a> / <span id="artCrumb"></span></div>
+<h1 id="artTitle"></h1>
+<div class="meta" id="artMeta"></div>
+<div class="body" id="artBody"></div>
+<div class="cta-box">
+<div><h4>Need this fixed today?</h4><p>Book a free diagnosis — most repairs are done same day.</p></div>
+<a href="#" class="btn" id="artWaBtn">WhatsApp Us</a>
+</div>
+</div>
 </div>
 
 <footer>
-  <div class="container" style="text-align:center;">
-    <div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
-      <a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
-      <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
-      <a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
-    </div>
-    © 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
-  </div>
+<div class="container" style="text-align:center;">
+<div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
+<a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+<a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
+<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+</div>
+<div class="legal-disclaimer">
+  <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
+</div>
+© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
+</div>
 </footer>
 
 <script>
@@ -105,74 +123,75 @@ function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURICompon
 
 /* Default editorial posts, shown alongside anything added via the admin panel */
 const DEFAULT_POSTS = [
-  {id:"d1", slug:"signs-your-battery-needs-replacing", title:"7 Signs Your Phone Battery Needs Replacing",
-   excerpt:"From rapid drain to sudden shutdowns — here's how to tell it's the battery, not the phone.",
-   tag:"Battery Care",
-   body:`<p>A phone that once lasted a full day but now struggles to reach lunchtime is one of the clearest signs of battery wear. Lithium-ion batteries degrade with every charge cycle, and after 300–500 cycles most phones show noticeable capacity loss.</p>
-   <h2>The clearest warning signs</h2>
-   <p>Rapid drain even when idle, a phone that shuts down at 20–30% battery, a device that feels warm during normal use, or a slightly swollen back panel are all signals worth acting on quickly — a swollen battery is a safety issue, not just a performance one.</p>
-   <h2>What replacement involves</h2>
-   <p>A battery swap is one of the fastest repairs we do — most Android devices take 20–30 minutes, iPhones slightly less. You'll leave with a battery health reading reset to reflect the new cell.</p>`},
-  {id:"d2", slug:"what-to-do-if-your-phone-falls-in-water", title:"What To Do In The First 5 Minutes After Water Damage",
-   excerpt:"The steps you take before reaching a repair shop matter more than people think.",
-   tag:"Water Damage",
-   body:`<p>The single most damaging thing you can do after a phone falls in water is turn it on to "check if it still works." Powering a wet device risks short-circuiting components that liquid alone wouldn't have damaged.</p>
-   <h2>Do this immediately</h2>
-   <p>Power off the device if it isn't already off. Do not charge it. Do not place it in rice — this is a myth that does little and can introduce dust into ports. Dry the visible exterior gently and bring it in as soon as possible; corrosion accelerates the longer a device sits.</p>
-   <h2>Why speed matters</h2>
-   <p>Board-level corrosion typically begins within hours, not days. A device brought in within the first day has meaningfully better recovery odds than one left for a week.</p>`},
-  {id:"d3", slug:"genuine-vs-aftermarket-screens", title:"Genuine vs Quality Aftermarket Screens: What's The Real Difference?",
-   excerpt:"A breakdown of what changes — and what doesn't — between screen part grades.",
-   tag:"Screen Replacement",
-   body:`<p>Not all replacement screens are equal, and the difference isn't just price. Genuine parts are sourced from the original manufacturer's supply chain, while quality aftermarket displays are built to matching specifications by third-party manufacturers.</p>
-   <h2>What actually differs</h2>
-   <p>Colour accuracy, peak brightness and touch sensitivity can vary slightly between grades. True Tone and 3D Touch behaviour on iPhones is the most noticeable difference between genuine and aftermarket parts.</p>
-   <h2>Our approach</h2>
-   <p>We quality-test every display before fitting and offer genuine parts on request for customers who want an exact factory match, alongside our standard warrantied aftermarket option.</p>`},
+{id:"d1", slug:"signs-your-battery-needs-replacing", title:"7 Signs Your Phone Battery Needs Replacing",
+excerpt:"From rapid drain to sudden shutdowns — here's how to tell it's the battery, not the phone.",
+tag:"Battery Care",
+body:`<p>A phone that once lasted a full day but now struggles to reach lunchtime is one of the clearest signs of battery wear. Lithium-ion batteries degrade with every charge cycle, and after 300–500 cycles most phones show noticeable capacity loss.</p>
+<h2>The clearest warning signs</h2>
+<p>Rapid drain even when idle, a phone that shuts down at 20–30% battery, a device that feels warm during normal use, or a slightly swollen back panel are all signals worth acting on quickly — a swollen battery is a safety issue, not just a performance one.</p>
+<h2>What replacement involves</h2>
+<p>A battery swap is one of the fastest repairs we do — most Android devices take 20–30 minutes, iPhones slightly less. You'll leave with a battery health reading reset to reflect the new cell.</p>`},
+{id:"d2", slug:"what-to-do-if-your-phone-falls-in-water", title:"What To Do In The First 5 Minutes After Water Damage",
+excerpt:"The steps you take before reaching a repair shop matter more than people think.",
+tag:"Water Damage",
+body:`<p>The single most damaging thing you can do after a phone falls in water is turn it on to "check if it still works." Powering a wet device risks short-circuiting components that liquid alone wouldn't have damaged.</p>
+<h2>Do this immediately</h2>
+<p>Power off the device if it isn't already off. Do not charge it. Do not place it in rice — this is a myth that does little and can introduce dust into ports. Dry the visible exterior gently and bring it in as soon as possible; corrosion accelerates the longer a device sits.</p>
+<h2>Why speed matters</h2>
+<p>Board-level corrosion typically begins within hours, not days. A device brought in within the first day has meaningfully better recovery odds than one left for a week.</p>`},
+{id:"d3", slug:"genuine-vs-aftermarket-screens", title:"Genuine vs Quality Aftermarket Screens: What's The Real Difference?",
+excerpt:"A breakdown of what changes — and what doesn't — between screen part grades.",
+tag:"Screen Replacement",
+body:`<p>Not all replacement screens are equal, and the difference isn't just price. Genuine parts are sourced from the original manufacturer's supply chain, while quality aftermarket displays are built to matching specifications by third-party manufacturers.</p>
+<h2>What actually differs</h2>
+<p>Colour accuracy, peak brightness and touch sensitivity can vary slightly between grades. True Tone and 3D Touch behaviour on iPhones is the most noticeable difference between genuine and aftermarket parts.</p>
+<h2>Our approach</h2>
+<p>We quality-test every display before fitting and offer genuine parts on request for customers who want an exact factory match, alongside our standard warrantied aftermarket option.</p>`},
 ];
 
 function getAdminPosts(){ try{ return JSON.parse(localStorage.getItem('satsu_admin_posts')||'[]'); }catch(e){ return []; } }
 
 (async function(){
-  // Pull posts from Supabase if configured, otherwise fall back to this browser's local demo storage
-  const livePosts = (window.SATSU_DB && SATSU_DB.isConfigured()) ? await SATSU_DB.getPosts() : getAdminPosts();
-  const adminPosts = (livePosts||[]).map(p=>({...p, tag: p.tag || "From The Shop", excerpt: p.excerpt || "", body: p.body || `<p>${p.excerpt||''}</p>`}));
-  const ALL_POSTS = [...adminPosts, ...DEFAULT_POSTS];
+// Pull posts from Supabase if configured, otherwise fall back to this browser's local demo storage
+const livePosts = (window.SATSU_DB && SATSU_DB.isConfigured()) ? await SATSU_DB.getPosts() : getAdminPosts();
+const adminPosts = (livePosts||[]).map(p=>({...p, tag: p.tag || "From The Shop", excerpt: p.excerpt || "", body: p.body || `<p>${p.excerpt||''}</p>`}));
+const ALL_POSTS = [...adminPosts, ...DEFAULT_POSTS];
 
-  const listView = document.getElementById('listView');
-  const articleView = document.getElementById('articleView');
-  const postGrid = document.getElementById('postGrid');
-  postGrid.innerHTML = ALL_POSTS.map(p=>`
-    <div class="post-card">
-      ${p.image_url ? `<img class="post-card-img" src="${p.image_url}" alt="${p.title}">` : ''}
-      <div class="post-card-body">
-        <div class="post-tag">${p.tag}</div>
-        <h3>${p.title}</h3>
-        <p>${p.excerpt}</p>
-        <a class="read-link" href="blog.html?post=${p.slug}">Read guide →</a>
-      </div>
-    </div>`).join('') || '<p style="color:var(--steel);">No articles yet — check back soon.</p>';
+const listView = document.getElementById('listView');
+const articleView = document.getElementById('articleView');
+const postGrid = document.getElementById('postGrid');
 
-  const params = new URLSearchParams(window.location.search);
-  const postSlug = params.get('post');
-  if(postSlug){
-    const post = ALL_POSTS.find(p=>p.slug===postSlug);
-    if(post){
-      listView.style.display='none';
-      articleView.style.display='block';
-      document.getElementById('pageTitle').textContent = `${post.title} | Samsung Apple Tech Services Uganda`;
-      document.getElementById('pageDesc').setAttribute('content', post.excerpt);
-      document.getElementById('pageCanonical').href = `https://www.samsungappletechservices.site/blog.html?post=${post.slug}`;
-      document.getElementById('artCrumb').textContent = post.title;
-      document.getElementById('artTitle').textContent = post.title;
-      document.getElementById('artMeta').textContent = post.tag + " · Samsung Apple Tech Services Uganda";
-      if(post.image_url){
-        document.getElementById('artTitle').insertAdjacentHTML('beforebegin', `<img class="art-img" src="${post.image_url}" alt="${post.title}">`);
-      }
-      document.getElementById('artBody').innerHTML = post.body;
-      document.getElementById('artWaBtn').href = waLink(`Hello, I read your article "${post.title}" and I'd like help with my device.`);
-    }
-  }
+postGrid.innerHTML = ALL_POSTS.map(p=>`
+<div class="post-card">
+${p.image_url ? `<img class="post-card-img" src="${p.image_url}" alt="${p.title}">` : ''}
+<div class="post-card-body">
+<div class="post-tag">${p.tag}</div>
+<h3>${p.title}</h3>
+<p>${p.excerpt}</p>
+<a class="read-link" href="blog.html?post=${p.slug}">Read guide →</a>
+</div>
+</div>`).join('') || '<p style="color:var(--steel);">No articles yet — check back soon.</p>';
+
+const params = new URLSearchParams(window.location.search);
+const postSlug = params.get('post');
+if(postSlug){
+const post = ALL_POSTS.find(p=>p.slug===postSlug);
+if(post){
+listView.style.display='none';
+articleView.style.display='block';
+document.getElementById('pageTitle').textContent = `${post.title} | Samsung Apple Tech Services Uganda`;
+document.getElementById('pageDesc').setAttribute('content', post.excerpt);
+document.getElementById('pageCanonical').href = `https://www.samsungappletechservices.site/blog.html?post=${post.slug}`;
+document.getElementById('artCrumb').textContent = post.title;
+document.getElementById('artTitle').textContent = post.title;
+document.getElementById('artMeta').textContent = post.tag + " · Samsung Apple Tech Services Uganda";
+if(post.image_url){
+document.getElementById('artTitle').insertAdjacentHTML('beforebegin', `<img class="art-img" src="${post.image_url}" alt="${post.title}">`);
+}
+document.getElementById('artBody').innerHTML = post.body;
+document.getElementById('artWaBtn').href = waLink(`Hello, I read your article "${post.title}" and I'd like help with my device.`);
+}
+}
 })();
 </script>
 </body>
