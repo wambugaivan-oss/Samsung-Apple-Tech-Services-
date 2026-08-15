@@ -714,9 +714,12 @@ const tickerTrack = document.getElementById('tickerTrack');
 const promoSlides = document.getElementById('promoSlides');
 const promoDots = document.getElementById('promoDots');
 PROMOS.forEach((p,i)=>{
-  promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}">
-    <div><span class="promo-tag">${p.tag}</span><h3>${p.title}</h3><p>${p.desc}</p></div>
-    <div class="promo-price">${p.price}</div></div>`);
+  const bgStyle = p.image ? ` style="background:linear-gradient(0deg,rgba(11,15,20,.72),rgba(11,15,20,.35)),url('${p.image}') center/cover no-repeat;"` : '';
+  const textColor = p.image ? 'color:#fff;' : '';
+  const descColor = p.image ? 'color:rgba(255,255,255,.75);' : '';
+  promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}"${bgStyle}>
+    <div><span class="promo-tag">${p.tag}</span><h3 style="${textColor}">${p.title}</h3><p style="${descColor}">${p.desc}</p></div>
+    <div class="promo-price" style="${textColor}">${p.price}</div></div>`);
   promoDots.insertAdjacentHTML('beforeend', `<button class="${i===0?'active':''}" data-i="${i}"></button>`);
 });
 let promoIdx=0;
@@ -736,10 +739,13 @@ cats.forEach(c=>filterRow.insertAdjacentHTML('beforeend',`<button class="chip ${
 const repairGrid = document.getElementById('repairGrid');
 function renderRepairs(filter){
   const list = filter==='all' ? REPAIRS : REPAIRS.filter(r=>r.cat===filter);
-  repairGrid.innerHTML = list.map(r=>`
+  repairGrid.innerHTML = list.map(r=>{
+    const mediaStyle = r.image_url ? ` style="background:url('${r.image_url}') center/cover no-repeat;"` : '';
+    const mediaContent = r.image_url ? '' : ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera'];
+    return `
     <div class="ticket" data-id="${r.id}">
-      <div class="ticket-media">
-        ${ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera']}
+      <div class="ticket-media"${mediaStyle}>
+        ${mediaContent}
         <button class="wish-btn" data-wish="${r.id}" aria-label="Add to wishlist">
           <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"/></svg>
         </button>
@@ -757,7 +763,8 @@ function renderRepairs(filter){
           <button class="add-btn" data-add="${r.id}">Add + Book</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   bindTicketEvents();
 }
 renderRepairs('all');
