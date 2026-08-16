@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">Repair Service | Samsung Apple Tech Services Uganda</title>
 <meta name="description" id="pageDesc" content="Professional device repair in Kampala. Same-day service, 30-day warranty.">
-<link rel="canonical" id="pageCanonical" href="https://www.samsungappletechservices.site/repair/">
+<link rel="canonical" id="pageCanonical" href="https://samsungappletechservices.site/service.html">
 <meta name="theme-color" content="#0B0F14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +16,10 @@
 <script type="application/ld+json" id="serviceSchema"></script>
 <style>
 :root{
-  --ink:#0B0F14;--ink-2:#121822;--porcelain:#F4F2EC;--paper:#FCFBF8;
-  --signal:#12B886;--signal-dim:#0E9370;--copper:#C1622C;--copper-2:#A8501F;
-  --steel:#4A5568;--line:rgba(11,15,20,.10);--line-dark:rgba(255,255,255,.08);
-  --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
+--ink:#0B0F14;--ink-2:#121822;--porcelain:#F4F2EC;--paper:#FCFBF8;
+--signal:#12B886;--signal-dim:#0E9370;--copper:#C1622C;--copper-2:#A8501F;
+--steel:#4A5568;--line:rgba(11,15,20,.10);--line-dark:rgba(255,255,255,.08);
+--font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);line-height:1.55;}
@@ -30,6 +30,11 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
 .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);display:flex;align-items:center;gap:6px;}
+.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
+.identity-strip .container{text-align:center;}
+.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
+.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
+@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .breadcrumb{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);padding:18px 0 0;letter-spacing:.5px;}
 .breadcrumb a{color:var(--copper);}
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:34px 0 56px;align-items:start;}
@@ -76,162 +81,175 @@ h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.7rem,3.4vw,
 .related-card h4{font-family:var(--font-display);font-size:.85rem;font-weight:700;}
 .related-card .p{font-family:var(--font-mono);font-size:.78rem;color:var(--signal-dim);margin-top:8px;}
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-top:40px;text-align:center;font-size:.72rem;}
+.legal-disclaimer{margin:0 auto 22px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;}
+.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 .float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
 .float-wa svg{width:27px;height:27px;fill:#fff;}
 @media(max-width:800px){.hero{grid-template-columns:1fr;}.stat-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="container nav-row">
-    <a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
-    <a href="catalogue.html" class="back-link" style="margin-right:16px;">Browse Catalogue</a>
-    <a href="index.html#repairs" class="back-link">← All Repairs</a>
-  </div>
+<div class="container nav-row">
+<a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
+<a href="catalogue.html" class="back-link" style="margin-right:16px;">Browse Catalogue</a>
+<a href="index.html#repairs" class="back-link">← All Repairs</a>
+</div>
 </header>
+
+<div class="identity-strip">
+  <div class="container">
+    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
+    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
+  </div>
+</div>
 
 <div class="container breadcrumb" id="breadcrumb"></div>
 
 <div class="container hero">
-  <div class="hero-media"><svg id="heroIcon" viewBox="0 0 24 24"></svg></div>
-  <div>
-    <div class="badge-row" id="badgeRow"></div>
-    <h1 id="serviceName">Repair Service</h1>
-    <div class="device-line" id="deviceLine"></div>
-    <p class="desc" id="serviceDesc"></p>
-    <div class="stat-grid">
-      <div class="stat"><span>Repair Time</span><b id="statTime">—</b></div>
-      <div class="stat"><span>Warranty</span><b id="statWarranty">—</b></div>
-      <div class="stat"><span>Turnaround</span><b>Same Day</b></div>
-    </div>
-    <div class="price-box">
-      <div class="label">Starting price</div>
-      <div class="amount" id="statPrice">—</div>
-      <div class="cta-row">
-        <a href="#" class="btn btn-copper" id="bookWaBtn">Book on WhatsApp</a>
-        <a href="tel:+256756922058" class="btn btn-dark">Call Now</a>
-        <a href="index.html#estimator" class="btn btn-outline">Get Free Estimate</a>
-      </div>
-    </div>
-  </div>
+<div class="hero-media"><svg id="heroIcon" viewBox="0 0 24 24"></svg></div>
+<div>
+<div class="badge-row" id="badgeRow"></div>
+<h1 id="serviceName">Repair Service</h1>
+<div class="device-line" id="deviceLine"></div>
+<p class="desc" id="serviceDesc"></p>
+<div class="stat-grid">
+<div class="stat"><span>Repair Time</span><b id="statTime">—</b></div>
+<div class="stat"><span>Warranty</span><b id="statWarranty">—</b></div>
+<div class="stat"><span>Turnaround</span><b>Same Day</b></div>
+</div>
+<div class="price-box">
+<div class="label">Starting price</div>
+<div class="amount" id="statPrice">—</div>
+<div class="cta-row">
+<a href="#" class="btn btn-copper" id="bookWaBtn">Book on WhatsApp</a>
+<a href="tel:+256756922058" class="btn btn-dark">Call Now</a>
+<a href="index.html#estimator" class="btn btn-outline">Get Free Estimate</a>
+</div>
+</div>
+</div>
 </div>
 
 <div class="container section">
-  <h2>How the repair works</h2>
-  <div class="steps">
-    <div class="step"><b>01 — Diagnose</b><p>We inspect the device and confirm the fault and final price, free of charge.</p></div>
-    <div class="step"><b>02 — Approve</b><p>You approve the quote — no work starts until you say go.</p></div>
-    <div class="step"><b>03 — Repair</b><p>Our technicians complete the repair using quality-tested parts.</p></div>
-    <div class="step"><b>04 — Warranty</b><p>You leave with a written warranty covering this exact repair.</p></div>
-  </div>
+<h2>How the repair works</h2>
+<div class="steps">
+<div class="step"><b>01 — Diagnose</b><p>We inspect the device and confirm the fault and final price, free of charge.</p></div>
+<div class="step"><b>02 — Approve</b><p>You approve the quote — no work starts until you say go.</p></div>
+<div class="step"><b>03 — Repair</b><p>Our technicians complete the repair using quality-tested parts.</p></div>
+<div class="step"><b>04 — Warranty</b><p>You leave with a written warranty covering this exact repair.</p></div>
+</div>
 </div>
 
 <div class="container section faq">
-  <h2>Frequently asked questions</h2>
-  <div id="faqList"></div>
+<h2>Frequently asked questions</h2>
+<div id="faqList"></div>
 </div>
 
 <div class="container section">
-  <h2>Related repairs</h2>
-  <div class="related-grid" id="relatedGrid"></div>
+<h2>Related repairs</h2>
+<div class="related-grid" id="relatedGrid"></div>
 </div>
 
 <footer>
-  <div class="container" style="text-align:center;">
-    <div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
-      <a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
-      <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
-      <a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
-    </div>
-    © 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
-  </div>
+<div class="container" style="text-align:center;">
+<div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
+<a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+<a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
+<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+</div>
+<div class="legal-disclaimer">
+  <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
+</div>
+© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
+</div>
 </footer>
 
 <a href="#" class="float-wa" id="floatWa" aria-label="WhatsApp us">
-  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35"/></svg>
+<svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35"/></svg>
 </a>
 
 <script>
 /* ============================= SERVICE DATA ============================= */
 const WA_NUMBER = "256756922058";
 const SERVICES = {
-  "iph-screen": {name:"iPhone Screen Replacement", brand:"Apple", device:"iPhone 6 – iPhone 16 series", cat:"Screen Replacement",
-    desc:"A cracked or unresponsive iPhone display fixed with a quality-tested screen assembly, calibrated for true-tone and touch accuracy.",
-    time:"30–45 minutes", warranty:"30 days", price:220000, icon:"phone",
-    faqs:[["Will my Face ID still work?","Yes — we preserve all original components not related to the display itself."],["Do you use genuine parts?","We use quality-tested premium displays; genuine Apple parts are available on request at a higher price point."]]},
-  "sam-screen": {name:"Samsung Galaxy Screen Replacement", brand:"Samsung", device:"Galaxy S, A, Z Fold & Flip series", cat:"Screen Replacement",
-    desc:"AMOLED and LCD screen replacement for the full Galaxy lineup, fitted and colour-calibrated in house.",
-    time:"30–45 minutes", warranty:"30 days", price:190000, icon:"phone",
-    faqs:[["Do you repair foldable screens?","Yes, including Z Fold and Z Flip inner and outer displays."],["Is fingerprint sensor affected?","No — under-display sensors are tested after every repair."]]},
-  "iph-batt": {name:"iPhone Battery Replacement", brand:"Apple", device:"All iPhone models", cat:"Battery Replacement",
-    desc:"Restore all-day battery life with a fresh, cycle-tested battery and a reset battery health reading.",
-    time:"20–30 minutes", warranty:"30 days", price:135000, icon:"battery",
-    faqs:[["Will this remove the battery health warning?","Yes, battery health resets to reflect the new battery."]]},
-  "and-batt": {name:"Android Battery Replacement", brand:"Android", device:"Samsung, Tecno, Infinix, Oppo & more", cat:"Battery Replacement",
-    desc:"Fast-draining or swollen battery replaced same day across all major Android brands.",
-    time:"20–30 minutes", warranty:"30 days", price:65000, icon:"battery",
-    faqs:[["Is this safe for swollen batteries?","Yes — we handle and dispose of swollen batteries safely."]]},
-  "charge-port": {name:"Charging Port Repair", brand:"All Brands", device:"USB-C, Lightning & Micro-USB", cat:"Charging Port",
-    desc:"Loose, bent or non-charging ports cleaned or replaced so your device charges reliably again.",
-    time:"20–30 minutes", warranty:"30 days", price:65000, icon:"plug",
-    faqs:[["Can lint cause this?","Yes — many charging faults are just debris; we check this first, free."]]},
-  "water": {name:"Water Damage Recovery", brand:"All Brands", device:"Phones, tablets & laptops", cat:"Water Damage",
-    desc:"Board-level cleaning and corrosion treatment to recover devices exposed to liquid, with data recovery where possible.",
-    time:"2–24 hours", warranty:"14 days", price:95000, icon:"drop",
-    faqs:[["What should I do immediately after water exposure?","Power off, don't charge, and bring it in as soon as possible."]]},
-  "software": {name:"Software Repair & Unlocking", brand:"All Brands", device:"Android & iOS", cat:"Software",
-    desc:"Bootloop, update failure, virus removal, network unlock and IMEI repair handled by certified technicians.",
-    time:"20–60 minutes", warranty:"7 days", price:40000, icon:"cpu",
-    faqs:[["Will I lose my data?","We back up where possible before any software work."]]},
-  "data": {name:"Data Recovery", brand:"All Brands", device:"Broken, dead or water-damaged devices", cat:"Data Recovery",
-    desc:"Recovery of photos, contacts and files from devices that won't power on or boot.",
-    time:"1–3 hours", warranty:"—", price:75000, icon:"disk",
-    faqs:[["Is recovery guaranteed?","We diagnose first and only charge if recovery is possible."]]},
-  "cam": {name:"Camera Module Replacement", brand:"All Brands", device:"Front & rear cameras", cat:"Camera Repair",
-    desc:"Blurry, cracked or non-functional camera modules replaced and calibrated for focus accuracy.",
-    time:"20–30 minutes", warranty:"30 days", price:110000, icon:"camera",
-    faqs:[["Can you fix just the lens glass?","Yes, for models where the lens is separable from the sensor."]]},
-  "back-glass": {name:"Back Glass Replacement", brand:"Samsung", device:"Glass-backed Galaxy & iPhone models", cat:"Back Glass",
-    desc:"Cracked back panels replaced with precision-fit glass, preserving wireless charging alignment.",
-    time:"20–30 minutes", warranty:"30 days", price:95000, icon:"phone",
-    faqs:[["Does this affect wireless charging?","No — coil alignment is verified after every replacement."]]},
-  "laptop-screen": {name:"Laptop Screen Replacement", brand:"MacBook", device:"MacBook & Windows laptops", cat:"Screen Replacement",
-    desc:"Cracked or flickering laptop panels replaced with resolution-matched displays.",
-    time:"45–60 minutes", warranty:"30 days", price:280000, icon:"phone",
-    faqs:[["Do you service MacBook Pro Retina displays?","Yes, including Retina and Liquid Retina panels."]]},
-  "tab-screen": {name:"Tablet Screen Replacement", brand:"Samsung", device:"Galaxy Tab & iPad series", cat:"Screen Replacement",
-    desc:"Digitizer and display replacement for tablets with cracked glass or unresponsive touch.",
-    time:"45–60 minutes", warranty:"30 days", price:230000, icon:"phone",
-    faqs:[["Is my tablet's Face ID / Touch ID affected?","No — biometric hardware is untouched during screen replacement."]]},
+"iph-screen": {name:"iPhone Screen Replacement", brand:"Apple", device:"iPhone 6 – iPhone 16 series", cat:"Screen Replacement",
+desc:"A cracked or unresponsive iPhone display fixed with a quality-tested screen assembly, calibrated for true-tone and touch accuracy.",
+time:"30–45 minutes", warranty:"30 days", price:220000, icon:"phone",
+faqs:[["Will my Face ID still work?","Yes — we preserve all original components not related to the display itself."],["Do you use genuine parts?","We use quality-tested premium displays; genuine Apple parts are available on request at a higher price point."]]},
+"sam-screen": {name:"Samsung Galaxy Screen Replacement", brand:"Samsung", device:"Galaxy S, A, Z Fold & Flip series", cat:"Screen Replacement",
+desc:"AMOLED and LCD screen replacement for the full Galaxy lineup, fitted and colour-calibrated in house.",
+time:"30–45 minutes", warranty:"30 days", price:190000, icon:"phone",
+faqs:[["Do you repair foldable screens?","Yes, including Z Fold and Z Flip inner and outer displays."],["Is fingerprint sensor affected?","No — under-display sensors are tested after every repair."]]},
+"iph-batt": {name:"iPhone Battery Replacement", brand:"Apple", device:"All iPhone models", cat:"Battery Replacement",
+desc:"Restore all-day battery life with a fresh, cycle-tested battery and a reset battery health reading.",
+time:"20–30 minutes", warranty:"30 days", price:135000, icon:"battery",
+faqs:[["Will this remove the battery health warning?","Yes, battery health resets to reflect the new battery."]]},
+"and-batt": {name:"Android Battery Replacement", brand:"Android", device:"Samsung, Tecno, Infinix, Oppo & more", cat:"Battery Replacement",
+desc:"Fast-draining or swollen battery replaced same day across all major Android brands.",
+time:"20–30 minutes", warranty:"30 days", price:65000, icon:"battery",
+faqs:[["Is this safe for swollen batteries?","Yes — we handle and dispose of swollen batteries safely."]]},
+"charge-port": {name:"Charging Port Repair", brand:"All Brands", device:"USB-C, Lightning & Micro-USB", cat:"Charging Port",
+desc:"Loose, bent or non-charging ports cleaned or replaced so your device charges reliably again.",
+time:"20–30 minutes", warranty:"30 days", price:65000, icon:"plug",
+faqs:[["Can lint cause this?","Yes — many charging faults are just debris; we check this first, free."]]},
+"water": {name:"Water Damage Recovery", brand:"All Brands", device:"Phones, tablets & laptops", cat:"Water Damage",
+desc:"Board-level cleaning and corrosion treatment to recover devices exposed to liquid, with data recovery where possible.",
+time:"2–24 hours", warranty:"14 days", price:95000, icon:"drop",
+faqs:[["What should I do immediately after water exposure?","Power off, don't charge, and bring it in as soon as possible."]]},
+"software": {name:"Software Repair & Unlocking", brand:"All Brands", device:"Android & iOS", cat:"Software",
+desc:"Bootloop, update failure, virus removal, network unlock and IMEI repair handled by our trained technicians.",
+time:"20–60 minutes", warranty:"7 days", price:40000, icon:"cpu",
+faqs:[["Will I lose my data?","We back up where possible before any software work."]]},
+"data": {name:"Data Recovery", brand:"All Brands", device:"Broken, dead or water-damaged devices", cat:"Data Recovery",
+desc:"Recovery of photos, contacts and files from devices that won't power on or boot.",
+time:"1–3 hours", warranty:"—", price:75000, icon:"disk",
+faqs:[["Is recovery guaranteed?","We diagnose first and only charge if recovery is possible."]]},
+"cam": {name:"Camera Module Replacement", brand:"All Brands", device:"Front & rear cameras", cat:"Camera Repair",
+desc:"Blurry, cracked or non-functional camera modules replaced and calibrated for focus accuracy.",
+time:"20–30 minutes", warranty:"30 days", price:110000, icon:"camera",
+faqs:[["Can you fix just the lens glass?","Yes, for models where the lens is separable from the sensor."]]},
+"back-glass": {name:"Back Glass Replacement", brand:"Samsung", device:"Glass-backed Galaxy & iPhone models", cat:"Back Glass",
+desc:"Cracked back panels replaced with precision-fit glass, preserving wireless charging alignment.",
+time:"20–30 minutes", warranty:"30 days", price:95000, icon:"phone",
+faqs:[["Does this affect wireless charging?","No — coil alignment is verified after every replacement."]]},
+"laptop-screen": {name:"Laptop Screen Replacement", brand:"MacBook", device:"MacBook & Windows laptops", cat:"Screen Replacement",
+desc:"Cracked or flickering laptop panels replaced with resolution-matched displays.",
+time:"45–60 minutes", warranty:"30 days", price:280000, icon:"phone",
+faqs:[["Do you service MacBook Pro Retina displays?","Yes, including Retina and Liquid Retina panels."]]},
+"tab-screen": {name:"Tablet Screen Replacement", brand:"Samsung", device:"Galaxy Tab & iPad series", cat:"Screen Replacement",
+desc:"Digitizer and display replacement for tablets with cracked glass or unresponsive touch.",
+time:"45–60 minutes", warranty:"30 days", price:230000, icon:"phone",
+faqs:[["Is my tablet's Face ID / Touch ID affected?","No — biometric hardware is untouched during screen replacement."]]},
 };
 const ICONS = {
-  phone:'<rect x="6" y="2" width="12" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="19" x2="14" y2="19" stroke="currentColor" stroke-width="1.2"/>',
-  battery:'<rect x="2" y="7" width="18" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="22" y1="10" x2="22" y2="14" stroke="currentColor" stroke-width="1.2"/>',
-  plug:'<path d="M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-10 0V8zM12 17v5" fill="none" stroke="currentColor" stroke-width="1.2"/>',
-  drop:'<path d="M12 2s7 8 7 13a7 7 0 0 1-14 0c0-5 7-13 7-13z" fill="none" stroke="currentColor" stroke-width="1.2"/>',
-  cpu:'<rect x="6" y="6" width="12" height="12" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>',
-  disk:'<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.2"/>',
-  camera:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/>',
+phone:'<rect x="6" y="2" width="12" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="19" x2="14" y2="19" stroke="currentColor" stroke-width="1.2"/>',
+battery:'<rect x="2" y="7" width="18" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="22" y1="10" x2="22" y2="14" stroke="currentColor" stroke-width="1.2"/>',
+plug:'<path d="M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-10 0V8zM12 17v5" fill="none" stroke="currentColor" stroke-width="1.2"/>',
+drop:'<path d="M12 2s7 8 7 13a7 7 0 0 1-14 0c0-5 7-13 7-13z" fill="none" stroke="currentColor" stroke-width="1.2"/>',
+cpu:'<rect x="6" y="6" width="12" height="12" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/>',
+disk:'<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.2"/>',
+camera:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/>',
 };
 function fmt(n){ return "UGX "+n.toLocaleString(); }
 function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get('repair') || 'iph-screen';
 const s = SERVICES[id] || SERVICES['iph-screen'];
 
 (async function(){
 /* Pick up any admin-panel edits (price/time/warranty/name) for this service id,
-   from Supabase if configured, otherwise this browser's local demo storage. */
+from Supabase if configured, otherwise this browser's local demo storage. */
 try{
-  const overrides = await SATSU_DB.getServices();
-  const o = (overrides||[]).find(x=>x.id===id);
-  if(o){ s.price = o.price; s.time = o.time; s.warranty = o.warranty; s.name = o.name || s.name; }
+const overrides = await SATSU_DB.getServices();
+const o = (overrides||[]).find(x=>x.id===id);
+if(o){ s.price = o.price; s.time = o.time; s.warranty = o.warranty; s.name = o.name || s.name; }
 }catch(e){}
 
 document.getElementById('pageTitle').textContent = `${s.name} in Kampala | Samsung Apple Tech Services Uganda`;
 document.getElementById('pageDesc').setAttribute('content', `${s.desc} Same-day service in Kampala from ${fmt(s.price)}. ${s.warranty!=='—' ? s.warranty+' warranty.' : ''}`);
-document.getElementById('pageCanonical').href = `https://www.samsungappletechservices.site/repair/?repair=${id}`;
+document.getElementById('pageCanonical').href = `https://samsungappletechservices.site/service.html?repair=${id}`;
+
 document.getElementById('breadcrumb').innerHTML = `<a href="index.html">Home</a> / <a href="index.html#repairs">Repairs</a> / ${s.cat} / ${s.brand}`;
 document.getElementById('heroIcon').innerHTML = ICONS[s.icon];
 document.getElementById('badgeRow').innerHTML = `<span class="badge">${s.brand}</span><span class="badge warm">${s.cat}</span>`;
@@ -241,30 +259,31 @@ document.getElementById('serviceDesc').textContent = s.desc;
 document.getElementById('statTime').textContent = s.time;
 document.getElementById('statWarranty').textContent = s.warranty;
 document.getElementById('statPrice').innerHTML = fmt(s.price) + " <small>starting</small>";
+
 document.getElementById('bookWaBtn').href = waLink(`Hello, I'd like to book: ${s.name}. Please confirm availability.`);
 document.getElementById('bookWaBtn').addEventListener('click', ()=>{
-  SATSU_DB.addBooking({customer_name:null, customer_phone:null, items:[{name:s.name, price:s.price}], total_price:s.price, notes:"Submitted via service page: "+s.name});
+SATSU_DB.addBooking({customer_name:null, customer_phone:null, items:[{name:s.name, price:s.price}], total_price:s.price, notes:"Submitted via service page: "+s.name});
 });
 document.getElementById('floatWa').href = waLink(`Hello, I'd like to book: ${s.name}.`);
 
 document.getElementById('faqList').innerHTML = s.faqs.map(f=>`
-  <div class="faq-item"><h4>${f[0]}<span>+</span></h4><p>${f[1]}</p></div>`).join('') +
-  `<div class="faq-item"><h4>Is there a warranty?<span>+</span></h4><p>${s.warranty!=='—' ? 'Yes — this repair carries a '+s.warranty+' warranty against the same fault recurring.' : 'This service does not carry a fixed warranty as outcomes depend on device condition.'}</p></div>`;
+<div class="faq-item"><h4>${f[0]}<span>+</span></h4><p>${f[1]}</p></div>`).join('') +
+`<div class="faq-item"><h4>Is there a warranty?<span>+</span></h4><p>${s.warranty!=='—' ? 'Yes — this repair carries a '+s.warranty+' warranty against the same fault recurring.' : 'This service does not carry a fixed warranty as outcomes depend on device condition.'}</p></div>`;
 document.querySelectorAll('.faq-item').forEach(item=>item.addEventListener('click', ()=>item.classList.toggle('open')));
 
 const related = Object.entries(SERVICES).filter(([k,v])=>k!==id && v.cat===s.cat).slice(0,3);
 const fallback = Object.entries(SERVICES).filter(([k,v])=>k!==id).slice(0,3);
 const relList = related.length ? related : fallback;
 document.getElementById('relatedGrid').innerHTML = relList.map(([k,v])=>
-  `<a class="related-card" href="service.html?repair=${k}"><h4>${v.name}</h4><div class="p">${fmt(v.price)}</div></a>`).join('');
+`<a class="related-card" href="service.html?repair=${k}"><h4>${v.name}</h4><div class="p">${fmt(v.price)}</div></a>`).join('');
 
 document.getElementById('serviceSchema').textContent = JSON.stringify({
-  "@context":"https://schema.org","@type":"Service",
-  "name":s.name,"serviceType":s.cat,
-  "provider":{"@type":"ElectronicsStore","name":"Samsung Apple Tech Services Uganda","telephone":"+256756922058",
-    "address":{"@type":"PostalAddress","streetAddress":"Kisa Kyaparamara Building, William Street","addressLocality":"Kampala","addressCountry":"UG"}},
-  "areaServed":"Kampala, Uganda",
-  "offers":{"@type":"Offer","price":s.price,"priceCurrency":"UGX","availability":"https://schema.org/InStock"}
+"@context":"https://schema.org","@type":"Service",
+"name":s.name,"serviceType":s.cat,
+"provider":{"@type":"ElectronicsStore","name":"Samsung Apple Tech Services Uganda","telephone":"+256756922058",
+"address":{"@type":"PostalAddress","streetAddress":"Kisa Kyaparamara Building, William Street","addressLocality":"Kampala","addressCountry":"UG"}},
+"areaServed":"Kampala, Uganda",
+"offers":{"@type":"Offer","price":s.price,"priceCurrency":"UGX","availability":"https://schema.org/InStock"}
 });
 })();
 </script>
