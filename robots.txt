@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://www.samsungappletechservices.site/sitemap.xml
+Sitemap: https://samsungappletechservices.site/sitemap.xml
