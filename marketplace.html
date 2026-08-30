@@ -4,89 +4,56 @@
 <meta charset="UTF-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%274%27 fill=%27%230B0F14%27/%3E%3Crect x=%2710%27 y=%275%27 width=%274%27 height=%2714%27 rx=%271%27 fill=%27%23C1622C%27/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buy & Sell Devices | Samsung Apple Tech Services Uganda</title>
-<meta name="description" content="Shop genuine phone accessories in Kampala — cables, cases, chargers and more. Plus sell or trade in your Samsung or Apple device for cash or credit.">
-<link rel="canonical" href="https://samsungappletechservices.site/marketplace.html">
-<meta name="theme-color" content="#0B0F14">
+<title id="pageTitle">Repair Guides & Tech Tips | Samsung Apple Tech Services Uganda</title>
+<meta name="description" id="pageDesc" content="Repair guides, buying advice and device care tips from Samsung Apple Tech Services Uganda.">
+<link rel="canonical" id="pageCanonical" href="https://samsungappletechservices.site/blog.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
-<script src="inventory-data.js"></script>
-<script src="inventory.js"></script>
-<script src="icons.js"></script>
 <style>
-:root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--signal-dim:#0E9370;--copper:#C1622C;--copper-2:#A8501F;--steel:#4A5568;--line:rgba(11,15,20,.10);--line-dark:rgba(255,255,255,.08);
+:root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--copper:#C1622C;--steel:#4A5568;--line:rgba(11,15,20,.10);
 --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);line-height:1.55;}
+html{overflow-x:hidden;}
+body{overflow-x:hidden;max-width:100vw;}
+body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);line-height:1.6;}
 a{color:inherit;text-decoration:none;}
-button{font-family:inherit;cursor:pointer;}
-.container{max-width:1200px;margin:0 auto;padding:0 clamp(18px,4vw,48px);}
+.container{max-width:940px;margin:0 auto;padding:0 clamp(18px,4vw,48px);}
 header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;}
 .nav-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;}
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
 .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);}
-.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-top:6px;}
-.tab-btn{padding:14px 22px;font-size:.82rem;font-weight:700;background:none;border:none;border-bottom:2px solid transparent;color:var(--steel);}
-.tab-btn.active{color:var(--ink);border-color:var(--copper);}
-.page-head{padding:38px 0 6px;}
+.page-head{padding:48px 0 8px;}
 .eyebrow{font-family:var(--font-mono);font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--copper);margin-bottom:12px;}
-.page-head h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.7rem,3.4vw,2.4rem);letter-spacing:-1px;}
-.page-head p{margin-top:12px;color:var(--steel);max-width:560px;font-size:.9rem;}
-/* SHOP TAB */
-#shopTab{padding:32px 0 60px;}
-.shop-layout{display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:start;}
-.filter-panel{background:var(--paper);border:1px solid var(--line);padding:20px;position:sticky;top:90px;}
-.filter-panel h4{font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--steel);margin:16px 0 10px;}
-.filter-panel h4:first-child{margin-top:0;}
-.filter-panel label{display:flex;align-items:center;gap:8px;font-size:.8rem;margin-bottom:9px;cursor:pointer;}
-.price-inputs{display:flex;gap:8px;}
-.price-inputs input{width:100%;padding:7px 8px;border:1px solid var(--line);font-size:.76rem;}
-.result-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:.8rem;color:var(--steel);}
-.result-bar select{padding:8px 10px;border:1px solid var(--line);background:var(--paper);font-size:.78rem;}
-.device-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
-.device-card{background:var(--paper);border:1px solid var(--line);transition:box-shadow .2s,transform .2s;}
-.device-card:hover{box-shadow:0 16px 36px rgba(11,15,20,.09);transform:translateY(-3px);}
-.device-media{height:150px;background:linear-gradient(135deg,var(--ink),#1c2530);display:flex;align-items:center;justify-content:center;position:relative;}
-.device-media svg{width:50px;height:50px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:1.3;}
-.grade-badge{position:absolute;top:10px;left:10px;background:var(--signal);color:#fff;font-family:var(--font-mono);font-size:.58rem;font-weight:700;padding:4px 9px;letter-spacing:1px;text-transform:uppercase;}
-.device-body{padding:16px;}
-.device-brand{font-family:var(--font-mono);font-size:.6rem;color:var(--steel);text-transform:uppercase;letter-spacing:1px;}
-.device-body h3{font-family:var(--font-display);font-size:.92rem;font-weight:700;margin-top:5px;}
-.device-specs{font-size:.72rem;color:var(--steel);margin-top:6px;}
-.device-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);}
-.device-price{font-family:var(--font-mono);font-weight:700;font-size:.92rem;}
-.device-old{font-size:.68rem;color:var(--steel);text-decoration:line-through;display:block;}
-.buy-btn{background:var(--ink);color:#fff;border:none;padding:8px 13px;font-size:.66rem;font-weight:700;letter-spacing:.5px;}
-.buy-btn:hover{background:var(--copper);}
-.empty{grid-column:1/-1;text-align:center;padding:50px;color:var(--steel);font-size:.85rem;}
-/* SELL TAB */
-#sellTab{display:none;padding:32px 0 60px;}
-.sell-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
-.sell-form{background:var(--paper);border:1px solid var(--line);padding:28px;}
-.field{margin-bottom:16px;}
-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);display:block;margin-bottom:6px;}
-input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:.84rem;}
-textarea{resize:vertical;min-height:80px;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;font-weight:700;font-size:.8rem;border:none;border-radius:1px;width:100%;justify-content:center;}
-.btn-copper{background:var(--copper);color:#fff;}
-.btn-copper:hover{background:var(--copper-2);}
-.sell-info h3{font-family:var(--font-display);font-size:1.1rem;margin-bottom:14px;}
-.sell-steps{display:flex;flex-direction:column;gap:14px;}
-.sell-step{display:flex;gap:14px;align-items:flex-start;}
-.sell-step-num{font-family:var(--font-mono);font-weight:700;color:var(--copper);font-size:.85rem;flex-shrink:0;}
-.sell-step p{font-size:.8rem;color:var(--steel);margin-top:3px;}
-.sell-step h4{font-size:.85rem;font-weight:700;}
-.trade-note{background:rgba(18,184,134,.08);border-left:3px solid var(--signal);padding:14px 16px;font-size:.78rem;margin-top:22px;line-height:1.6;}
+.page-head h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-1px;}
+.page-head p{margin-top:14px;color:var(--steel);max-width:560px;font-size:.92rem;}
+#listView{padding:36px 0 60px;}
+.post-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+.post-card{background:var(--paper);border:1px solid var(--line);overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.post-card-img{width:100%;height:150px;object-fit:cover;display:block;}
+.post-card-body{padding:22px;}
+.post-card:hover{box-shadow:0 16px 36px rgba(11,15,20,.08);transform:translateY(-3px);}
+.post-tag{font-family:var(--font-mono);font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--copper);}
+.post-card h3{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-top:10px;letter-spacing:-.2px;}
+.post-card p{font-size:.82rem;color:var(--steel);margin-top:10px;}
+.read-link{display:inline-block;margin-top:14px;font-size:.75rem;font-weight:700;border-bottom:1.5px solid var(--copper);}
+#articleView{display:none;padding:36px 0 60px;}
+#articleView .breadcrumb{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);margin-bottom:22px;}
+#articleView .breadcrumb a{color:var(--copper);}
+#articleView .art-img{width:100%;max-height:360px;object-fit:cover;margin-top:24px;}
+#articleView h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.6rem,3.2vw,2.3rem);letter-spacing:-1px;line-height:1.15;}
+#articleView .meta{font-family:var(--font-mono);font-size:.7rem;color:var(--steel);margin-top:14px;}
+#articleView .body{margin-top:28px;font-size:.95rem;color:var(--ink);}
+#articleView .body p{margin-bottom:18px;}
+#articleView .body h2{font-family:var(--font-display);font-size:1.2rem;margin:28px 0 12px;}
+.cta-box{margin-top:36px;background:var(--ink);color:#fff;padding:26px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.cta-box h4{font-family:var(--font-display);font-size:1rem;}
+.cta-box p{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:4px;}
+.btn{display:inline-flex;padding:12px 20px;background:var(--copper);color:#fff;font-weight:700;font-size:.78rem;border:none;}
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-top:20px;text-align:center;font-size:.72rem;}
-.float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
-.float-wa svg{width:27px;height:27px;fill:#fff;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:2px;font-size:.8rem;font-weight:600;z-index:700;opacity:0;pointer-events:none;transition:all .3s;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-@media(max-width:900px){.shop-layout{grid-template-columns:1fr;}.filter-panel{position:static;}.sell-layout{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -95,169 +62,109 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 <a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
 <a href="index.html" class="back-link">← Back to site</a>
 </div>
-<div class="container tabs">
-<button class="tab-btn active" data-tab="shop">Shop Accessories</button>
-<button class="tab-btn" data-tab="sell">Sell / Trade-In</button>
-</div>
 </header>
-<!-- SHOP -->
-<section id="shopTab">
+<div id="listView">
 <div class="container page-head">
-<div class="eyebrow">Retail Accessories · In Stock</div>
-<h1>Shop Accessories</h1>
-<p>Cables, cases, chargers and screen protectors — real stock, ready to take away. Looking to buy a phone instead? See the banner below.</p>
+<div class="eyebrow">Repair Guides &amp; Tips</div>
+<h1>The Tech Care Journal</h1>
+<p>Practical advice on keeping your devices running longer — written by the technicians who repair them every day in Kampala.</p>
 </div>
-<div class="container" style="margin-top:20px;">
-<div class="esimu-banner" style="background:var(--ink);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:26px;">
-<p style="font-size:.84rem;color:rgba(255,255,255,.6);">Looking to <strong style="color:#fff;">buy a phone</strong>? Browse verified listings on our partner marketplace, Esimu Uganda.</p>
-<a href="https://essimuuganda.site/" target="_blank" rel="noopener" class="btn btn-copper">Browse Phones on Esimu Uganda →</a>
-</div>
-<div class="shop-layout">
-<aside class="filter-panel">
-<h4>Category</h4>
-<div id="accessoryCatFilters"></div>
-<h4>Price Range (UGX)</h4>
-<div class="price-inputs"><input type="number" id="minPrice" placeholder="Min"><input type="number" id="maxPrice" placeholder="Max"></div>
-<button class="btn btn-copper" id="applyFilters" style="margin-top:16px;">Apply Filters</button>
-</aside>
-<div>
-<div class="result-bar">
-<span id="resultCount">0 items</span>
-<select id="sortSelect"><option value="default">Sort: Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
-</div>
-<div class="device-grid" id="deviceGrid"></div>
+<div class="container" style="margin-top:30px;">
+<div class="post-grid" id="postGrid"></div>
 </div>
 </div>
-</div>
-</section>
-<!-- SELL -->
-<section id="sellTab">
-<div class="container page-head">
-<div class="eyebrow">Instant Valuation</div>
-<h1>Sell or Trade In Your Device</h1>
-<p>Tell us about your device and we'll respond on WhatsApp with a valuation — usually within the hour.</p>
-</div>
-<div class="container" style="margin-top:26px;">
-<div class="sell-layout">
-<form class="sell-form" id="sellForm">
-<div class="field"><label>Your Name</label><input id="s-name" required></div>
-<div class="field"><label>Phone Number</label><input id="s-phone" type="tel" placeholder="07XX XXX XXX" required></div>
-<div class="field"><label>Device Brand &amp; Model</label><input id="s-device" placeholder="e.g. iPhone 13 Pro, 128GB" required></div>
-<div class="field"><label>Condition</label>
-<select id="s-condition"><option>Like New — no visible wear</option><option>Good — light scratches only</option><option>Fair — visible wear, fully functional</option><option>Faulty — has an issue</option></select></div>
-<div class="field"><label>Anything we should know?</label><textarea id="s-notes" placeholder="Battery health, accessories included, faults, etc."></textarea></div>
-<button type="submit" class="btn btn-copper">Get My Valuation on WhatsApp</button>
-</form>
-<div class="sell-info">
-<h3>How trade-in works</h3>
-<div class="sell-steps">
-<div class="sell-step"><span class="sell-step-num">01</span><div><h4>Tell us about your device</h4><p>Fill in the form with model, condition and any faults.</p></div></div>
-<div class="sell-step"><span class="sell-step-num">02</span><div><h4>Get an instant estimate</h4><p>We reply on WhatsApp with a fair valuation, usually within the hour.</p></div></div>
-<div class="sell-step"><span class="sell-step-num">03</span><div><h4>Bring it in for confirmation</h4><p>We inspect the device in person and confirm the final offer.</p></div></div>
-<div class="sell-step"><span class="sell-step-num">04</span><div><h4>Get paid or trade up</h4><p>Take cash, mobile money, or apply the value toward another device.</p></div></div>
-</div>
-<div class="trade-note">💡 Trading in? The value of your old device can go straight toward any device in our Shop tab or a repair on your current one.</div>
-</div>
-</div>
-</div>
-</section>
-<footer>
+<div id="articleView">
 <div class="container">
-<div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
-<a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
-<a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
-<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+<div class="breadcrumb"><a href="blog.html">Blog</a> / <span id="artCrumb"></span></div>
+<h1 id="artTitle"></h1>
+<div class="meta" id="artMeta"></div>
+<div class="body" id="artBody"></div>
+<div class="cta-box">
+<div><h4>Need this fixed today?</h4><p>Book a free diagnosis — most repairs are done same day.</p></div>
+<a href="#" class="btn" id="artWaBtn">WhatsApp Us</a>
 </div>
-<div>© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala</div>
+</div>
+</div>
+<footer>
+<div class="container" style="text-align:center;">
+<div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
+<a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+<a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
+<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+</div>
+© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
 </div>
 </footer>
-<a href="#" class="float-wa" id="floatWa" aria-label="WhatsApp us">
-<svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35"/></svg>
-</a>
-<div class="toast" id="toast"></div>
 <script>
 const WA_NUMBER = "256756922058";
-function fmt(n){ return "UGX "+n.toLocaleString(); }
 function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
-document.getElementById('floatWa').href = waLink("Hello, I have a question about buying or selling a device.");
-function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
-/* TABS */
-function setTab(tab){
-document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
-document.getElementById('shopTab').style.display = tab==='shop' ? 'block':'none';
-document.getElementById('sellTab').style.display = tab==='sell' ? 'block':'none';
-}
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-btn.addEventListener('click', ()=> setTab(btn.dataset.tab));
-});
-/* Support deep-links like marketplace.html#sell from the homepage and footer */
-if(window.location.hash === '#sell'){ setTab('sell'); }
-/* REAL ACCESSORY STOCK — sourced from the Accessories sheet in the repair price list.
-No invented products or prices: this is exactly the "Universal / All Devices / Accessories"
-rows from ESSIMU_Full_Repair_Catalogue_v2.xlsx. */
-function accessoryItems(){
-return SATSU_INV.all().filter(i=>i.type==='Accessories');
-}
-function renderAccessoryFilters(){
-const cats = [...new Set(accessoryItems().map(i=>i.part))];
-document.getElementById('accessoryCatFilters').innerHTML = cats.map(c=>
-`<label><input type="checkbox" value="${c}" class="f-part"> ${c}</label>`).join('');
-document.querySelectorAll('.f-part').forEach(cb=>cb.addEventListener('change', renderDevices));
-}
-function renderDevices(){
-const parts = [...document.querySelectorAll('.f-part:checked')].map(c=>c.value);
-const min = Number(document.getElementById('minPrice').value) || 0;
-const max = Number(document.getElementById('maxPrice').value) || Infinity;
-const sort = document.getElementById('sortSelect').value;
-let list = accessoryItems().filter(d=>
-(!parts.length || parts.includes(d.part)) && d.total >= min && d.total <= max
-);
-if(sort==='low') list = [...list].sort((a,b)=>a.total-b.total);
-if(sort==='high') list = [...list].sort((a,b)=>b.total-a.total);
-document.getElementById('resultCount').textContent = `${list.length} item${list.length!==1?'s':''}`;
-document.getElementById('deviceGrid').innerHTML = list.map(d=>{
-const key = SATSU_INV.iconKey(d);
-const bg = SATSU_ICON_TILE_BG(d.part, key);
-return `<div class="device-card">
-<div class="device-media" style="background:${bg}">
-<div style="width:38px;height:38px;color:rgba(255,255,255,.9);">${SATSU_ICON(key, d.part, d.part)}</div>
+/* Default editorial posts, shown alongside anything added via the admin panel */
+const DEFAULT_POSTS = [
+{id:"d1", slug:"signs-your-battery-needs-replacing", title:"7 Signs Your Phone Battery Needs Replacing",
+excerpt:"From rapid drain to sudden shutdowns — here's how to tell it's the battery, not the phone.",
+tag:"Battery Care",
+body:`<p>A phone that once lasted a full day but now struggles to reach lunchtime is one of the clearest signs of battery wear. Lithium-ion batteries degrade with every charge cycle, and after 300–500 cycles most phones show noticeable capacity loss.</p>
+<h2>The clearest warning signs</h2>
+<p>Rapid drain even when idle, a phone that shuts down at 20–30% battery, a device that feels warm during normal use, or a slightly swollen back panel are all signals worth acting on quickly — a swollen battery is a safety issue, not just a performance one.</p>
+<h2>What replacement involves</h2>
+<p>A battery swap is one of the fastest repairs we do — most Android devices take 20–30 minutes, iPhones slightly less. You'll leave with a battery health reading reset to reflect the new cell.</p>`},
+{id:"d2", slug:"what-to-do-if-your-phone-falls-in-water", title:"What To Do In The First 5 Minutes After Water Damage",
+excerpt:"The steps you take before reaching a repair shop matter more than people think.",
+tag:"Water Damage",
+body:`<p>The single most damaging thing you can do after a phone falls in water is turn it on to "check if it still works." Powering a wet device risks short-circuiting components that liquid alone wouldn't have damaged.</p>
+<h2>Do this immediately</h2>
+<p>Power off the device if it isn't already off. Do not charge it. Do not place it in rice — this is a myth that does little and can introduce dust into ports. Dry the visible exterior gently and bring it in as soon as possible; corrosion accelerates the longer a device sits.</p>
+<h2>Why speed matters</h2>
+<p>Board-level corrosion typically begins within hours, not days. A device brought in within the first day has meaningfully better recovery odds than one left for a week.</p>`},
+{id:"d3", slug:"genuine-vs-aftermarket-screens", title:"Genuine vs Quality Aftermarket Screens: What's The Real Difference?",
+excerpt:"A breakdown of what changes — and what doesn't — between screen part grades.",
+tag:"Screen Replacement",
+body:`<p>Not all replacement screens are equal, and the difference isn't just price. Genuine parts are sourced from the original manufacturer's supply chain, while quality aftermarket displays are built to matching specifications by third-party manufacturers.</p>
+<h2>What actually differs</h2>
+<p>Colour accuracy, peak brightness and touch sensitivity can vary slightly between grades. True Tone and 3D Touch behaviour on iPhones is the most noticeable difference between genuine and aftermarket parts.</p>
+<h2>Our approach</h2>
+<p>We quality-test every display before fitting and offer genuine parts on request for customers who want an exact factory match, alongside our standard warrantied aftermarket option.</p>`},
+];
+function getAdminPosts(){ try{ return JSON.parse(localStorage.getItem('satsu_admin_posts')||'[]'); }catch(e){ return []; } }
+(async function(){
+// Pull posts from Supabase if configured, otherwise fall back to this browser's local demo storage
+const livePosts = (window.SATSU_DB && SATSU_DB.isConfigured()) ? await SATSU_DB.getPosts() : getAdminPosts();
+const adminPosts = (livePosts||[]).map(p=>({...p, tag: p.tag || "From The Shop", excerpt: p.excerpt || "", body: p.body || `<p>${p.excerpt||''}</p>`}));
+const ALL_POSTS = [...adminPosts, ...DEFAULT_POSTS];
+const listView = document.getElementById('listView');
+const articleView = document.getElementById('articleView');
+const postGrid = document.getElementById('postGrid');
+postGrid.innerHTML = ALL_POSTS.map(p=>`
+<div class="post-card">
+${p.image_url ? `<img class="post-card-img" src="${p.image_url}" alt="${p.title}">` : ''}
+<div class="post-card-body">
+<div class="post-tag">${p.tag}</div>
+<h3>${p.title}</h3>
+<p>${p.excerpt}</p>
+<a class="read-link" href="blog.html?post=${p.slug}">Read guide →</a>
 </div>
-<div class="device-body">
-<div class="device-brand">Universal · In Stock</div>
-<h3>${d.part}</h3>
-<div class="device-specs">Fits most devices</div>
-<div class="device-foot">
-<span class="device-price">${fmt(d.total)}</span>
-<button class="buy-btn" data-buy="${d.part}" data-price="${d.total}">Order</button>
-</div>
-</div>
-</div>`;
-}).join('') || '<div class="empty">No items match those filters — try widening your search.</div>';
-document.querySelectorAll('[data-buy]').forEach(btn=>{
-btn.addEventListener('click', ()=>{
-window.open(waLink(`Hello, I'm interested in the ${btn.dataset.buy} listed at ${fmt(Number(btn.dataset.price))}. Is it in stock?`), '_blank');
-});
-});
+</div>`).join('') || '<p style="color:var(--steel);">No articles yet — check back soon.</p>';
+const params = new URLSearchParams(window.location.search);
+const postSlug = params.get('post');
+if(postSlug){
+const post = ALL_POSTS.find(p=>p.slug===postSlug);
+if(post){
+listView.style.display='none';
+articleView.style.display='block';
+document.getElementById('pageTitle').textContent = `${post.title} | Samsung Apple Tech Services Uganda`;
+document.getElementById('pageDesc').setAttribute('content', post.excerpt);
+document.getElementById('pageCanonical').href = `https://samsungappletechservices.site/blog.html?post=${post.slug}`;
+document.getElementById('artCrumb').textContent = post.title;
+document.getElementById('artTitle').textContent = post.title;
+document.getElementById('artMeta').textContent = post.tag + " · Samsung Apple Tech Services Uganda";
+if(post.image_url){
+document.getElementById('artTitle').insertAdjacentHTML('beforebegin', `<img class="art-img" src="${post.image_url}" alt="${post.title}">`);
 }
-document.getElementById('applyFilters').addEventListener('click', renderDevices);
-document.getElementById('sortSelect').addEventListener('change', renderDevices);
-renderAccessoryFilters();
-renderDevices();
-/* SELL FORM */
-document.getElementById('sellForm').addEventListener('submit', async e=>{
-e.preventDefault();
-const name = document.getElementById('s-name').value.trim();
-const phone = document.getElementById('s-phone').value.trim();
-const device = document.getElementById('s-device').value.trim();
-const condition = document.getElementById('s-condition').value;
-const notes = document.getElementById('s-notes').value.trim();
-if(!name||!phone||!device){ showToast('Please fill in your name, phone and device'); return; }
-const msg = `Hello, I'd like to sell/trade in a device.\n\nName: ${name}\nPhone: ${phone}\nDevice: ${device}\nCondition: ${condition}${notes ? '\nNotes: '+notes : ''}`;
-window.open(waLink(msg), '_blank');
-await SATSU_DB.addSellRequest({customer_name:name, customer_phone:phone, device, condition, notes});
-showToast('Opening WhatsApp with your details…');
-e.target.reset();
-});
+document.getElementById('artBody').innerHTML = post.body;
+document.getElementById('artWaBtn').href = waLink(`Hello, I read your article "${post.title}" and I'd like help with my device.`);
+}
+}
+})();
 </script>
 </body>
 </html>
