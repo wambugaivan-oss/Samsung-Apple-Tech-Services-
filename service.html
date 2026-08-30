@@ -30,11 +30,6 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
 .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);display:flex;align-items:center;gap:6px;}
-.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
-.identity-strip .container{text-align:center;}
-.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
-.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
-@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .breadcrumb{font-family:var(--font-mono);font-size:.66rem;color:var(--steel);padding:18px 0 0;letter-spacing:.5px;}
 .breadcrumb a{color:var(--copper);}
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:34px 0 56px;align-items:start;}
@@ -81,15 +76,12 @@ h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.7rem,3.4vw,
 .related-card h4{font-family:var(--font-display);font-size:.85rem;font-weight:700;}
 .related-card .p{font-family:var(--font-mono);font-size:.78rem;color:var(--signal-dim);margin-top:8px;}
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-top:40px;text-align:center;font-size:.72rem;}
-.legal-disclaimer{margin:0 auto 22px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;}
-.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 .float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
 .float-wa svg{width:27px;height:27px;fill:#fff;}
 @media(max-width:800px){.hero{grid-template-columns:1fr;}.stat-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
-
 <header>
 <div class="container nav-row">
 <a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
@@ -97,16 +89,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 <a href="index.html#repairs" class="back-link">← All Repairs</a>
 </div>
 </header>
-
-<div class="identity-strip">
-  <div class="container">
-    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
-    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
-  </div>
-</div>
-
 <div class="container breadcrumb" id="breadcrumb"></div>
-
 <div class="container hero">
 <div class="hero-media"><svg id="heroIcon" viewBox="0 0 24 24"></svg></div>
 <div>
@@ -130,7 +113,6 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 </div>
 </div>
 </div>
-
 <div class="container section">
 <h2>How the repair works</h2>
 <div class="steps">
@@ -140,17 +122,14 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 <div class="step"><b>04 — Warranty</b><p>You leave with a written warranty covering this exact repair.</p></div>
 </div>
 </div>
-
 <div class="container section faq">
 <h2>Frequently asked questions</h2>
 <div id="faqList"></div>
 </div>
-
 <div class="container section">
 <h2>Related repairs</h2>
 <div class="related-grid" id="relatedGrid"></div>
 </div>
-
 <footer>
 <div class="container" style="text-align:center;">
 <div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
@@ -158,17 +137,12 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
 <a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
 </div>
-<div class="legal-disclaimer">
-  <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
-</div>
 © 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
 </div>
 </footer>
-
 <a href="#" class="float-wa" id="floatWa" aria-label="WhatsApp us">
 <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35"/></svg>
 </a>
-
 <script>
 /* ============================= SERVICE DATA ============================= */
 const WA_NUMBER = "256756922058";
@@ -198,7 +172,7 @@ desc:"Board-level cleaning and corrosion treatment to recover devices exposed to
 time:"2–24 hours", warranty:"14 days", price:95000, icon:"drop",
 faqs:[["What should I do immediately after water exposure?","Power off, don't charge, and bring it in as soon as possible."]]},
 "software": {name:"Software Repair & Unlocking", brand:"All Brands", device:"Android & iOS", cat:"Software",
-desc:"Bootloop, update failure, virus removal, network unlock and IMEI repair handled by our trained technicians.",
+desc:"Bootloop, update failure, virus removal, network unlock and IMEI repair handled by certified technicians.",
 time:"20–60 minutes", warranty:"7 days", price:40000, icon:"cpu",
 faqs:[["Will I lose my data?","We back up where possible before any software work."]]},
 "data": {name:"Data Recovery", brand:"All Brands", device:"Broken, dead or water-damaged devices", cat:"Data Recovery",
@@ -236,7 +210,6 @@ function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURICompon
 const params = new URLSearchParams(window.location.search);
 const id = params.get('repair') || 'iph-screen';
 const s = SERVICES[id] || SERVICES['iph-screen'];
-
 (async function(){
 /* Pick up any admin-panel edits (price/time/warranty/name) for this service id,
 from Supabase if configured, otherwise this browser's local demo storage. */
@@ -245,11 +218,9 @@ const overrides = await SATSU_DB.getServices();
 const o = (overrides||[]).find(x=>x.id===id);
 if(o){ s.price = o.price; s.time = o.time; s.warranty = o.warranty; s.name = o.name || s.name; }
 }catch(e){}
-
 document.getElementById('pageTitle').textContent = `${s.name} in Kampala | Samsung Apple Tech Services Uganda`;
 document.getElementById('pageDesc').setAttribute('content', `${s.desc} Same-day service in Kampala from ${fmt(s.price)}. ${s.warranty!=='—' ? s.warranty+' warranty.' : ''}`);
 document.getElementById('pageCanonical').href = `https://samsungappletechservices.site/service.html?repair=${id}`;
-
 document.getElementById('breadcrumb').innerHTML = `<a href="index.html">Home</a> / <a href="index.html#repairs">Repairs</a> / ${s.cat} / ${s.brand}`;
 document.getElementById('heroIcon').innerHTML = ICONS[s.icon];
 document.getElementById('badgeRow').innerHTML = `<span class="badge">${s.brand}</span><span class="badge warm">${s.cat}</span>`;
@@ -259,24 +230,20 @@ document.getElementById('serviceDesc').textContent = s.desc;
 document.getElementById('statTime').textContent = s.time;
 document.getElementById('statWarranty').textContent = s.warranty;
 document.getElementById('statPrice').innerHTML = fmt(s.price) + " <small>starting</small>";
-
 document.getElementById('bookWaBtn').href = waLink(`Hello, I'd like to book: ${s.name}. Please confirm availability.`);
 document.getElementById('bookWaBtn').addEventListener('click', ()=>{
 SATSU_DB.addBooking({customer_name:null, customer_phone:null, items:[{name:s.name, price:s.price}], total_price:s.price, notes:"Submitted via service page: "+s.name});
 });
 document.getElementById('floatWa').href = waLink(`Hello, I'd like to book: ${s.name}.`);
-
 document.getElementById('faqList').innerHTML = s.faqs.map(f=>`
 <div class="faq-item"><h4>${f[0]}<span>+</span></h4><p>${f[1]}</p></div>`).join('') +
 `<div class="faq-item"><h4>Is there a warranty?<span>+</span></h4><p>${s.warranty!=='—' ? 'Yes — this repair carries a '+s.warranty+' warranty against the same fault recurring.' : 'This service does not carry a fixed warranty as outcomes depend on device condition.'}</p></div>`;
 document.querySelectorAll('.faq-item').forEach(item=>item.addEventListener('click', ()=>item.classList.toggle('open')));
-
 const related = Object.entries(SERVICES).filter(([k,v])=>k!==id && v.cat===s.cat).slice(0,3);
 const fallback = Object.entries(SERVICES).filter(([k,v])=>k!==id).slice(0,3);
 const relList = related.length ? related : fallback;
 document.getElementById('relatedGrid').innerHTML = relList.map(([k,v])=>
 `<a class="related-card" href="service.html?repair=${k}"><h4>${v.name}</h4><div class="p">${fmt(v.price)}</div></a>`).join('');
-
 document.getElementById('serviceSchema').textContent = JSON.stringify({
 "@context":"https://schema.org","@type":"Service",
 "name":s.name,"serviceType":s.cat,
