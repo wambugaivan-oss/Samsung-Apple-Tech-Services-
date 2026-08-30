@@ -26,11 +26,6 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;}
 .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);}
-.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
-.identity-strip .container{text-align:center;}
-.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
-.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
-@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .page-head{padding:48px 0 8px;}
 .eyebrow{font-family:var(--font-mono);font-size:.66rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--copper);margin-bottom:12px;}
 .page-head h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-1px;}
@@ -59,26 +54,15 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .cta-box p{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:4px;}
 .btn{display:inline-flex;padding:12px 20px;background:var(--copper);color:#fff;font-weight:700;font-size:.78rem;border:none;}
 footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-top:20px;text-align:center;font-size:.72rem;}
-.legal-disclaimer{margin:0 auto 22px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;}
-.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 </style>
 </head>
 <body>
-
 <header>
 <div class="container nav-row">
 <a href="index.html" class="logo"><span class="chip"></span> Samsung Apple Tech</a>
 <a href="index.html" class="back-link">← Back to site</a>
 </div>
 </header>
-
-<div class="identity-strip">
-  <div class="container">
-    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
-    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
-  </div>
-</div>
-
 <div id="listView">
 <div class="container page-head">
 <div class="eyebrow">Repair Guides &amp; Tips</div>
@@ -89,7 +73,6 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 <div class="post-grid" id="postGrid"></div>
 </div>
 </div>
-
 <div id="articleView">
 <div class="container">
 <div class="breadcrumb"><a href="blog.html">Blog</a> / <span id="artCrumb"></span></div>
@@ -102,7 +85,6 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 </div>
 </div>
 </div>
-
 <footer>
 <div class="container" style="text-align:center;">
 <div style="display:flex;gap:12px;justify-content:center;margin-bottom:18px;">
@@ -110,17 +92,12 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:40px 0;margin-to
 <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
 <a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
 </div>
-<div class="legal-disclaimer">
-  <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
-</div>
 © 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala
 </div>
 </footer>
-
 <script>
 const WA_NUMBER = "256756922058";
 function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
-
 /* Default editorial posts, shown alongside anything added via the admin panel */
 const DEFAULT_POSTS = [
 {id:"d1", slug:"signs-your-battery-needs-replacing", title:"7 Signs Your Phone Battery Needs Replacing",
@@ -148,19 +125,15 @@ body:`<p>Not all replacement screens are equal, and the difference isn't just pr
 <h2>Our approach</h2>
 <p>We quality-test every display before fitting and offer genuine parts on request for customers who want an exact factory match, alongside our standard warrantied aftermarket option.</p>`},
 ];
-
 function getAdminPosts(){ try{ return JSON.parse(localStorage.getItem('satsu_admin_posts')||'[]'); }catch(e){ return []; } }
-
 (async function(){
 // Pull posts from Supabase if configured, otherwise fall back to this browser's local demo storage
 const livePosts = (window.SATSU_DB && SATSU_DB.isConfigured()) ? await SATSU_DB.getPosts() : getAdminPosts();
 const adminPosts = (livePosts||[]).map(p=>({...p, tag: p.tag || "From The Shop", excerpt: p.excerpt || "", body: p.body || `<p>${p.excerpt||''}</p>`}));
 const ALL_POSTS = [...adminPosts, ...DEFAULT_POSTS];
-
 const listView = document.getElementById('listView');
 const articleView = document.getElementById('articleView');
 const postGrid = document.getElementById('postGrid');
-
 postGrid.innerHTML = ALL_POSTS.map(p=>`
 <div class="post-card">
 ${p.image_url ? `<img class="post-card-img" src="${p.image_url}" alt="${p.title}">` : ''}
@@ -171,7 +144,6 @@ ${p.image_url ? `<img class="post-card-img" src="${p.image_url}" alt="${p.title}
 <a class="read-link" href="blog.html?post=${p.slug}">Read guide →</a>
 </div>
 </div>`).join('') || '<p style="color:var(--steel);">No articles yet — check back soon.</p>';
-
 const params = new URLSearchParams(window.location.search);
 const postSlug = params.get('post');
 if(postSlug){
