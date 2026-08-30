@@ -30,11 +30,6 @@ header{background:rgba(252,251,248,.94);backdrop-filter:blur(10px);border-bottom
 .logo{font-family:var(--font-display);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;white-space:nowrap;}
 .chip-mark{width:9px;height:22px;background:var(--copper);border-radius:1px;}
 .back-link{font-size:.78rem;font-weight:700;color:var(--steel);white-space:nowrap;}
-.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
-.identity-strip .container{text-align:center;}
-.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
-.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
-@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
 .top-search{flex:1;max-width:420px;position:relative;}
 .top-search input{width:100%;padding:10px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:.84rem;border-radius:2px;}
 .page-head{padding:32px 0 4px;}
@@ -90,15 +85,12 @@ footer{background:var(--ink);color:rgba(255,255,255,.5);padding:44px 0 24px;marg
 .foot-social a:hover{background:var(--copper);}
 .foot-social svg{width:16px;height:16px;fill:#fff;}
 footer .copy{text-align:center;font-size:.72rem;}
-.legal-disclaimer{margin:0 auto 24px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;}
-.legal-disclaimer strong{color:rgba(255,255,255,.62);}
 .float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
 .float-wa svg{width:27px;height:27px;fill:#fff;}
 @media(max-width:900px){.browse-layout{grid-template-columns:1fr;}.filter-panel{position:static;max-height:none;}.top-search{display:none;}}
 </style>
 </head>
 <body>
-
 <header>
 <div class="container nav-row">
 <a href="index.html" class="logo"><span class="chip-mark"></span> Samsung Apple Tech</a>
@@ -106,14 +98,6 @@ footer .copy{text-align:center;font-size:.72rem;}
 <a href="index.html" class="back-link">← Back to site</a>
 </div>
 </header>
-
-<div class="identity-strip">
-  <div class="container">
-    <p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
-    <p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
-  </div>
-</div>
-
 <div class="container page-head">
 <div class="eyebrow">Full Repair Parts Catalogue</div>
 <h1 id="pageTitle">Browse Parts &amp; Repair Prices</h1>
@@ -123,7 +107,6 @@ footer .copy{text-align:center;font-size:.72rem;}
 <a href="https://essimuuganda.site/" target="_blank" rel="noopener" class="esimu-btn">Browse Phones on Esimu Uganda →</a>
 </div>
 </div>
-
 <div class="container browse-layout">
 <aside class="filter-panel">
 <h4>Device Type <span class="clear-link" id="clearType">Clear</span></h4>
@@ -153,34 +136,27 @@ footer .copy{text-align:center;font-size:.72rem;}
 </div>
 </div>
 </div>
-
 <footer>
 <div class="container">
 <div class="foot-social">
 <a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
 <a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
-<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
-</div>
-<div class="legal-disclaimer">
-  <strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
+<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z" fill-opacity="0"/><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
 </div>
 <div class="copy">© 2025 Samsung Apple Tech Services Uganda · Kisa Kyaparamara Building, William Street, Kampala</div>
 </div>
 </footer>
-
 <a href="#" class="float-wa" id="floatWa" aria-label="WhatsApp us">
 <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35"/></svg>
 </a>
-
 <script>
 const WA_NUMBER = "256756922058";
 function fmt(n){ return "UGX "+Number(n).toLocaleString(); }
 function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
 document.getElementById('floatWa').href = waLink("Hello, I have a question about a repair part.");
-
 const PAGE_SIZE = 24;
 let state = { type:[], brand:[], cat:[], q:'', minPrice:'', maxPrice:'', sort:'relevance', page:1 };
-
+/* Read initial state from URL (?t=Phone&b=Samsung&c=Screen&q=...) */
 (function initFromURL(){
 const p = new URLSearchParams(location.search);
 if(p.get('t')) state.type = [p.get('t')];
@@ -188,7 +164,6 @@ if(p.get('b')) state.brand = [p.get('b')];
 if(p.get('c')) state.cat = [p.get('c')];
 if(p.get('q')) state.q = p.get('q');
 })();
-
 function results(){
 let items = SATSU_INV.all();
 if(state.type.length) items = items.filter(i=>state.type.includes(i.type));
@@ -208,7 +183,6 @@ if(state.sort==='high') items = [...items].sort((a,b)=>b.total-a.total);
 if(state.sort==='az') items = [...items].sort((a,b)=>a.model.localeCompare(b.model));
 return items;
 }
-
 function renderFilters(){
 const items = SATSU_INV.all();
 const {types, brands, cats} = SATSU_INV.facets();
@@ -229,7 +203,6 @@ state.page = 1; render();
 });
 });
 }
-
 function renderBrandFilters(brands, items){
 const q = (document.getElementById('brandSearch').value||'').toLowerCase();
 const filtered = brands.filter(b=>b.toLowerCase().includes(q));
@@ -244,7 +217,6 @@ state.page = 1; render();
 });
 });
 }
-
 document.getElementById('brandSearch').addEventListener('input', ()=>renderBrandFilters(SATSU_INV.facets().brands, SATSU_INV.all()));
 ['clearType','clearBrand','clearCat'].forEach(id=>{
 document.getElementById(id).addEventListener('click', ()=>{
@@ -257,7 +229,6 @@ document.getElementById('maxPrice').addEventListener('change', e=>{ state.maxPri
 document.getElementById('sortSelect').addEventListener('change', e=>{ state.sort=e.target.value; state.page=1; render(); });
 document.getElementById('topSearch').addEventListener('input', e=>{ state.q=e.target.value; state.page=1; render(); });
 document.getElementById('topSearch').value = state.q;
-
 function renderChips(){
 const chips = [];
 state.type.forEach(v=>chips.push({k:'type',v}));
@@ -275,7 +246,6 @@ state.page=1; renderFilters(); render();
 });
 });
 }
-
 function cardHTML(item){
 const key = SATSU_INV.iconKey(item);
 const cat = SATSU_INV.friendlyCategory(item);
@@ -300,7 +270,6 @@ ${!retail ? `<div class="pc-meta">⏱ ${item.duration}</div>` : `<div class="pc-
 </div>
 </div>`;
 }
-
 function render(){
 const items = results();
 document.getElementById('resultCount').textContent = `${items.length.toLocaleString()} item${items.length!==1?'s':''}`;
@@ -314,12 +283,10 @@ else wrap.style.display='none';
 renderChips();
 }
 document.getElementById('loadMoreBtn').addEventListener('click', ()=>{ state.page++; render(); });
-
 document.getElementById('statLine').innerHTML = (function(){
 const s = SATSU_INV.stats();
 return `<b>${s.total.toLocaleString()}</b> parts &amp; services across <b>${s.brands}</b> brands and <b>${s.models}</b> device models — sourced directly from our repair price list.`;
 })();
-
 renderFilters();
 render();
 </script>
