@@ -4,579 +4,884 @@
 <meta charset="UTF-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%274%27 fill=%27%230B0F14%27/%3E%3Crect x=%2710%27 y=%275%27 width=%274%27 height=%2714%27 rx=%271%27 fill=%27%23C1622C%27/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard — Samsung Apple Tech Services Uganda</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Samsung Apple Tech Services Uganda | Independent Phone, Tablet &amp; Laptop Repair — Kampala</title>
+<meta name="description" content="Kampala's premium device repair specialist. Screens, batteries, charging ports, water damage, software &amp; data recovery for every brand. Same-day repair, 30-day warranty. We also buy &amp; sell devices.">
+<link rel="canonical" href="https://samsungappletechservices.site/">
+<meta name="theme-color" content="#0B0F14">
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
 <script src="inventory-data.js"></script>
 <script src="inventory.js"></script>
+<script src="icons.js"></script>
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "ElectronicsStore",
+"name": "Samsung Apple Tech Services Uganda",
+"image": "https://samsungappletechservices.site/assets/storefront.jpg",
+"telephone": "+256756922058",
+"email": "wambugaivan@gmail.com",
+"priceRange": "UGX 15,000 – UGX 1,600,000",
+"address": {
+"@type": "PostalAddress",
+"streetAddress": "Kisa Kyaparamara Building, William Street",
+"addressLocality": "Kampala",
+"addressCountry": "UG"
+},
+"openingHours": "Mo-Su 08:00-20:00"
+}
+</script>
 <style>
-:root{--ink:#0B0F14;--porcelain:#F4F2EC;--paper:#FCFBF8;--signal:#12B886;--copper:#C1622C;--steel:#4A5568;--line:rgba(11,15,20,.10);
-  --font-display:'Sora',sans-serif;--font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;}
+/* ============================= DESIGN TOKENS ============================= */
+:root{
+--ink:#0B0F14; /* near-black diagnostic panel */
+--ink-2:#121822;
+--porcelain:#F4F2EC; /* warm page background */
+--paper:#FCFBF8; /* card surface */
+--signal:#12B886; /* "device is healthy" green */
+--signal-dim:#0E9370;
+--copper:#C1622C; /* warm CTA / Ugandan-sun accent */
+--copper-2:#A8501F;
+--steel:#4A5568; /* muted secondary text */
+--line:rgba(11,15,20,.10);
+--line-dark:rgba(255,255,255,.08);
+--white:#FFFFFF;
+--radius:2px;
+--font-display:'Sora',sans-serif;
+--font-body:'Inter',sans-serif;
+--font-mono:'JetBrains Mono',monospace;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-html{overflow-x:hidden;}
-body{overflow-x:hidden;max-width:100vw;}
-body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);display:flex;min-height:100vh;}
-a{color:inherit;text-decoration:none;}
-/* LOGIN SCREEN */
-#loginScreen{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:1000;}
-.login-box{background:var(--paper);width:min(380px,90vw);padding:36px;border-radius:2px;}
-.login-box h1{font-family:var(--font-display);font-weight:800;font-size:1.2rem;margin-bottom:6px;}
-.login-box p{font-size:.8rem;color:var(--steel);margin-bottom:24px;}
-.login-box .field{margin-bottom:14px;}
-.login-box label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);display:block;margin-bottom:5px;}
-.login-box input{width:100%;padding:11px;border:1.5px solid var(--line);font-size:.85rem;}
-.login-err{color:#d64545;font-size:.76rem;margin-top:10px;min-height:16px;}
-.demo-banner{background:rgba(193,98,44,.1);border-left:3px solid var(--copper);padding:14px 16px;font-size:.8rem;margin:16px 36px 0;line-height:1.6;}
-/* SIDEBAR */
-.sidebar{width:220px;background:var(--ink);color:rgba(255,255,255,.7);flex-shrink:0;display:flex;flex-direction:column;padding:24px 0;}
-.sidebar .logo{font-family:var(--font-display);font-weight:800;color:#fff;font-size:.9rem;padding:0 20px 24px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
-.sidebar .logo small{display:block;font-family:var(--font-mono);font-size:.6rem;color:var(--signal);margin-top:4px;letter-spacing:1px;}
-.nav-item{padding:12px 20px;font-size:.8rem;font-weight:600;cursor:pointer;border-left:3px solid transparent;transition:all .2s;}
-.nav-item:hover{background:rgba(255,255,255,.05);color:#fff;}
-.nav-item.active{border-color:var(--copper);color:#fff;background:rgba(255,255,255,.06);}
-.sidebar-foot{margin-top:auto;padding:16px 20px;font-size:.68rem;color:rgba(255,255,255,.35);}
-.sidebar-foot a{display:block;margin-bottom:6px;}
-#signOutBtn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.72rem;cursor:pointer;margin-top:8px;text-decoration:underline;}
-/* MAIN */
-main{flex:1;padding:36px clamp(20px,4vw,48px);max-width:1100px;}
-.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
-h1{font-family:var(--font-display);font-weight:800;font-size:1.5rem;letter-spacing:-.5px;}
-.sub{font-size:.82rem;color:var(--steel);margin-top:4px;}
-.panel{display:none;}
-.panel.active{display:block;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-weight:700;font-size:.78rem;border:none;border-radius:2px;cursor:pointer;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--porcelain);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px;}
+.container{max-width:1280px;margin:0 auto;padding:0 clamp(18px,4vw,48px);}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important;}}
+/* ============================= SCAN-LINE SIGNATURE ============================= */
+.scanline{position:relative;overflow:hidden;}
+.scanline::after{
+content:'';position:absolute;left:0;right:0;height:2px;
+background:linear-gradient(90deg,transparent,var(--signal),transparent);
+top:0;animation:scan 3.2s ease-in-out infinite;opacity:.85;pointer-events:none;
+}
+@keyframes scan{0%{top:0;opacity:0;}10%{opacity:.9;}50%{top:100%;}90%{opacity:.9;}100%{top:100%;opacity:0;}}
+/* ============================= TOP UTILITY BAR ============================= */
+.util-bar{background:var(--ink);color:rgba(255,255,255,.65);font-family:var(--font-mono);font-size:.68rem;letter-spacing:.5px;padding:7px 0;}
+.util-bar .container{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.util-bar .status{display:flex;align-items:center;gap:7px;}
+.util-dot{width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px rgba(18,184,134,.18);}
+.util-bar a{color:rgba(255,255,255,.65);text-decoration:none;}
+.util-bar a:hover{color:var(--white);}
+.util-links{display:flex;gap:18px;}
+/* ============================= HEADER / NAV ============================= */
+header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-row{display:flex;align-items:center;gap:28px;padding:16px 0;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:1.05rem;letter-spacing:-.3px;display:flex;flex-direction:column;line-height:1.1;min-width:0;flex-shrink:1;}
+.logo .mark{display:flex;align-items:center;gap:8px;white-space:nowrap;}
+.logo .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;position:relative;}
+.logo .chip::before,.logo .chip::after{content:'';position:absolute;left:50%;width:1px;height:5px;background:var(--copper);transform:translateX(-50%);}
+.logo .chip::before{top:-6px;}
+.logo .chip::after{bottom:-6px;}
+.logo small{font-family:var(--font-mono);font-weight:500;font-size:.55rem;letter-spacing:2px;color:var(--steel);text-transform:uppercase;margin-top:2px;}
+.nav-search{flex:1;max-width:480px;position:relative;}
+.nav-search input{width:100%;padding:11px 44px 11px 16px;border:1.5px solid var(--line);background:var(--paper);font-family:var(--font-body);font-size:.85rem;border-radius:var(--radius);transition:border-color .2s;}
+.nav-search input:focus{border-color:var(--copper);}
+.nav-search .icon-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--ink);color:var(--white);width:32px;height:32px;border:none;display:flex;align-items:center;justify-content:center;border-radius:1px;}
+.nav-links{display:flex;gap:22px;align-items:center;}
+.nav-links a{font-size:.8rem;font-weight:600;text-decoration:none;color:var(--ink);position:relative;padding:4px 0;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--copper);transition:width .2s;}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex;align-items:center;gap:6px;}
+.icon-action{position:relative;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;border-radius:50%;transition:background .2s;}
+.icon-action:hover{background:var(--line);}
+.icon-action svg{width:19px;height:19px;stroke:var(--ink);fill:none;stroke-width:1.7;}
+.badge{position:absolute;top:2px;right:2px;background:var(--copper);color:#fff;font-size:.55rem;font-weight:700;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);}
+.cat-bar{border-top:1px solid var(--line);}
+.cat-row{display:flex;gap:26px;overflow-x:auto;padding:11px 0;scrollbar-width:none;}
+.cat-row::-webkit-scrollbar{display:none;}
+.cat-row a{font-size:.72rem;font-weight:600;letter-spacing:.3px;text-decoration:none;color:var(--steel);white-space:nowrap;text-transform:uppercase;transition:color .2s;}
+.cat-row a:hover{color:var(--copper);}
+.ham{display:none;background:none;border:none;width:38px;height:38px;flex-direction:column;justify-content:center;gap:5px;align-items:center;}
+.identity-strip{background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;}
+.identity-strip .container{text-align:center;}
+.identity-main{font-family:var(--font-display);font-weight:700;font-size:.82rem;color:var(--ink);letter-spacing:-.1px;}
+.identity-sub{font-size:.72rem;color:var(--steel);margin-top:3px;line-height:1.5;max-width:640px;margin-left:auto;margin-right:auto;}
+@media(max-width:520px){.identity-main{font-size:.74rem;}.identity-sub{font-size:.68rem;}}
+.ham span{width:20px;height:2px;background:var(--ink);}
+/* ============================= HERO ============================= */
+.hero{position:relative;background:var(--ink);color:var(--white);overflow:hidden;min-height:min(88vh,680px);display:flex;align-items:center;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 60% at 60% 40%,black 40%,transparent 90%);}
+.hero-glow{position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(18,184,134,.16),transparent 70%);top:-120px;right:-140px;pointer-events:none;}
+.hero-inner{position:relative;z-index:2;padding:96px 0 72px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;width:100%;}
+.hero-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:9px;margin-bottom:20px;}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--signal);}
+.hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(2.4rem,4.6vw,3.9rem);line-height:1.03;letter-spacing:-1.5px;}
+.hero h1 em{font-style:normal;color:var(--signal);}
+.hero-sub{margin-top:22px;font-size:1rem;color:rgba(255,255,255,.62);max-width:460px;line-height:1.75;}
+.hero-cta{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;font-weight:700;font-size:.82rem;text-decoration:none;border:none;border-radius:1px;transition:transform .15s,background .2s;}
+.btn:active{transform:scale(.98);}
 .btn-copper{background:var(--copper);color:#fff;}
+.btn-copper:hover{background:var(--copper-2);}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.3);}
+.btn-outline:hover{border-color:var(--white);}
 .btn-dark{background:var(--ink);color:#fff;}
-.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);}
-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);}
-th,td{text-align:left;padding:12px 14px;font-size:.8rem;border-bottom:1px solid var(--line);}
-th{font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:1px;color:var(--steel);background:rgba(11,15,20,.02);}
-td.price{font-family:var(--font-mono);font-weight:700;}
-.row-actions{display:flex;gap:8px;}
-.row-actions button{background:none;border:none;font-size:.72rem;font-weight:700;cursor:pointer;color:var(--copper);}
-.row-actions button.del{color:#d64545;}
-.card{background:var(--paper);border:1px solid var(--line);padding:22px;margin-bottom:16px;}
-.card h3{font-family:var(--font-display);font-size:.95rem;margin-bottom:14px;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--steel);display:block;margin-bottom:5px;}
-input,select,textarea{width:100%;padding:9px 11px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:.82rem;border-radius:2px;}
-textarea{resize:vertical;min-height:70px;}
-.field{margin-bottom:12px;}
-.empty-state{background:var(--paper);border:1px dashed var(--line);padding:40px;text-align:center;color:var(--steel);font-size:.85rem;}
-.note{background:rgba(193,98,44,.08);border-left:3px solid var(--copper);padding:14px 16px;font-size:.78rem;color:var(--ink);margin-bottom:24px;line-height:1.6;}
-.note.good{background:rgba(18,184,134,.08);border-left-color:var(--signal);}
-.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:28px;}
-.stat{background:var(--paper);padding:18px;}
-.stat span{font-family:var(--font-mono);font-size:.6rem;text-transform:uppercase;color:var(--steel);letter-spacing:1px;}
-.stat b{display:block;font-family:var(--font-display);font-size:1.4rem;margin-top:6px;}
+.btn-dark:hover{background:#000;}
+.hero-stats{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap;}
+.hero-stats div{font-family:var(--font-display);font-size:1.6rem;font-weight:800;}
+.hero-stats span{display:block;font-family:var(--font-mono);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:4px;}
+/* Rotating promo slider card */
+.promo-card{position:relative;background:var(--paper);color:var(--ink);border-radius:3px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.35);}
+.promo-slides{position:relative;height:340px;}
+.promo-slide{position:absolute;inset:0;padding:30px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transition:opacity .6s ease;}
+.promo-slide.active{opacity:1;}
+.promo-tag{font-family:var(--font-mono);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--copper);background:rgba(193,98,44,.1);padding:5px 10px;border-radius:1px;width:fit-content;}
+.promo-slide h3{font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-top:14px;letter-spacing:-.5px;line-height:1.15;}
+.promo-slide p{font-size:.82rem;color:var(--steel);margin-top:8px;}
+.promo-price{font-family:var(--font-mono);font-weight:700;font-size:1.05rem;color:var(--signal-dim);margin-top:14px;}
+.promo-dots{display:flex;gap:7px;padding:16px 30px;border-top:1px solid var(--line);}
+.promo-dots button{width:22px;height:3px;background:var(--line);border:none;padding:0;transition:background .2s;}
+.promo-dots button.active{background:var(--copper);}
+/* ============================= TICKER ============================= */
+.ticker{background:var(--signal);overflow:hidden;padding:9px 0;}
+.ticker-track{display:flex;animation:tick 24s linear infinite;white-space:nowrap;}
+.ticker-track span{font-family:var(--font-mono);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink);padding:0 20px;border-right:1px solid rgba(11,15,20,.2);}
+@keyframes tick{to{transform:translateX(-50%);}}
+/* ============================= SECTION SHELL ============================= */
+.section{padding:76px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:38px;gap:20px;flex-wrap:wrap;}
+.section-eyebrow{font-family:var(--font-mono);font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--copper);display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.section-eyebrow::before{content:'';width:16px;height:1px;background:var(--copper);}
+.section-title{font-family:var(--font-display);font-weight:800;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-1px;}
+.section-link{font-size:.78rem;font-weight:700;text-decoration:none;color:var(--ink);border-bottom:1.5px solid var(--copper);padding-bottom:2px;white-space:nowrap;}
+/* ============================= CATEGORIES ============================= */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
+.cat-card{background:var(--paper);border:1px solid var(--line);padding:26px 20px;text-decoration:none;color:var(--ink);transition:all .25s;position:relative;overflow:hidden;}
+.cat-card:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 14px 32px rgba(11,15,20,.08);}
+.cat-icon{width:38px;height:38px;margin-bottom:16px;}
+.cat-card h3{font-family:var(--font-display);font-size:.9rem;font-weight:700;letter-spacing:-.2px;}
+.cat-card p{font-size:.72rem;color:var(--steel);margin-top:5px;}
+/* ============================= SERVICE TICKET CARDS ============================= */
+.ticket-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;}
+.ticket{background:var(--paper);border:1px solid var(--line);position:relative;transition:box-shadow .25s,transform .25s;}
+.ticket:hover{box-shadow:0 18px 40px rgba(11,15,20,.1);transform:translateY(-3px);}
+.ticket-media{height:170px;background:linear-gradient(135deg,var(--ink),#1c2530);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.ticket-media svg{width:56px;height:56px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:1.3;position:relative;z-index:2;}
+.ticket-media::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:14px 14px;}
+.wish-btn{position:absolute;top:10px;right:10px;width:32px;height:32px;background:rgba(255,255,255,.92);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;}
+.wish-btn svg{width:15px;height:15px;stroke:var(--ink);fill:none;stroke-width:1.8;transition:fill .2s,stroke .2s;}
+.wish-btn.active svg{fill:var(--copper);stroke:var(--copper);}
+.ticket-perf{height:1px;background-image:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 12px);position:relative;}
+.ticket-perf::before,.ticket-perf::after{content:'';position:absolute;top:-6px;width:12px;height:12px;background:var(--porcelain);border-radius:50%;}
+.ticket-perf::before{left:-7px;}
+.ticket-perf::after{right:-7px;}
+.ticket-body{padding:20px;}
+.ticket-cat{font-family:var(--font-mono);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel);}
+.ticket-body h3{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-top:6px;letter-spacing:-.2px;}
+.ticket-meta{display:flex;gap:14px;margin-top:12px;font-size:.7rem;color:var(--steel);}
+.ticket-meta span{display:flex;align-items:center;gap:5px;}
+.ticket-meta svg{width:13px;height:13px;stroke:var(--steel);fill:none;stroke-width:1.6;}
+.ticket-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);}
+.ticket-price{font-family:var(--font-mono);font-weight:700;font-size:.95rem;}
+.ticket-price small{display:block;font-size:.6rem;font-weight:500;color:var(--steel);text-transform:uppercase;letter-spacing:1px;}
+.add-btn{background:var(--ink);color:#fff;border:none;padding:8px 14px;font-size:.68rem;font-weight:700;letter-spacing:.5px;border-radius:1px;transition:background .2s;}
+.add-btn:hover{background:var(--copper);}
+/* filter chip row */
+.filter-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:30px;}
+.chip{padding:9px 16px;border:1.5px solid var(--line);background:var(--paper);font-size:.72rem;font-weight:600;border-radius:20px;transition:all .2s;}
+.chip.active,.chip:hover{border-color:var(--ink);background:var(--ink);color:#fff;}
+/* ============================= BRAND STRIP ============================= */
+.brand-section{background:var(--ink);color:#fff;}
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--line-dark);border:1px solid var(--line-dark);margin-top:36px;}
+.brand-pill{background:var(--ink);padding:24px 14px;text-align:center;text-decoration:none;color:rgba(255,255,255,.7);transition:all .25s;}
+.brand-pill:hover{background:#161d26;color:#fff;}
+.brand-pill span{display:block;font-family:var(--font-display);font-size:.78rem;font-weight:700;letter-spacing:-.2px;}
+/* ============================= WHY / PROCESS ============================= */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+.why-card{background:var(--paper);padding:30px 24px;}
+.why-num{font-family:var(--font-mono);font-size:.68rem;color:var(--copper);font-weight:700;letter-spacing:1px;}
+.why-card h3{font-family:var(--font-display);font-size:.98rem;font-weight:700;margin-top:12px;}
+.why-card p{font-size:.8rem;color:var(--steel);margin-top:8px;line-height:1.65;}
+/* ============================= REVIEWS ============================= */
+.review-track-wrap{overflow:hidden;}
+.review-track{display:flex;gap:16px;}
+.review-card{min-width:290px;background:var(--paper);border:1px solid var(--line);padding:26px 24px;flex-shrink:0;}
+.stars{color:var(--copper);font-size:.85rem;letter-spacing:2px;}
+.review-card p{font-size:.83rem;color:var(--ink);margin:14px 0;line-height:1.7;}
+.review-author{font-family:var(--font-mono);font-size:.68rem;color:var(--steel);text-transform:uppercase;letter-spacing:1px;}
+/* ============================= WHATSAPP + BUY/SELL BAND ============================= */
+.band{background:linear-gradient(120deg,var(--signal),var(--signal-dim));color:#fff;padding:56px 0;}
+.band .container{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
+.band h2{font-family:var(--font-display);font-size:1.7rem;font-weight:800;letter-spacing:-.5px;}
+.band p{margin-top:8px;opacity:.9;font-size:.88rem;max-width:460px;}
+/* ============================= FOOTER ============================= */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:64px 0 26px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.1fr;gap:36px;padding-bottom:40px;border-bottom:1px solid var(--line-dark);}
+.foot-brand p{font-size:.8rem;margin-top:14px;line-height:1.7;max-width:260px;color:rgba(255,255,255,.5);}
+.foot-col h4{font-family:var(--font-mono);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;}
+.foot-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.65);text-decoration:none;margin-bottom:11px;transition:color .2s;}
+.foot-col a:hover{color:var(--signal);}
+.foot-bottom{display:flex;justify-content:space-between;padding-top:24px;font-size:.68rem;color:rgba(255,255,255,.35);flex-wrap:wrap;gap:12px;}
+.newsletter{display:flex;gap:0;margin-top:16px;max-width:280px;}
+.newsletter input{flex:1;padding:10px 12px;border:1px solid var(--line-dark);background:transparent;color:#fff;font-size:.78rem;}
+.newsletter button{background:var(--copper);border:none;color:#fff;padding:0 14px;font-weight:700;font-size:.75rem;}
+/* ── LEGAL / TRADEMARK DISCLAIMER ── */
+.legal-disclaimer{margin-top:28px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.68rem;line-height:1.65;color:rgba(255,255,255,.42);text-align:center;max-width:920px;margin-left:auto;margin-right:auto;}
+.legal-disclaimer strong{color:rgba(255,255,255,.62);}
+/* ============================= FLOATING WHATSAPP + CART DRAWER ============================= */
+.float-wa{position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);}
+.float-wa svg{width:27px;height:27px;fill:#fff;}
+.drawer-overlay{position:fixed;inset:0;background:rgba(11,15,20,.5);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s;}
+.drawer-overlay.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:var(--paper);z-index:501;transform:translateX(100%);transition:transform .35s ease;display:flex;flex-direction:column;}
+.drawer.open{transform:translateX(0);}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);}
+.drawer-head h3{font-family:var(--font-display);font-weight:800;font-size:1.05rem;}
+.drawer-close{background:none;border:none;font-size:1.3rem;line-height:1;}
+.drawer-body{flex:1;overflow-y:auto;padding:18px 22px;}
+.drawer-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);}
+.drawer-item-thumb{width:56px;height:56px;background:var(--ink);border-radius:2px;flex-shrink:0;}
+.drawer-item h4{font-size:.82rem;font-weight:700;}
+.drawer-item .p{font-family:var(--font-mono);font-size:.78rem;color:var(--signal-dim);margin-top:4px;}
+.drawer-item .rm{font-size:.68rem;color:var(--steel);text-decoration:underline;background:none;border:none;margin-top:6px;}
+.drawer-empty{text-align:center;padding:60px 20px;color:var(--steel);font-size:.85rem;}
+.drawer-foot{padding:18px 22px;border-top:1px solid var(--line);}
+.drawer-total{display:flex;justify-content:space-between;font-family:var(--font-mono);font-weight:700;margin-bottom:14px;}
+/* search modal */
+.search-modal{position:fixed;inset:0;background:rgba(11,15,20,.6);z-index:600;display:flex;align-items:flex-start;justify-content:center;padding-top:10vh;opacity:0;pointer-events:none;transition:opacity .25s;}
+.search-modal.open{opacity:1;pointer-events:auto;}
+.search-box{background:var(--paper);width:min(600px,92vw);border-radius:3px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4);}
+.search-box input{width:100%;border:none;padding:22px 24px;font-size:1.05rem;font-family:var(--font-body);border-bottom:1px solid var(--line);}
+.search-results{max-height:340px;overflow-y:auto;}
+.search-results a{display:flex;justify-content:space-between;padding:14px 24px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--line);font-size:.85rem;}
+.search-results a:hover{background:var(--porcelain);}
+.search-hint{padding:18px 24px;font-size:.75rem;color:var(--steel);}
+/* toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:2px;font-size:.8rem;font-weight:600;z-index:700;opacity:0;pointer-events:none;transition:all .3s;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.status-pill{font-family:var(--font-mono);font-size:.62rem;font-weight:700;text-transform:uppercase;padding:4px 9px;border-radius:10px;}
-.status-new{background:rgba(193,98,44,.12);color:var(--copper);}
-.status-contacted{background:rgba(18,184,134,.12);color:#0E9370;}
-.status-completed{background:rgba(11,15,20,.08);color:var(--steel);}
-@media(max-width:800px){.sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:300;transition:transform .3s;}.sidebar.open{transform:translateX(0);}.form-grid{grid-template-columns:1fr;}.menu-btn{display:block;}}
-.menu-btn{display:none;background:var(--ink);color:#fff;border:none;padding:8px 12px;border-radius:2px;margin-bottom:16px;}
+html{overflow-x:hidden;}
+body{overflow-x:hidden;max-width:100vw;}
+@media(max-width:920px){
+.hero-inner{grid-template-columns:1fr;}
+.nav-search{display:none;}
+.nav-links{display:none;}
+.ham{display:flex;}
+.foot-grid{grid-template-columns:1fr 1fr;}
+.nav-row{gap:12px;}
+}
+@media(max-width:520px){
+.foot-grid{grid-template-columns:1fr;}
+.util-links{display:none;}
+.logo{font-size:.92rem;}
+.logo small{font-size:.5rem;letter-spacing:1px;}
+.nav-row{gap:8px;padding:14px 0;}
+}
+@media(max-width:360px){
+.logo small{display:none;}
+.nav-row{gap:6px;}
+.icon-action{width:34px;height:34px;}
+}
 </style>
 </head>
 <body>
-
-<div id="loginScreen">
-  <div class="login-box">
-    <h1>Admin Login</h1>
-    <p id="loginSub">Sign in with the email/password you created in Supabase Authentication.</p>
-    <div class="field"><label>Email</label><input id="loginEmail" type="email"></div>
-    <div class="field"><label>Password</label><input id="loginPassword" type="password"></div>
-    <button class="btn btn-copper" id="loginBtn" style="width:100%;justify-content:center;">Sign In</button>
-    <div class="login-err" id="loginErr"></div>
-  </div>
+<!-- UTILITY BAR -->
+<div class="util-bar">
+<div class="container">
+<div class="status"><span class="util-dot"></span> Open now · 8:00 – 20:00 · William Street, Kampala</div>
+<div class="util-links">
+<a href="tel:+256756922058">+256 756 922 058</a>
+<a href="#" id="waTopLink">WhatsApp Us</a>
+<a href="marketplace.html#sell">Sell Your Device</a>
 </div>
-
-<aside class="sidebar" id="sidebar">
-  <div class="logo">Samsung Apple Tech<small id="modeIndicator">● Checking backend…</small></div>
-  <div class="nav-item active" data-panel="overview">Overview</div>
-  <div class="nav-item" data-panel="services">Services &amp; Pricing</div>
-  <div class="nav-item" data-panel="banners">Homepage Banners</div>
-  <div class="nav-item" data-panel="reviews">Reviews</div>
-  <div class="nav-item" data-panel="blog">Blog Posts</div>
-  <div class="nav-item" data-panel="bookings">Bookings</div>
-  <div class="nav-item" data-panel="sell">Sell Requests</div>
-  <div class="nav-item" data-panel="customers">Customers</div>
-  <div class="sidebar-foot">
-    <a href="index.html">← Back to site</a>
-    <a href="blog.html">View blog →</a>
-    <button id="signOutBtn" style="display:none;">Sign out</button>
-  </div>
-</aside>
-
-<main>
-  <button class="menu-btn" id="menuBtn">☰ Menu</button>
-
-  <section class="panel active" id="panel-overview">
-    <div class="top-row"><div><h1>Overview</h1><p class="sub" id="overviewSub"></p></div></div>
-    <div class="note" id="backendNote"></div>
-    <div class="stat-row" id="statRow"></div>
-    <div class="card"><h3>Quick actions</h3>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn btn-copper" onclick="go('services')">+ Add a service</button>
-        <button class="btn btn-dark" onclick="go('banners')">Edit homepage banners</button>
-        <button class="btn btn-ghost" onclick="go('bookings')">View bookings</button>
-      </div>
-    </div>
-    <div class="card" id="crmOverviewCard" style="display:none;">
-      <h3>Business Overview <span style="font-weight:400;font-size:.76rem;color:var(--steel);">— live from your CRM</span></h3>
-      <div class="stat-row" id="crmStatRow" style="margin-bottom:0;"></div>
-      <div style="margin-top:16px;">
-        <a href="crm/dashboard.html" class="btn btn-dark" style="text-decoration:none;">Open Full CRM →</a>
-      </div>
-    </div>
-    <div class="note" id="crmNotConnectedNote" style="display:none;">
-      Your CRM (Products, Sales, Repairs, Customers) isn't showing here yet — this usually means <code>crm-full-bridge.sql</code> hasn't been run in Supabase yet, or your CRM doesn't have any data logged so far. <a href="crm/dashboard.html" style="color:var(--copper);font-weight:700;">Open the CRM directly →</a>
-    </div>
-  </section>
-
-  <section class="panel" id="panel-services">
-    <div class="top-row"><div><h1>Services &amp; Pricing</h1><p class="sub">These are the curated "Popular Repairs" shown on the homepage — add, edit or remove them and changes appear instantly.</p></div>
-      <button class="btn btn-copper" id="addServiceBtn">+ Add Service</button></div>
-    <div class="note" id="catalogueNote"></div>
-    <div class="card" id="serviceFormCard" style="display:none;">
-      <h3 id="serviceFormTitle">Add Service</h3>
-      <div class="form-grid">
-        <div class="field"><label>Service Name</label><input id="f-name" placeholder="e.g. iPhone Screen Replacement"></div>
-        <div class="field"><label>Brand</label><input id="f-brand" placeholder="e.g. Apple"></div>
-        <div class="field"><label>Category</label>
-          <select id="f-cat"><option>Screen</option><option>Battery</option><option>Charging</option><option>Water</option><option>Software</option><option>Data</option><option>Camera</option></select></div>
-        <div class="field"><label>Price (UGX)</label><input id="f-price" type="number" placeholder="220000"></div>
-        <div class="field"><label>Repair Time</label><input id="f-time" placeholder="e.g. 30–45 min"></div>
-        <div class="field"><label>Warranty</label><input id="f-warranty" placeholder="e.g. 30 days"></div>
-      </div>
-      <div class="field"><label>Photo (optional)</label><input id="f-image-file" type="file" accept="image/*">
-        <img id="f-image-preview" style="display:none;max-width:140px;margin-top:8px;border:1px solid var(--line);">
-      </div>
-      <div class="field"><label>Video (optional)</label><input id="f-video-file" type="file" accept="video/*">
-        <video id="f-video-preview" style="display:none;max-width:220px;margin-top:8px;border:1px solid var(--line);" controls></video>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:14px;">
-        <button class="btn btn-copper" id="saveServiceBtn">Save Service</button>
-        <button class="btn btn-ghost" id="cancelServiceBtn">Cancel</button>
-      </div>
-    </div>
-    <table><thead><tr><th>Photo</th><th>Service</th><th>Brand</th><th>Category</th><th>Price</th><th>Time</th><th>Warranty</th><th></th></tr></thead><tbody id="serviceTableBody"></tbody></table>
-  </section>
-
-  <section class="panel" id="panel-banners">
-    <div class="top-row"><div><h1>Homepage Banners</h1><p class="sub">These are the rotating slides in the hero section.</p></div>
-      <button class="btn btn-copper" id="addBannerBtn">+ Add Banner</button></div>
-    <div class="card" id="bannerFormCard" style="display:none;">
-      <h3 id="bannerFormTitle">Add Banner</h3>
-      <div class="field"><label>Tag</label><input id="b-tag" placeholder="e.g. This Week"></div>
-      <div class="field"><label>Headline</label><input id="b-title" placeholder="e.g. iPhone Screens From UGX 220,000"></div>
-      <div class="field"><label>Description</label><textarea id="b-desc" placeholder="Short supporting line"></textarea></div>
-      <div class="field"><label>Price / CTA line</label><input id="b-price" placeholder="e.g. From UGX 220,000"></div>
-      <div class="field"><label>Photo (optional)</label><input id="b-image-file" type="file" accept="image/*">
-        <img id="b-image-preview" style="display:none;max-width:140px;margin-top:8px;border:1px solid var(--line);">
-      </div>
-      <div style="display:flex;gap:10px;margin-top:14px;">
-        <button class="btn btn-copper" id="saveBannerBtn">Save Banner</button>
-        <button class="btn btn-ghost" id="cancelBannerBtn">Cancel</button>
-      </div>
-    </div>
-    <table><thead><tr><th>Photo</th><th>Tag</th><th>Headline</th><th>CTA Line</th><th></th></tr></thead><tbody id="bannerTableBody"></tbody></table>
-  </section>
-
-  <section class="panel" id="panel-reviews">
-    <div class="top-row"><div><h1>Reviews</h1><p class="sub">Shown in the "What Customers Say" carousel.</p></div>
-      <button class="btn btn-copper" id="addReviewBtn">+ Add Review</button></div>
-    <div class="card" id="reviewFormCard" style="display:none;">
-      <h3 id="reviewFormTitle">Add Review</h3>
-      <div class="field"><label>Customer Name</label><input id="r-name" placeholder="e.g. Nakato Judith"></div>
-      <div class="field"><label>Review Text</label><textarea id="r-text" placeholder="What did they say?"></textarea></div>
-      <div style="display:flex;gap:10px;margin-top:14px;">
-        <button class="btn btn-copper" id="saveReviewBtn">Save Review</button>
-        <button class="btn btn-ghost" id="cancelReviewBtn">Cancel</button>
-      </div>
-    </div>
-    <table><thead><tr><th>Name</th><th>Review</th><th></th></tr></thead><tbody id="reviewTableBody"></tbody></table>
-  </section>
-
-  <section class="panel" id="panel-blog">
-    <div class="top-row"><div><h1>Blog Posts</h1><p class="sub">Repair guides and articles for SEO — publish, edit or remove.</p></div>
-      <button class="btn btn-copper" id="addPostBtn">+ New Post</button></div>
-    <div class="card" id="postFormCard" style="display:none;">
-      <h3 id="postFormTitle">New Post</h3>
-      <div class="field"><label>Title</label><input id="p-title" placeholder="e.g. 5 Signs Your Phone Battery Needs Replacing"></div>
-      <div class="field"><label>Slug (URL)</label><input id="p-slug" placeholder="e.g. signs-battery-needs-replacing"></div>
-      <div class="field"><label>Excerpt</label><textarea id="p-excerpt" placeholder="Short summary for search engines"></textarea></div>
-      <div class="field"><label>Article Text</label>
-        <textarea id="p-body" placeholder="Write the full article here. Leave a blank line between paragraphs — each becomes its own paragraph automatically." style="min-height:220px;"></textarea>
-      </div>
-      <div class="field"><label>Featured Photo (optional)</label><input id="p-image-file" type="file" accept="image/*">
-        <img id="p-image-preview" style="display:none;max-width:140px;margin-top:8px;border:1px solid var(--line);">
-      </div>
-      <div style="display:flex;gap:10px;margin-top:14px;">
-        <button class="btn btn-copper" id="savePostBtn">Publish</button>
-        <button class="btn btn-ghost" id="cancelPostBtn">Cancel</button>
-      </div>
-    </div>
-    <table><thead><tr><th>Title</th><th>Slug</th><th></th></tr></thead><tbody id="postTableBody"></tbody></table>
-  </section>
-
-  <section class="panel" id="panel-bookings">
-    <div class="top-row"><div><h1>Bookings</h1><p class="sub">Repair requests submitted through the site (cart, service &amp; brand pages).</p></div></div>
-    <table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="bookingTableBody"></tbody></table>
-  </section>
-
-  <section class="panel" id="panel-sell">
-    <div class="top-row"><div><h1>Sell / Trade-In Requests</h1><p class="sub">Submitted from the marketplace "Sell / Trade-In" form.</p></div></div>
-    <table><thead><tr><th>Date</th><th>Customer</th><th>Device</th><th>Condition</th><th>Status</th></tr></thead><tbody id="sellTableBody"></tbody></table>
-  </section>
-
-  <section class="panel" id="panel-customers">
-    <div class="top-row"><div><h1>Customers</h1><p class="sub">Built automatically from bookings and sell requests.</p></div></div>
-    <table><thead><tr><th>Name</th><th>Phone</th><th>Total Requests</th></tr></thead><tbody id="customerTableBody"></tbody></table>
-  </section>
-</main>
-
+</div>
+</div>
+<!-- HEADER -->
+<header>
+<div class="container nav-row">
+<button class="ham" id="hamBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+<a href="#" class="logo">
+<span class="mark"><span class="chip"></span> Samsung Apple Tech</span>
+<small>Services Uganda · Repair Specialists</small>
+</a>
+<div class="nav-search">
+<input type="text" id="navSearchInput" placeholder="Search a repair — e.g. iPhone 14 screen">
+<button class="icon-btn" id="searchOpenBtn" aria-label="Search">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+</button>
+</div>
+<nav class="nav-links">
+<a href="catalogue.html">Catalogue</a>
+<a href="#repairs">Popular Repairs</a>
+<a href="#brands">Brands</a>
+<a href="marketplace.html">Buy &amp; Sell</a>
+<a href="blog.html">Blog</a>
+<a href="#contact">Contact</a>
+</nav>
+<div class="nav-actions">
+<button class="icon-action" id="mobileSearchBtn" aria-label="Search">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+</button>
+<button class="icon-action" id="wishOpenBtn" aria-label="Wishlist">
+<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"/></svg>
+<span class="badge" id="wishBadge">0</span>
+</button>
+<button class="icon-action" id="cartOpenBtn" aria-label="Cart">
+<svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+<span class="badge" id="cartBadge">0</span>
+</button>
+</div>
+</div>
+<div class="cat-bar">
+<div class="container cat-row">
+<a href="#repairs" data-filter="all">All Repairs</a>
+<a href="#repairs" data-filter="Screen">Screen Replacement</a>
+<a href="#repairs" data-filter="Battery">Battery</a>
+<a href="#repairs" data-filter="Charging">Charging Port</a>
+<a href="#repairs" data-filter="Camera">Camera</a>
+<a href="#repairs" data-filter="Water">Water Damage</a>
+<a href="#repairs" data-filter="Software">Software</a>
+<a href="#repairs" data-filter="Data">Data Recovery</a>
+<a href="#repairs" data-filter="Unlock">Unlocking</a>
+<a href="marketplace.html#sell">We Buy Devices</a>
+</div>
+</div>
+</header>
+<div class="identity-strip" id="about">
+<div class="container">
+<p class="identity-main">Independent Samsung &amp; Apple Store in Uganda — Sales • Purchases • Repairs</p>
+<p class="identity-sub">We sell, buy, and professionally repair Samsung and Apple devices in Uganda. We are an independent business and are not affiliated with or endorsed by Samsung or Apple.</p>
+</div>
+</div>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" style="display:none;position:fixed;inset:0;background:var(--ink);z-index:900;flex-direction:column;padding:80px 30px;gap:22px;">
+<button onclick="closeMobile()" style="position:absolute;top:24px;right:24px;background:none;border:none;color:#fff;font-size:1.6rem;">✕</button>
+<a href="catalogue.html" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Catalogue</a>
+<a href="#repairs" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Repairs</a>
+<a href="#brands" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Brands</a>
+<a href="marketplace.html" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Buy &amp; Sell</a>
+<a href="https://essimuuganda.site/" target="_blank" rel="noopener" style="color:var(--signal,#12B886);font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Buy a Phone ↗</a>
+<a href="#contact" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Contact</a>
+</div>
+<!-- HERO -->
+<section class="hero">
+<div class="hero-grid"></div>
+<div class="hero-glow"></div>
+<div class="container hero-inner">
+<div>
+<div class="hero-eyebrow">Kampala · Same-Day Diagnostics</div>
+<h1>Your device,<br><em>fully restored.</em></h1>
+<p class="hero-sub">Screens, batteries, charging ports, water damage, software and data recovery — for every phone, tablet and laptop brand. Walk in or book online, and leave with a working device the same day.</p>
+<div class="hero-cta">
+<a href="#" class="btn btn-copper" id="heroWaBtn">Book a Repair on WhatsApp</a>
+<a href="#estimator" class="btn btn-outline">Get a Free Estimate</a>
+<a href="https://essimuuganda.site/" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:var(--signal);color:var(--signal);">Buy a Phone →</a>
+</div>
+<div class="hero-stats">
+<div>12k+<span>Devices repaired</span></div>
+<div>30-day<span>Warranty on all work</span></div>
+<div>4.9★<span>Average rating</span></div>
+</div>
+</div>
+<div class="promo-card">
+<div class="promo-slides" id="promoSlides"></div>
+<div class="promo-dots" id="promoDots"></div>
+</div>
+</div>
+</section>
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+<!-- FULL CATALOGUE SEARCH BAND -->
+<section class="section container" id="catalogue-search" style="padding-bottom:0;">
+<div style="background:var(--ink);padding:40px clamp(20px,4vw,48px);border-radius:2px;color:#fff;">
+<div class="section-eyebrow" style="color:var(--signal);">Real Inventory · Sourced From Our Price List</div>
+<h2 class="section-title" style="color:#fff;margin-bottom:14px;">Search Our Full Parts Catalogue</h2>
+<p id="catalogueStatLine" style="font-family:var(--font-mono);font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:22px;"></p>
+<form id="catSearchForm" style="display:flex;gap:10px;flex-wrap:wrap;max-width:640px;">
+<input type="text" id="catSearchInput" placeholder="e.g. Galaxy S22 screen, iPhone 13 battery, Redmi Note 12…" style="flex:1;min-width:220px;padding:14px 16px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:inherit;font-size:.86rem;border-radius:2px;">
+<button type="submit" class="btn btn-copper">Search Catalogue</button>
+</form>
+<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:18px;" id="quickCatChips"></div>
+</div>
+</section>
+<!-- CATEGORIES -->
+<section class="section container" id="categories">
+<div class="section-head">
+<div>
+<div class="section-eyebrow">What needs fixing</div>
+<h2 class="section-title">Repair Categories</h2>
+</div>
+<a href="catalogue.html" class="section-link">Browse full catalogue →</a>
+</div>
+<div class="cat-grid" id="categoryGrid"></div>
+</section>
+<!-- FEATURED / POPULAR REPAIRS -->
+<section class="section container" id="repairs">
+<div class="section-head">
+<div>
+<div class="section-eyebrow">Most booked this month</div>
+<h2 class="section-title">Popular Repairs</h2>
+</div>
+<a href="catalogue.html" class="section-link">View all services →</a>
+</div>
+<div class="filter-row" id="filterRow"></div>
+<div class="ticket-grid" id="repairGrid"></div>
+</section>
+<!-- BRANDS -->
+<section class="section brand-section" id="brands">
+<div class="container">
+<div class="section-eyebrow" style="color:var(--signal)">Every brand, one shop</div>
+<h2 class="section-title" style="color:#fff">Repairs By Brand</h2>
+<div class="brand-grid" id="brandGrid"></div>
+</div>
+</section>
+<!-- WHY US -->
+<section class="section container" id="trust">
+<div class="section-head">
+<div>
+<div class="section-eyebrow">Why customers choose us</div>
+<h2 class="section-title">Built On Trust</h2>
+</div>
+</div>
+<div class="why-grid">
+<div class="why-card"><div class="why-num">01 / Speed</div><h3>Same-day turnaround</h3><p>Most screen, battery and port repairs are done in under 2 hours while you wait or run errands nearby.</p></div>
+<div class="why-card"><div class="why-num">02 / Proof</div><h3>Free diagnostics first</h3><p>Every device is inspected and quoted before any work begins — no surprise charges at pickup.</p></div>
+<div class="why-card"><div class="why-num">03 / Cover</div><h3>30-day warranty</h3><p>If the same fault returns within 30 days, we repair it again at no extra cost. In writing, every time.</p></div>
+<div class="why-card"><div class="why-num">04 / Reach</div><h3>Nationwide shipping repair</h3><p>Outside Kampala? Send your device by courier — we repair and return it the same day it arrives.</p></div>
+</div>
+</section>
+<!-- BUY / SELL BAND -->
+<section class="band" id="buy-sell">
+<div class="container">
+<div>
+<h2>We also buy &amp; sell devices.</h2>
+<p>Trade in your old phone, or shop our certified pre-owned Samsung and Apple devices — all tested and warrantied.</p>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;">
+<a href="marketplace.html#sell" class="btn btn-dark" id="sellBtn">Sell My Device</a>
+<a href="marketplace.html" class="btn btn-outline" style="border-color:rgba(255,255,255,.5)">Shop Devices</a>
+</div>
+</div>
+</section>
+<!-- REVIEWS -->
+<section class="section container" id="reviews">
+<div class="section-head">
+<div>
+<div class="section-eyebrow">4.9 out of 5 · 1,200+ reviews</div>
+<h2 class="section-title">What Customers Say</h2>
+</div>
+</div>
+<div class="review-track-wrap"><div class="review-track" id="reviewTrack"></div></div>
+</section>
+<!-- CONTACT -->
+<section class="section container" id="contact">
+<div class="section-head"><div><div class="section-eyebrow">Get in touch</div><h2 class="section-title">Visit Or Message Us</h2></div></div>
+<div class="why-grid">
+<div class="why-card"><div class="why-num">Location</div><h3>Kisa Kyaparamara Building</h3><p>William Street, Kampala, Uganda</p></div>
+<div class="why-card"><div class="why-num">Phone</div><h3>+256 756 922 058</h3><p>Call or WhatsApp anytime during opening hours</p></div>
+<div class="why-card"><div class="why-num">Email</div><h3>wambugaivan@gmail.com</h3><p>For bulk orders, partnerships &amp; press</p></div>
+<div class="why-card"><div class="why-num">Hours</div><h3>8:00 AM – 8:00 PM</h3><p>Open 7 days a week, including public holidays</p></div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer>
+<div class="container foot-grid">
+<div class="foot-brand">
+<a href="index.html" class="logo" style="color:#fff;"><span class="mark"><span class="chip"></span> Samsung Apple Tech</span></a>
+<p>Kampala's premium device repair specialist since 2019. Screens, batteries, software and data recovery for every brand — plus trusted buying and selling of pre-owned devices.</p>
+<div class="newsletter"><input type="email" placeholder="Your email"><button>Join</button></div>
+<div class="foot-social" style="display:flex;gap:10px;margin-top:20px;">
+<a href="https://www.instagram.com/samsungappletechsolutions" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.55.55.9 1.11 1.16 1.77.25.64.42 1.37.47 2.43C21.99 8.94 22 9.3 22 12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47C15.06 21.99 14.7 22 12 22s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77a4.9 4.9 0 0 1 1.77-1.16c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 1.8c-2.65 0-2.98.01-4.02.06-.87.04-1.34.18-1.65.3-.42.16-.71.35-1.02.66-.31.31-.5.6-.66 1.02-.12.31-.26.78-.3 1.65C4.31 9.02 4.3 9.35 4.3 12s.01 2.98.06 4.02c.04.87.18 1.34.3 1.65.16.42.35.71.66 1.02.31.31.6.5 1.02.66.31.12.78.26 1.65.3 1.04.05 1.37.06 4.02.06s2.98-.01 4.02-.06c.87-.04 1.34-.18 1.65-.3.42-.16.71-.35 1.02-.66.31-.31.5-.6.66-1.02.12-.31.26-.78.3-1.65.05-1.04.06-1.37.06-4.02s-.01-2.98-.06-4.02c-.04-.87-.18-1.34-.3-1.65a2.7 2.7 0 0 0-.66-1.02 2.7 2.7 0 0 0-1.02-.66c-.31-.12-.78-.26-1.65-.3C14.98 3.81 14.65 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+<a href="https://www.facebook.com/share/196ufskBaG/" target="_blank" rel="noopener" aria-label="Facebook" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.14C16.2 4.1 15.2 4 14 4c-2.4 0-4 1.46-4 4.15v2.35H7.5v3h2.5V22h3.5z"/></svg></a>
+<a href="https://www.tiktok.com/@samsungappletechsolution" target="_blank" rel="noopener" aria-label="TikTok" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M16.6 5.1c-.9-.8-1.4-1.9-1.5-3.1h-3.1v13.7c0 1.5-1.2 2.7-2.7 2.7A2.7 2.7 0 0 1 6.6 15.7c0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9a5.9 5.9 0 0 0-.9-.07 5.8 5.8 0 0 0-5.8 5.8A5.8 5.8 0 0 0 9.3 21.4a5.8 5.8 0 0 0 5.8-5.8V8.5a7.8 7.8 0 0 0 4.5 1.4V6.8c-1 0-1.9-.3-2.8-.9z"/></svg></a>
+</div>
+</div>
+<div class="foot-col"><h4>Repairs</h4>
+<a href="catalogue.html?c=Screen">Screen Replacement</a><a href="catalogue.html?c=Battery">Battery Replacement</a><a href="catalogue.html?c=Charging%20Port">Charging Port</a><a href="catalogue.html?c=Back%20Glass%20%2F%20Housing">Back Glass</a><a href="catalogue.html">Full Catalogue</a>
+</div>
+<div class="foot-col"><h4>Company</h4>
+<a href="index.html#about">About Us</a><a href="blog.html">Blog</a><a href="index.html#trust">Warranty Policy</a><a href="admin.html">Admin</a>
+</div>
+<div class="foot-col"><h4>Buy &amp; Sell</h4>
+<a href="marketplace.html">Shop Accessories</a><a href="marketplace.html#sell">Sell Your Device</a><a href="https://essimuuganda.site/" target="_blank" rel="noopener">Buy a Phone (Esimu Uganda) ↗</a>
+</div>
+<div class="foot-col"><h4>Contact</h4>
+<a href="tel:+256756922058">+256 756 922 058</a><a href="mailto:wambugaivan@gmail.com">wambugaivan@gmail.com</a><a href="index.html#contact">William Street, Kampala</a>
+</div>
+</div>
+<div class="container">
+<div class="legal-disclaimer">
+<strong>Disclaimer:</strong> We are an independent third-party repair facility and service provider. We are not affiliated with, authorized by, sponsored by, or endorsed by Apple Inc. or Samsung Electronics. All trademarks, brand names, and device names (such as iPhone, iPad, MacBook, Samsung Galaxy, etc.) belong to their respective owners and are used here solely for descriptive and identification purposes.
+</div>
+</div>
+<div class="container foot-bottom">
+<span>© 2025 Samsung Apple Tech Services Uganda. All rights reserved.</span>
+<span>Not affiliated with Samsung Electronics or Apple Inc.</span>
+</div>
+</footer>
+<!-- FLOATING WHATSAPP -->
+<a href="#" class="float-wa" id="floatWaBtn" aria-label="WhatsApp us">
+<svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17 0-.37 0-.57 0s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35M12.05 21.8h0a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26C2.17 6.47 6.6 2.04 12.05 2.04c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 012.89 6.99c0 5.45-4.44 9.88-9.88 9.88"/></svg>
+</a>
+<!-- CART DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="cartDrawer">
+<div class="drawer-head"><h3>Your Cart</h3><button class="drawer-close" id="cartCloseBtn">✕</button></div>
+<div class="drawer-body" id="cartBody"></div>
+<div class="drawer-foot">
+<div class="drawer-total"><span>Estimated total</span><span id="cartTotal">UGX 0</span></div>
+<input type="text" id="cartName" placeholder="Your name" style="width:100%;padding:9px 11px;border:1.5px solid var(--line);margin-bottom:8px;font-family:inherit;font-size:.8rem;">
+<input type="tel" id="cartPhone" placeholder="Your phone number" style="width:100%;padding:9px 11px;border:1.5px solid var(--line);margin-bottom:10px;font-family:inherit;font-size:.8rem;">
+<a href="#" class="btn btn-copper" style="width:100%;justify-content:center;" id="cartWaBtn">Send Booking on WhatsApp</a>
+</div>
+</div>
+<div class="drawer" id="wishDrawer">
+<div class="drawer-head"><h3>Wishlist</h3><button class="drawer-close" id="wishCloseBtn">✕</button></div>
+<div class="drawer-body" id="wishBody"></div>
+</div>
+<!-- SEARCH MODAL -->
+<div class="search-modal" id="searchModal">
+<div class="search-box">
+<input type="text" id="searchModalInput" placeholder="Search repairs, brands, models…" autofocus>
+<div class="search-results" id="searchModalResults"></div>
+<div class="search-hint">Try "iPhone battery", "Samsung screen" or "water damage"</div>
+</div>
+</div>
 <div class="toast" id="toast"></div>
-
 <script>
-function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
-function fmt(n){ return n || n===0 ? "UGX "+Number(n).toLocaleString() : "—"; }
-
-/* ---------- MEDIA HELPERS (used by services, banners, blog) ---------- */
-// Wires a <input type=file> to show a live preview in an <img>/<video> tag
-function wireFilePreview(fileInputId, previewId){
-  const input = document.getElementById(fileInputId), preview = document.getElementById(previewId);
-  input.addEventListener('change', ()=>{
-    const f = input.files[0];
-    if(!f){ preview.style.display='none'; return; }
-    preview.src = URL.createObjectURL(f);
-    preview.style.display='block';
-  });
+/* ============================= DATA LAYER ============================= */
+const WA_NUMBER = "256756922058";
+const CATEGORIES = [
+{name:"Screen Replacement", desc:"Cracked or dead displays", icon:"phone", cat:"Screen"},
+{name:"Battery Replacement", desc:"Fast drain & swelling", icon:"battery", cat:"Battery"},
+{name:"Charging Port", desc:"Loose or dead ports", icon:"plug", cat:"Charging Port"},
+{name:"Back Glass / Housing", desc:"Cracked rear panels", icon:"drop", cat:"Back Glass / Housing"},
+{name:"Camera Repair", desc:"Blurry or broken lenses", icon:"camera", cat:"Camera"},
+{name:"Speaker & Microphone", desc:"Audio faults", icon:"cpu", cat:"Speaker / Microphone"},
+{name:"Motherboard / Core", desc:"Board-level faults", icon:"disk", cat:"Motherboard / Core"},
+{name:"Accessories", desc:"Cables, cases, chargers", icon:"check", cat:"Accessory"},
+];
+const ICONS = {
+phone:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg>',
+battery:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><rect x="2" y="7" width="18" height="10" rx="1.5"/><line x1="22" y1="10" x2="22" y2="14"/><rect x="5" y="9.5" width="8" height="5" fill="currentColor" stroke="none"/></svg>',
+plug:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-10 0V8zM12 17v5"/></svg>',
+drop:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M12 2s7 8 7 13a7 7 0 0 1-14 0c0-5 7-13 7-13z"/></svg>',
+cpu:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><rect x="6" y="6" width="12" height="12" rx="1"/><line x1="9" y1="2" x2="9" y2="6"/><line x1="15" y1="2" x2="15" y2="6"/><line x1="9" y1="18" x2="9" y2="22"/><line x1="15" y1="18" x2="15" y2="22"/><line x1="2" y1="9" x2="6" y2="9"/><line x1="2" y1="15" x2="6" y2="15"/><line x1="18" y1="9" x2="22" y2="9"/><line x1="18" y1="15" x2="22" y2="15"/></svg>',
+disk:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>',
+camera:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+check:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+};
+const REPAIRS = [
+{id:"iph-screen",name:"iPhone Screen Replacement",cat:"Screen",time:"30–45 min",warranty:"30 days",price:220000,brand:"Apple"},
+{id:"sam-screen",name:"Samsung Galaxy Screen Replacement",cat:"Screen",time:"30–45 min",warranty:"30 days",price:190000,brand:"Samsung"},
+{id:"iph-batt",name:"iPhone Battery Replacement",cat:"Battery",time:"20–30 min",warranty:"30 days",price:135000,brand:"Apple"},
+{id:"and-batt",name:"Android Battery Replacement",cat:"Battery",time:"20–30 min",warranty:"30 days",price:65000,brand:"Android"},
+{id:"charge-port",name:"Charging Port Repair",cat:"Charging",time:"20–30 min",warranty:"30 days",price:65000,brand:"All Brands"},
+{id:"water",name:"Water Damage Recovery",cat:"Water",time:"2–24 hrs",warranty:"14 days",price:95000,brand:"All Brands"},
+{id:"software",name:"Software Repair & Unlocking",cat:"Software",time:"20–60 min",warranty:"7 days",price:40000,brand:"All Brands"},
+{id:"data",name:"Data Recovery",cat:"Data",time:"1–3 hrs",warranty:"—",price:75000,brand:"All Brands"},
+{id:"cam",name:"Camera Module Replacement",cat:"Camera",time:"20–30 min",warranty:"30 days",price:110000,brand:"All Brands"},
+{id:"back-glass",name:"Back Glass Replacement",cat:"Screen",time:"20–30 min",warranty:"30 days",price:95000,brand:"Samsung"},
+{id:"laptop-screen",name:"Laptop Screen Replacement",cat:"Screen",time:"45–60 min",warranty:"30 days",price:280000,brand:"MacBook"},
+{id:"tab-screen",name:"Tablet Screen Replacement",cat:"Screen",time:"45–60 min",warranty:"30 days",price:230000,brand:"Samsung"},
+];
+const BRANDS = ["Samsung","Apple","Google Pixel","Huawei","Oppo","Vivo","Redmi","Xiaomi","Tecno","Infinix","Nokia","Sony","Motorola","OnePlus","Realme","Honor","Nothing","Asus","Lenovo","HP","Dell","Acer","MS Surface","MacBook"];
+const REVIEWS = [
+{name:"Nakato Judith",text:"Cracked my iPhone 14 screen and it was fixed in under an hour — looks brand new."},
+{name:"Wamono Peter",text:"Sent my Samsung from Mbale for software repair, got it back the same day. Excellent service."},
+{name:"Apio Grace",text:"Affordable, honest pricing and the estimator on the site matched exactly what I paid."},
+{name:"Kiwanuka Dennis",text:"Battery replacement done while I waited. Professional and fast."},
+{name:"Namutebi Sharon",text:"Best repair shop in Kampala — fixed my charging port and it's never been better."},
+];
+const PROMOS = [
+{tag:"This Week", title:"iPhone Screens From UGX 220,000", desc:"Genuine-quality displays, fitted in under 45 minutes.", price:"From UGX 220,000"},
+{tag:"Bundle Deal", title:"Battery + Diagnostics", desc:"Free full device check with every battery replacement.", price:"From UGX 65,000"},
+{tag:"Trade-In", title:"Sell Your Old Device Today", desc:"Instant valuation, same-day cash or store credit.", price:"Get a quote →"},
+];
+/* ============================================================================
+DATA LOAD — pulls Services/Banners/Reviews from Supabase if config.js has
+been filled in, otherwise from this browser's local demo storage.
+============================================================================ */
+async function loadLiveData(){
+const [liveServices, livePromos, liveReviews] = await Promise.all([
+SATSU_DB.getServices(), SATSU_DB.getBanners(), SATSU_DB.getReviews()
+]);
+if(liveServices && liveServices.length){ REPAIRS.length = 0; REPAIRS.push(...liveServices); }
+if(livePromos && livePromos.length){ PROMOS.length = 0; PROMOS.push(...livePromos); }
+if(liveReviews && liveReviews.length){ REVIEWS.length = 0; REVIEWS.push(...liveReviews); }
 }
-// If a new file was picked, uploads it and returns the new URL. Otherwise keeps existingUrl.
-async function uploadIfPicked(fileInputId, folder, existingUrl){
-  const input = document.getElementById(fileInputId);
-  const file = input.files[0];
-  if(!file) return {url: existingUrl||null, error:null};
-  const {url, error} = await SATSU_DB.uploadMedia(file, folder);
-  return {url: url || existingUrl || null, error};
-}
-function resetFileField(fileInputId, previewId){
-  document.getElementById(fileInputId).value = '';
-  const preview = document.getElementById(previewId);
-  preview.style.display='none'; preview.removeAttribute('src');
-}
-function showExistingPreview(previewId, url){
-  const preview = document.getElementById(previewId);
-  if(url){ preview.src=url; preview.style.display='block'; } else { preview.style.display='none'; }
-}
-function thumbCell(url){
-  return url ? `<img src="${url}" style="width:44px;height:44px;object-fit:cover;border:1px solid var(--line);">` : '<span style="color:var(--steel);font-size:.7rem;">—</span>';
-}
-
-/* ============================= AUTH GATE ============================= */
-async function boot(){
-  const configured = SATSU_DB.isConfigured();
-  document.getElementById('modeIndicator').textContent = configured ? "● Connected to Supabase" : "● Local demo mode";
-  document.getElementById('overviewSub').textContent = configured ? "Live data, synced across every device." : "Editing local demo data in this browser only.";
-
-  if(!configured){
-    document.getElementById('backendNote').textContent = "⚠️ No backend connected yet. You're editing demo data stored only in this browser (see config.js to connect Supabase for real, cross-device syncing and a real Bookings/Customers log).";
-    document.getElementById('loginScreen').style.display = 'none';
-    initApp();
-    return;
-  }
-
-  const user = await SATSU_DB.currentUser();
-  if(user){
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('signOutBtn').style.display = 'block';
-    document.getElementById('backendNote').classList.add('good');
-    document.getElementById('backendNote').textContent = "✅ Connected to your Supabase backend — changes here are live for every visitor and device.";
-    initApp();
-  } else {
-    document.getElementById('loginScreen').style.display = 'flex';
-  }
-}
-document.getElementById('loginBtn').addEventListener('click', async ()=>{
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value;
-  const {error} = await SATSU_DB.signIn(email, password);
-  if(error){ document.getElementById('loginErr').textContent = error; return; }
-  boot();
+function fmt(n){return "UGX "+n.toLocaleString();}
+(async function(){
+await loadLiveData();
+/* ============================= RENDER: CATEGORIES ============================= */
+const catGrid = document.getElementById('categoryGrid');
+CATEGORIES.forEach(c=>{
+const count = (window.SATSU_INV ? SATSU_INV.all().filter(i=>SATSU_INV.friendlyCategory(i)===c.cat).length : null);
+catGrid.insertAdjacentHTML('beforeend', `<a class="cat-card" href="catalogue.html?c=${encodeURIComponent(c.cat)}">
+<div class="cat-icon">${ICONS[c.icon]}</div>
+<h3>${c.name}</h3><p>${c.desc}${count!==null ? ' · '+count+' items' : ''}</p></a>`);
 });
-document.getElementById('signOutBtn').addEventListener('click', async ()=>{ await SATSU_DB.signOut(); location.reload(); });
-boot();
-
-/* ============================= APP (runs once authenticated / in demo mode) ============================= */
-let services=[], banners=[], reviews=[], posts=[], bookings=[], sellRequests=[], customers=[];
-
-async function initApp(){
-  document.querySelectorAll('.nav-item').forEach(item=>item.addEventListener('click', ()=>go(item.dataset.panel)));
-  document.getElementById('menuBtn').addEventListener('click', ()=>document.getElementById('sidebar').classList.toggle('open'));
-  wireFilePreview('f-image-file','f-image-preview');
-  wireFilePreview('f-video-file','f-video-preview');
-  wireFilePreview('b-image-file','b-image-preview');
-  wireFilePreview('p-image-file','p-image-preview');
-  await refreshAll();
-  wireForms();
-  go('overview');
+/* ============================= CATALOGUE SEARCH BAND ============================= */
+if(window.SATSU_INV){
+const s = SATSU_INV.stats();
+document.getElementById('catalogueStatLine').textContent =
+`${s.total.toLocaleString()} parts & services across ${s.brands} brands and ${s.models} device models — pulled directly from our repair price list.`;
+const quickLinks = [
+{label:"Phone Screens", href:"catalogue.html?t=Phone&c=Screen"},
+{label:"Batteries", href:"catalogue.html?c=Battery"},
+{label:"Charging Ports", href:"catalogue.html?c=Charging%20Port"},
+{label:"Samsung", href:"catalogue.html?b=Samsung"},
+{label:"iPhone / Apple", href:"catalogue.html?b=Apple"},
+{label:"TVs", href:"catalogue.html?t=TV"},
+{label:"Laptops", href:"catalogue.html?t=Laptop"},
+{label:"Smartwatches", href:"catalogue.html?t=Smartwatch"},
+{label:"Earbuds", href:"catalogue.html?t=Earbuds%20%26%20Audio"},
+{label:"Accessories", href:"catalogue.html?t=Accessories"},
+];
+document.getElementById('quickCatChips').innerHTML = quickLinks.map(q=>
+`<a href="${q.href}" style="font-size:.7rem;font-weight:600;padding:7px 13px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);border-radius:20px;">${q.label}</a>`).join('');
 }
-async function refreshAll(){
-  services = (await SATSU_DB.getServices()) || [];
-  banners = (await SATSU_DB.getBanners()) || [];
-  reviews = (await SATSU_DB.getReviews()) || [];
-  posts = (await SATSU_DB.getPosts()) || [];
-  bookings = (await SATSU_DB.getBookings()) || [];
-  sellRequests = (await SATSU_DB.getSellRequests()) || [];
-  customers = (await SATSU_DB.getCustomers()) || [];
-  renderOverview(); renderServices(); renderBanners(); renderReviews(); renderPosts(); renderBookings(); renderSell(); renderCustomers();
+document.getElementById('catSearchForm').addEventListener('submit', e=>{
+e.preventDefault();
+const q = document.getElementById('catSearchInput').value.trim();
+window.location.href = 'catalogue.html' + (q ? '?q='+encodeURIComponent(q) : '');
+});
+/* ============================= RENDER: BRANDS ============================= */
+const brandGrid = document.getElementById('brandGrid');
+BRANDS.forEach(b=>{
+brandGrid.insertAdjacentHTML('beforeend', `<a class="brand-pill" href="brand.html?brand=${encodeURIComponent(b)}"><span>${b}</span></a>`);
+});
+/* ============================= RENDER: TICKER ============================= */
+const tickerItems = ["Same-Day Repairs","iPhone & Samsung Specialists","30-Day Warranty","Free Diagnostics","We Buy & Sell Devices","Nationwide Shipping Repair"];
+const tickerTrack = document.getElementById('tickerTrack');
+[...tickerItems,...tickerItems].forEach(t=>tickerTrack.insertAdjacentHTML('beforeend',`<span>${t}</span>`));
+/* ============================= RENDER: PROMO SLIDER ============================= */
+const promoSlides = document.getElementById('promoSlides');
+const promoDots = document.getElementById('promoDots');
+PROMOS.forEach((p,i)=>{
+const bgStyle = p.image ? ` style="background:linear-gradient(0deg,rgba(11,15,20,.72),rgba(11,15,20,.35)),url('${p.image}') center/cover no-repeat;"` : '';
+const textColor = p.image ? 'color:#fff;' : '';
+const descColor = p.image ? 'color:rgba(255,255,255,.75);' : '';
+promoSlides.insertAdjacentHTML('beforeend', `<div class="promo-slide ${i===0?'active':''}"${bgStyle}>
+<div><span class="promo-tag">${p.tag}</span><h3 style="${textColor}">${p.title}</h3><p style="${descColor}">${p.desc}</p></div>
+<div class="promo-price" style="${textColor}">${p.price}</div></div>`);
+promoDots.insertAdjacentHTML('beforeend', `<button class="${i===0?'active':''}" data-i="${i}"></button>`);
+});
+let promoIdx=0;
+function showPromo(i){
+document.querySelectorAll('.promo-slide').forEach((s,j)=>s.classList.toggle('active',j===i));
+document.querySelectorAll('.promo-dots button').forEach((d,j)=>d.classList.toggle('active',j===i));
+promoIdx=i;
 }
-
-function go(panel){
-  document.querySelectorAll('.nav-item').forEach(i=>i.classList.toggle('active', i.dataset.panel===panel));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+panel));
-  document.getElementById('sidebar').classList.remove('open');
+document.querySelectorAll('.promo-dots button').forEach(d=>d.addEventListener('click',()=>showPromo(+d.dataset.i)));
+setInterval(()=>showPromo((promoIdx+1)%PROMOS.length),5000);
+/* ============================= RENDER: FILTERS + REPAIRS ============================= */
+const filterRow = document.getElementById('filterRow');
+const cats = ["all","Screen","Battery","Charging","Water","Software","Data","Camera"];
+cats.forEach(c=>filterRow.insertAdjacentHTML('beforeend',`<button class="chip ${c==='all'?'active':''}" data-f="${c}">${c==='all'?'All':c}</button>`));
+const repairGrid = document.getElementById('repairGrid');
+function renderRepairs(filter){
+const list = filter==='all' ? REPAIRS : REPAIRS.filter(r=>r.cat===filter);
+repairGrid.innerHTML = list.map(r=>{
+const mediaStyle = r.image_url ? ` style="background:url('${r.image_url}') center/cover no-repeat;"` : '';
+const mediaContent = r.image_url ? '' : ICONS[r.cat==='Screen'?'phone':r.cat==='Battery'?'battery':r.cat==='Charging'?'plug':r.cat==='Water'?'drop':r.cat==='Software'?'cpu':r.cat==='Data'?'disk':'camera'];
+return `
+<div class="ticket" data-id="${r.id}">
+<div class="ticket-media"${mediaStyle}>
+${mediaContent}
+<button class="wish-btn" data-wish="${r.id}" aria-label="Add to wishlist">
+<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"/></svg>
+</button>
+</div>
+<div class="ticket-perf"></div>
+<div class="ticket-body">
+<div class="ticket-cat">${r.brand} · ${r.cat}</div>
+<h3><a href="service.html?repair=${r.id}" style="text-decoration:none;color:inherit;">${r.name}</a></h3>
+<div class="ticket-meta">
+<span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${r.time}</span>
+<span><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg>${r.warranty}</span>
+</div>
+<div class="ticket-foot">
+<div class="ticket-price"><small>From</small>${fmt(r.price)}</div>
+<button class="add-btn" data-add="${r.id}">Add + Book</button>
+</div>
+</div>
+</div>`;
+}).join('');
+bindTicketEvents();
 }
-
-async function renderOverview(){
-  document.getElementById('statRow').innerHTML = `
-    <div class="stat"><span>Popular Repairs (Homepage)</span><b>${services.length}</b></div>
-    <div class="stat"><span>Homepage Banners</span><b>${banners.length}</b></div>
-    <div class="stat"><span>Bookings</span><b>${bookings.length}</b></div>
-    <div class="stat"><span>Sell Requests</span><b>${sellRequests.length}</b></div>` +
-    (window.SATSU_INV ? `<div class="stat"><span>Full Catalogue Items</span><b>${SATSU_INV.stats().total.toLocaleString()}</b></div>
-    <div class="stat"><span>Catalogue Brands</span><b>${SATSU_INV.stats().brands}</b></div>` : '');
-  const note = document.getElementById('catalogueNote');
-  if(note && window.SATSU_INV){
-    note.textContent = `ℹ️ This panel only manages the small curated "Popular Repairs" list on the homepage. The full ${SATSU_INV.stats().total.toLocaleString()}-item repair catalogue (screens, batteries, parts for every brand/model in catalogue.html) comes from inventory-data.js, generated from your Excel price list — to update those prices, update the spreadsheet and regenerate that file rather than editing here.`;
-  }
-
-  if(window.SATSU_DB && SATSU_DB.isConfigured()){
-    const crm = await SATSU_DB.getCrmOverview();
-    if(crm){
-      document.getElementById('crmOverviewCard').style.display = 'block';
-      document.getElementById('crmNotConnectedNote').style.display = 'none';
-      document.getElementById('crmStatRow').innerHTML = `
-        <div class="stat"><span>Products in Stock</span><b>${crm.productCount}</b></div>
-        <div class="stat"><span>Low Stock Alerts</span><b style="${crm.lowStockCount>0?'color:#C1622C;':''}">${crm.lowStockCount}</b></div>
-        <div class="stat"><span>Sales Today</span><b>${crm.salesTodayCount} · UGX ${crm.salesTodayTotal.toLocaleString()}</b></div>
-        <div class="stat"><span>Sales This Month</span><b>UGX ${crm.salesMonthTotal.toLocaleString()}</b></div>
-        <div class="stat"><span>Active Repair Jobs</span><b>${crm.activeRepairs}</b></div>
-        <div class="stat"><span>Ready for Pickup</span><b>${crm.readyRepairs}</b></div>
-        <div class="stat"><span>CRM Customers</span><b>${crm.crmCustomers}</b></div>`;
-    } else {
-      document.getElementById('crmNotConnectedNote').style.display = 'block';
-    }
-  }
+renderRepairs('all');
+filterRow.addEventListener('click', e=>{
+const btn = e.target.closest('.chip'); if(!btn) return;
+filterRow.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+btn.classList.add('active');
+renderRepairs(btn.dataset.f);
+});
+document.querySelectorAll('[data-filter]').forEach(a=>{
+a.addEventListener('click', e=>{
+const f = a.dataset.filter;
+setTimeout(()=>{
+filterRow.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.dataset.f===f));
+renderRepairs(f);
+},50);
+});
+});
+/* ============================= RENDER: REVIEWS ============================= */
+const reviewTrack = document.getElementById('reviewTrack');
+[...REVIEWS,...REVIEWS].forEach(r=>{
+reviewTrack.insertAdjacentHTML('beforeend', `<div class="review-card">
+<div class="stars">★★★★★</div><p>"${r.text}"</p><div class="review-author">${r.name} — Kampala</div></div>`);
+});
+})(); // end async render block
+/* ============================= CART / WISHLIST (localStorage) ============================= */
+function getStore(key){ try{ return JSON.parse(localStorage.getItem(key))||[]; }catch(e){ return []; } }
+function setStore(key,val){ localStorage.setItem(key, JSON.stringify(val)); }
+function updateBadges(){
+document.getElementById('cartBadge').textContent = getStore('satsu_cart').length;
+document.getElementById('wishBadge').textContent = getStore('satsu_wish').length;
 }
-
-/* ---------- SERVICES ---------- */
-function renderServices(){
-  document.getElementById('serviceTableBody').innerHTML = services.map(s=>`
-    <tr><td>${thumbCell(s.image_url)}</td><td>${s.name}</td><td>${s.brand||''}</td><td>${s.cat||''}</td><td class="price">${fmt(s.price)}</td><td>${s.time||''}</td><td>${s.warranty||''}</td>
-    <td class="row-actions"><button data-edit="${s.id}">Edit</button><button class="del" data-del="${s.id}">Delete</button></td></tr>`).join('')
-    || '<tr><td colspan="8" style="text-align:center;color:var(--steel);">No services yet.</td></tr>';
+function showToast(msg){
+const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'), 2200);
 }
-let editingServiceId = null;
-document.getElementById('addServiceBtn').addEventListener('click', ()=>{ editingServiceId=null; ['f-name','f-brand','f-price','f-time','f-warranty'].forEach(id=>document.getElementById(id).value=''); document.getElementById('f-cat').value='Screen'; resetFileField('f-image-file','f-image-preview'); resetFileField('f-video-file','f-video-preview'); document.getElementById('serviceFormTitle').textContent='Add Service'; document.getElementById('serviceFormCard').style.display='block'; });
-document.getElementById('cancelServiceBtn').addEventListener('click', ()=>document.getElementById('serviceFormCard').style.display='none');
-
-function wireForms(){
-  document.getElementById('saveServiceBtn').addEventListener('click', async ()=>{
-    const name=document.getElementById('f-name').value.trim();
-    const brand=document.getElementById('f-brand').value.trim();
-    const cat=document.getElementById('f-cat').value;
-    const price=Number(document.getElementById('f-price').value)||0;
-    const time=document.getElementById('f-time').value.trim();
-    const warranty=document.getElementById('f-warranty').value.trim();
-    if(!name||!price){ showToast('Name and price are required'); return; }
-    const svc = editingServiceId ? services.find(x=>x.id===editingServiceId) : {};
-    Object.assign(svc,{name,brand,cat,price,time,warranty});
-    showToast('Saving…');
-    const [img, vid] = await Promise.all([
-      uploadIfPicked('f-image-file','services',svc.image_url),
-      uploadIfPicked('f-video-file','services',svc.video_url),
-    ]);
-    if(img.error){ showToast('Photo upload error: '+img.error); return; }
-    if(vid.error){ showToast('Video upload error: '+vid.error); return; }
-    svc.image_url = img.url; svc.video_url = vid.url;
-    const {error} = await SATSU_DB.saveService(svc);
-    if(error){ showToast('Error: '+error); return; }
-    await refreshAll();
-    document.getElementById('serviceFormCard').style.display='none';
-    showToast('Service saved — live on the site now');
-  });
-  document.getElementById('serviceTableBody').addEventListener('click', async e=>{
-    if(e.target.dataset.edit){
-      const s = services.find(x=>x.id===e.target.dataset.edit); editingServiceId=s.id;
-      document.getElementById('f-name').value=s.name; document.getElementById('f-brand').value=s.brand||'';
-      document.getElementById('f-cat').value=s.cat||'Screen'; document.getElementById('f-price').value=s.price;
-      document.getElementById('f-time').value=s.time||''; document.getElementById('f-warranty').value=s.warranty||'';
-      resetFileField('f-image-file','f-image-preview'); showExistingPreview('f-image-preview', s.image_url);
-      resetFileField('f-video-file','f-video-preview'); showExistingPreview('f-video-preview', s.video_url);
-      document.getElementById('serviceFormTitle').textContent='Edit Service';
-      document.getElementById('serviceFormCard').style.display='block';
-    }
-    if(e.target.dataset.del){
-      const {error} = await SATSU_DB.deleteService(e.target.dataset.del);
-      if(error){ showToast('Error: '+error); return; }
-      await refreshAll(); showToast('Service deleted');
-    }
-  });
-
-  /* ---------- BANNERS ---------- */
-  let editingBannerIdx = null, editingBannerId = null;
-  document.getElementById('addBannerBtn').addEventListener('click', ()=>{ editingBannerIdx=null; editingBannerId=null; ['b-tag','b-title','b-desc','b-price'].forEach(id=>document.getElementById(id).value=''); resetFileField('b-image-file','b-image-preview'); document.getElementById('bannerFormTitle').textContent='Add Banner'; document.getElementById('bannerFormCard').style.display='block'; });
-  document.getElementById('cancelBannerBtn').addEventListener('click', ()=>document.getElementById('bannerFormCard').style.display='none');
-  document.getElementById('saveBannerBtn').addEventListener('click', async ()=>{
-    const b = {tag:document.getElementById('b-tag').value.trim(), title:document.getElementById('b-title').value.trim(), desc:document.getElementById('b-desc').value.trim(), price:document.getElementById('b-price').value.trim()};
-    if(!b.title){ showToast('Headline is required'); return; }
-    if(editingBannerId) b.id = editingBannerId;
-    const existingImg = editingBannerIdx!==null && banners[editingBannerIdx] ? banners[editingBannerIdx].image : null;
-    showToast('Saving…');
-    const img = await uploadIfPicked('b-image-file','banners', existingImg);
-    if(img.error){ showToast('Photo upload error: '+img.error); return; }
-    b.image = img.url;
-    const {error} = await SATSU_DB.saveBanner(b, editingBannerIdx);
-    if(error){ showToast('Error: '+error); return; }
-    await refreshAll();
-    document.getElementById('bannerFormCard').style.display='none';
-    showToast('Banner saved — live on the site now');
-  });
-  document.getElementById('bannerTableBody').addEventListener('click', async e=>{
-    const i = e.target.dataset.edit ?? e.target.dataset.del;
-    if(e.target.dataset.edit!==undefined){
-      const idx=+e.target.dataset.edit; const b=banners[idx]; editingBannerIdx=idx; editingBannerId=b.id||null;
-      document.getElementById('b-tag').value=b.tag||''; document.getElementById('b-title').value=b.title;
-      document.getElementById('b-desc').value=b.desc||''; document.getElementById('b-price').value=b.price||'';
-      resetFileField('b-image-file','b-image-preview'); showExistingPreview('b-image-preview', b.image);
-      document.getElementById('bannerFormTitle').textContent='Edit Banner';
-      document.getElementById('bannerFormCard').style.display='block';
-    }
-    if(e.target.dataset.del!==undefined){
-      const idx=+e.target.dataset.del; const b=banners[idx];
-      const {error} = await SATSU_DB.deleteBanner(b.id!==undefined ? b.id : idx);
-      if(error){ showToast('Error: '+error); return; }
-      await refreshAll(); showToast('Banner deleted');
-    }
-  });
-
-  /* ---------- REVIEWS ---------- */
-  let editingReviewIdx = null, editingReviewId = null;
-  document.getElementById('addReviewBtn').addEventListener('click', ()=>{ editingReviewIdx=null; editingReviewId=null; document.getElementById('r-name').value=''; document.getElementById('r-text').value=''; document.getElementById('reviewFormTitle').textContent='Add Review'; document.getElementById('reviewFormCard').style.display='block'; });
-  document.getElementById('cancelReviewBtn').addEventListener('click', ()=>document.getElementById('reviewFormCard').style.display='none');
-  document.getElementById('saveReviewBtn').addEventListener('click', async ()=>{
-    const r = {name:document.getElementById('r-name').value.trim(), text:document.getElementById('r-text').value.trim()};
-    if(!r.name||!r.text){ showToast('Name and review text are required'); return; }
-    if(editingReviewId) r.id = editingReviewId;
-    const {error} = await SATSU_DB.saveReview(r, editingReviewIdx);
-    if(error){ showToast('Error: '+error); return; }
-    await refreshAll();
-    document.getElementById('reviewFormCard').style.display='none';
-    showToast('Review saved — live on the site now');
-  });
-  document.getElementById('reviewTableBody').addEventListener('click', async e=>{
-    if(e.target.dataset.edit!==undefined){
-      const idx=+e.target.dataset.edit; const r=reviews[idx]; editingReviewIdx=idx; editingReviewId=r.id||null;
-      document.getElementById('r-name').value=r.name; document.getElementById('r-text').value=r.text;
-      document.getElementById('reviewFormTitle').textContent='Edit Review';
-      document.getElementById('reviewFormCard').style.display='block';
-    }
-    if(e.target.dataset.del!==undefined){
-      const idx=+e.target.dataset.del; const r=reviews[idx];
-      const {error} = await SATSU_DB.deleteReview(r.id!==undefined ? r.id : idx);
-      if(error){ showToast('Error: '+error); return; }
-      await refreshAll(); showToast('Review deleted');
-    }
-  });
-
-  /* ---------- BLOG ---------- */
-  let editingPostId = null;
-  document.getElementById('addPostBtn').addEventListener('click', ()=>{ editingPostId=null; ['p-title','p-slug','p-excerpt','p-body'].forEach(id=>document.getElementById(id).value=''); resetFileField('p-image-file','p-image-preview'); document.getElementById('postFormTitle').textContent='New Post'; document.getElementById('postFormCard').style.display='block'; });
-  document.getElementById('cancelPostBtn').addEventListener('click', ()=>document.getElementById('postFormCard').style.display='none');
-  document.getElementById('savePostBtn').addEventListener('click', async ()=>{
-    const title=document.getElementById('p-title').value.trim();
-    const slug=document.getElementById('p-slug').value.trim();
-    const excerpt=document.getElementById('p-excerpt').value.trim();
-    const bodyRaw=document.getElementById('p-body').value.trim();
-    // Turn plain text into paragraphs: blank line = new <p>
-    const body = bodyRaw ? bodyRaw.split(/\n\s*\n/).map(para=>`<p>${para.trim().replace(/\n/g,'<br>')}</p>`).join('') : '';
-    if(!title){ showToast('Title is required'); return; }
-    const post = editingPostId ? posts.find(x=>x.id===editingPostId) : {};
-    Object.assign(post,{title,slug,excerpt,body});
-    showToast('Saving…');
-    const img = await uploadIfPicked('p-image-file','blog', post.image_url);
-    if(img.error){ showToast('Photo upload error: '+img.error); return; }
-    post.image_url = img.url;
-    const {error} = await SATSU_DB.savePost(post);
-    if(error){ showToast('Error: '+error); return; }
-    await refreshAll();
-    document.getElementById('postFormCard').style.display='none';
-    showToast('Post saved');
-  });
-  document.getElementById('postTableBody').addEventListener('click', async e=>{
-    if(e.target.dataset.edit){
-      const p = posts.find(x=>x.id===e.target.dataset.edit); editingPostId=p.id;
-      document.getElementById('p-title').value=p.title; document.getElementById('p-slug').value=p.slug||''; document.getElementById('p-excerpt').value=p.excerpt||'';
-      // Convert saved HTML paragraphs back into plain text for editing
-      const plain = (p.body||'').replace(/<br\s*\/?>/gi,'\n').replace(/<\/p>\s*<p>/gi,'\n\n').replace(/<\/?p>/gi,'').trim();
-      document.getElementById('p-body').value = plain;
-      resetFileField('p-image-file','p-image-preview'); showExistingPreview('p-image-preview', p.image_url);
-      document.getElementById('postFormTitle').textContent='Edit Post';
-      document.getElementById('postFormCard').style.display='block';
-    }
-    if(e.target.dataset.del){
-      const {error} = await SATSU_DB.deletePost(e.target.dataset.del);
-      if(error){ showToast('Error: '+error); return; }
-      await refreshAll(); showToast('Post deleted');
-    }
-  });
+function renderCart(){
+const cart = getStore('satsu_cart');
+const body = document.getElementById('cartBody');
+if(!cart.length){ body.innerHTML = '<div class="drawer-empty">Your cart is empty.<br>Add a repair to get started.</div>'; document.getElementById('cartTotal').textContent='UGX 0'; return; }
+let total = 0;
+body.innerHTML = cart.map(item=>{
+total += item.price;
+return `<div class="drawer-item"><div class="drawer-item-thumb"></div>
+<div><h4>${item.name}</h4><div class="p">${fmt(item.price)}</div>
+<button class="rm" data-rm="${item.id}">Remove</button></div></div>`;
+}).join('');
+document.getElementById('cartTotal').textContent = fmt(total);
 }
-
-function renderBanners(){
-  document.getElementById('bannerTableBody').innerHTML = banners.map((p,i)=>`
-    <tr><td>${thumbCell(p.image)}</td><td>${p.tag||''}</td><td>${p.title}</td><td>${p.price||''}</td>
-    <td class="row-actions"><button data-edit="${i}">Edit</button><button class="del" data-del="${i}">Delete</button></td></tr>`).join('')
-    || '<tr><td colspan="5" style="text-align:center;color:var(--steel);">No banners yet.</td></tr>';
+function renderWish(){
+const wish = getStore('satsu_wish');
+const body = document.getElementById('wishBody');
+if(!wish.length){ body.innerHTML = '<div class="drawer-empty">No items saved yet.<br>Tap the heart on any repair to save it.</div>'; return; }
+body.innerHTML = wish.map(item=>`<div class="drawer-item"><div class="drawer-item-thumb"></div>
+<div><h4>${item.name}</h4><div class="p">${fmt(item.price)}</div>
+<button class="rm" data-rmwish="${item.id}">Remove</button></div></div>`).join('');
 }
-function renderReviews(){
-  document.getElementById('reviewTableBody').innerHTML = reviews.map((r,i)=>`
-    <tr><td>${r.name}</td><td>${(r.text||'').slice(0,70)}${(r.text||'').length>70?'…':''}</td>
-    <td class="row-actions"><button data-edit="${i}">Edit</button><button class="del" data-del="${i}">Delete</button></td></tr>`).join('')
-    || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No reviews yet.</td></tr>';
+function bindTicketEvents(){
+document.querySelectorAll('[data-add]').forEach(btn=>{
+btn.addEventListener('click', ()=>{
+const r = REPAIRS.find(x=>x.id===btn.dataset.add);
+const cart = getStore('satsu_cart');
+cart.push({id:r.id+Date.now(), name:r.name, price:r.price});
+setStore('satsu_cart', cart); updateBadges(); renderCart();
+showToast(r.name+" added to cart");
+});
+});
+document.querySelectorAll('[data-wish]').forEach(btn=>{
+btn.addEventListener('click', ()=>{
+const r = REPAIRS.find(x=>x.id===btn.dataset.wish);
+let wish = getStore('satsu_wish');
+const exists = wish.find(w=>w.id===r.id);
+if(exists){ wish = wish.filter(w=>w.id!==r.id); btn.classList.remove('active'); showToast("Removed from wishlist"); }
+else { wish.push({id:r.id,name:r.name,price:r.price}); btn.classList.add('active'); showToast("Saved to wishlist"); }
+setStore('satsu_wish', wish); updateBadges(); renderWish();
+});
+});
 }
-function renderPosts(){
-  document.getElementById('postTableBody').innerHTML = posts.map(p=>`
-    <tr><td>${p.title}</td><td>/blog.html?post=${p.slug}</td>
-    <td class="row-actions"><button data-edit="${p.id}">Edit</button><button class="del" data-del="${p.id}">Delete</button></td></tr>`).join('')
-    || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No posts yet.</td></tr>';
+document.addEventListener('click', e=>{
+if(e.target.closest('[data-rm]')){
+const id = e.target.closest('[data-rm]').dataset.rm;
+setStore('satsu_cart', getStore('satsu_cart').filter(i=>i.id!==id));
+updateBadges(); renderCart();
 }
-function renderBookings(){
-  document.getElementById('bookingTableBody').innerHTML = bookings.map(b=>{
-    const items = (b.items||[]).map(i=>i.name).join(', ');
-    const date = b.created_at ? new Date(b.created_at).toLocaleDateString() : '—';
-    return `<tr><td>${date}</td><td>${b.customer_name||'—'}${b.customer_phone?' · '+b.customer_phone:''}</td><td>${items}</td><td class="price">${fmt(b.total_price)}</td>
-    <td><span class="status-pill status-${b.status||'new'}">${b.status||'new'}</span></td></tr>`;
-  }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--steel);">No bookings yet — they will appear here as customers book through the site.</td></tr>';
+if(e.target.closest('[data-rmwish]')){
+const id = e.target.closest('[data-rmwish]').dataset.rmwish;
+setStore('satsu_wish', getStore('satsu_wish').filter(i=>i.id!==id));
+updateBadges(); renderWish();
 }
-function renderSell(){
-  document.getElementById('sellTableBody').innerHTML = sellRequests.map(r=>{
-    const date = r.created_at ? new Date(r.created_at).toLocaleDateString() : '—';
-    return `<tr><td>${date}</td><td>${r.customer_name||'—'} · ${r.customer_phone||''}</td><td>${r.device||''}</td><td>${r.condition||''}</td>
-    <td><span class="status-pill status-${r.status||'new'}">${r.status||'new'}</span></td></tr>`;
-  }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--steel);">No sell requests yet.</td></tr>';
+});
+updateBadges(); renderCart(); renderWish();
+/* ============================= DRAWERS ============================= */
+const overlay = document.getElementById('drawerOverlay');
+const cartDrawer = document.getElementById('cartDrawer');
+const wishDrawer = document.getElementById('wishDrawer');
+function openDrawer(d){ d.classList.add('open'); overlay.classList.add('open'); }
+function closeDrawers(){ cartDrawer.classList.remove('open'); wishDrawer.classList.remove('open'); overlay.classList.remove('open'); }
+document.getElementById('cartOpenBtn').addEventListener('click', ()=>{ renderCart(); openDrawer(cartDrawer); });
+document.getElementById('wishOpenBtn').addEventListener('click', ()=>{ renderWish(); openDrawer(wishDrawer); });
+document.getElementById('cartCloseBtn').addEventListener('click', closeDrawers);
+document.getElementById('wishCloseBtn').addEventListener('click', closeDrawers);
+overlay.addEventListener('click', closeDrawers);
+/* ============================= SEARCH ============================= */
+const searchModal = document.getElementById('searchModal');
+const searchModalInput = document.getElementById('searchModalInput');
+const searchModalResults = document.getElementById('searchModalResults');
+function openSearch(){ searchModal.classList.add('open'); searchModalInput.value=''; searchModalResults.innerHTML=''; setTimeout(()=>searchModalInput.focus(),50); }
+document.getElementById('searchOpenBtn').addEventListener('click', openSearch);
+document.getElementById('mobileSearchBtn').addEventListener('click', openSearch);
+document.getElementById('navSearchInput').addEventListener('focus', openSearch);
+searchModal.addEventListener('click', e=>{ if(e.target===searchModal) searchModal.classList.remove('open'); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') searchModal.classList.remove('open'); });
+function doSearch(q){
+q = q.toLowerCase().trim();
+if(!q){ searchModalResults.innerHTML=''; return; }
+// Curated "popular repairs" matches (shown first — these are the homepage highlights)
+const popular = REPAIRS.filter(r=> r.name.toLowerCase().includes(q) || r.brand.toLowerCase().includes(q) || r.cat.toLowerCase().includes(q));
+const popularHTML = popular.slice(0,4).map(r=>`<a href="#repairs" data-goto="${r.id}"><span>${r.name}</span><span>${fmt(r.price)}</span></a>`).join('');
+// Full catalogue matches (the real inventory)
+let catalogueHTML = '';
+let catalogueCount = 0;
+if(window.SATSU_INV){
+const matches = SATSU_INV.query({q});
+catalogueCount = matches.length;
+catalogueHTML = matches.slice(0,6).map(i=>
+`<a href="product.html?id=${i.id}"><span>${i.brand} ${i.model} — ${i.part}</span><span>${fmt(i.total)}</span></a>`).join('');
 }
-function renderCustomers(){
-  document.getElementById('customerTableBody').innerHTML = customers.map(c=>
-    `<tr><td>${c.name||'—'}</td><td>${c.phone||'—'}</td><td>${c.total_bookings||1}</td></tr>`).join('')
-    || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No customers logged yet.</td></tr>';
+const sections = [];
+if(popularHTML) sections.push(`<div class="search-hint" style="padding-bottom:4px;">Popular Repairs</div>${popularHTML}`);
+if(catalogueHTML) sections.push(`<div class="search-hint" style="padding-bottom:4px;">Full Catalogue${catalogueCount>6?` (${catalogueCount} matches — press Enter to see all)`:''}</div>${catalogueHTML}`);
+searchModalResults.innerHTML = sections.length
+? sections.join('') : '<div class="search-hint">No matches — try a different brand, model or repair type.</div>';
 }
+searchModalInput.addEventListener('input', ()=>doSearch(searchModalInput.value));
+searchModalInput.addEventListener('keydown', e=>{
+if(e.key==='Enter'){
+const q = searchModalInput.value.trim();
+if(q) window.location.href = 'catalogue.html?q='+encodeURIComponent(q);
+}
+});
+/* ============================= WHATSAPP LINKS ============================= */
+function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
+document.getElementById('waTopLink').href = waLink("Hello, I need a device repaired.");
+document.getElementById('heroWaBtn').href = waLink("Hello, I'd like to book a repair.");
+document.getElementById('floatWaBtn').href = waLink("Hello, I need a device repaired.");
+document.getElementById('cartWaBtn') && document.getElementById('cartWaBtn').addEventListener('click', async e=>{
+e.preventDefault();
+const cart = getStore('satsu_cart');
+if(!cart.length){ showToast("Your cart is empty"); return; }
+const name = document.getElementById('cartName').value.trim();
+const phone = document.getElementById('cartPhone').value.trim();
+const lines = cart.map(c=>`• ${c.name} — ${fmt(c.price)}`).join('\n');
+const total = cart.reduce((s,c)=>s+c.price,0);
+const greeting = name ? `Hello, my name is ${name}.` : "Hello,";
+window.open(waLink(`${greeting} I'd like to book these repairs:\n${lines}\n\nEstimated total: ${fmt(total)}${phone ? '\nMy number: '+phone : ''}`), '_blank');
+await SATSU_DB.addBooking({
+customer_name: name || null, customer_phone: phone || null,
+items: cart.map(c=>({name:c.name, price:c.price})),
+total_price: total, notes: "Submitted via homepage cart"
+});
+});
+/* ============================= MOBILE MENU ============================= */
+document.getElementById('hamBtn').addEventListener('click', ()=>{ document.getElementById('mobileMenu').style.display='flex'; });
+function closeMobile(){ document.getElementById('mobileMenu').style.display='none'; }
+/* ============================= NAV SCROLL STATE ============================= */
+window.addEventListener('scroll', ()=>{
+document.querySelector('header').style.boxShadow = window.scrollY>10 ? '0 6px 18px rgba(11,15,20,.06)' : 'none';
+}, {passive:true});
 </script>
 </body>
-<a href="crm/dashboard.html" style="display:inline-block;background:#3ea6ff;color:#00131f;padding:10px 18px;border-radius:8px;font-weight:600;text-decoration:none;margin:10px 0">Open Full CRM →</a>
 </html>
