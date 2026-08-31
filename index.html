@@ -84,9 +84,9 @@ top:0;animation:scan 3.2s ease-in-out infinite;opacity:.85;pointer-events:none;
 /* ============================= HEADER / NAV ============================= */
 header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
 .nav-row{display:flex;align-items:center;gap:28px;padding:16px 0;}
-.logo{font-family:var(--font-display);font-weight:800;font-size:1.05rem;letter-spacing:-.3px;display:flex;flex-direction:column;line-height:1.1;min-width:0;flex-shrink:1;}
-.logo-img{height:34px;width:auto;display:block;}
-.logo-img-footer{height:32px;}
+.logo{font-family:var(--font-display);font-weight:800;font-size:1.05rem;letter-spacing:-.3px;display:flex;flex-direction:column;align-items:flex-start;line-height:1.1;min-width:0;flex-shrink:1;}
+.logo-img{height:clamp(32px,5vw,46px);width:auto;max-width:200px;object-fit:contain;flex-shrink:0;display:block;}
+.logo-img-footer{height:clamp(36px,5vw,52px);max-width:220px;}
 .logo .mark{display:flex;align-items:center;gap:8px;white-space:nowrap;}
 .logo .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;position:relative;}
 .logo .chip::before,.logo .chip::after{content:'';position:absolute;left:50%;width:1px;height:5px;background:var(--copper);transform:translateX(-50%);}
@@ -283,7 +283,6 @@ body{overflow-x:hidden;max-width:100vw;}
 .foot-grid{grid-template-columns:1fr;}
 .util-links{display:none;}
 .logo{font-size:.92rem;}
-.logo-img{height:28px;}
 .logo small{font-size:.5rem;letter-spacing:1px;}
 .nav-row{gap:8px;padding:14px 0;}
 }
