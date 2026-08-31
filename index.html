@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%274%27 fill=%27%230B0F14%27/%3E%3Crect x=%2710%27 y=%275%27 width=%274%27 height=%2714%27 rx=%271%27 fill=%27%23C1622C%27/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samsung Apple Tech Services Uganda | Independent Phone, Tablet &amp; Laptop Repair — Kampala</title>
 <meta name="description" content="Kampala's premium device repair specialist. Screens, batteries, charging ports, water damage, software &amp; data recovery for every brand. Same-day repair, 30-day warranty. We also buy &amp; sell devices.">
@@ -84,6 +85,8 @@ top:0;animation:scan 3.2s ease-in-out infinite;opacity:.85;pointer-events:none;
 header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
 .nav-row{display:flex;align-items:center;gap:28px;padding:16px 0;}
 .logo{font-family:var(--font-display);font-weight:800;font-size:1.05rem;letter-spacing:-.3px;display:flex;flex-direction:column;line-height:1.1;min-width:0;flex-shrink:1;}
+.logo-img{height:34px;width:auto;display:block;}
+.logo-img-footer{height:32px;}
 .logo .mark{display:flex;align-items:center;gap:8px;white-space:nowrap;}
 .logo .chip{width:9px;height:22px;background:var(--copper);border-radius:1px;position:relative;}
 .logo .chip::before,.logo .chip::after{content:'';position:absolute;left:50%;width:1px;height:5px;background:var(--copper);transform:translateX(-50%);}
@@ -280,6 +283,7 @@ body{overflow-x:hidden;max-width:100vw;}
 .foot-grid{grid-template-columns:1fr;}
 .util-links{display:none;}
 .logo{font-size:.92rem;}
+.logo-img{height:28px;}
 .logo small{font-size:.5rem;letter-spacing:1px;}
 .nav-row{gap:8px;padding:14px 0;}
 }
@@ -307,7 +311,7 @@ body{overflow-x:hidden;max-width:100vw;}
 <div class="container nav-row">
 <button class="ham" id="hamBtn" aria-label="Menu"><span></span><span></span><span></span></button>
 <a href="#" class="logo">
-<span class="mark"><span class="chip"></span> Samsung Apple Tech</span>
+<img src="assets/logo.png" alt="Samsung Apple Tech Services Uganda" class="logo-img">
 <small>Services Uganda · Repair Specialists</small>
 </a>
 <div class="nav-search">
@@ -493,7 +497,7 @@ body{overflow-x:hidden;max-width:100vw;}
 <footer>
 <div class="container foot-grid">
 <div class="foot-brand">
-<a href="index.html" class="logo" style="color:#fff;"><span class="mark"><span class="chip"></span> Samsung Apple Tech</span></a>
+<a href="index.html" class="logo" style="color:#fff;"><img src="assets/logo.png" alt="Samsung Apple Tech Services Uganda" class="logo-img logo-img-footer"></a>
 <p>Kampala's premium device repair specialist since 2019. Screens, batteries, software and data recovery for every brand — plus trusted buying and selling of pre-owned devices.</p>
 <div class="newsletter"><input type="email" placeholder="Your email"><button>Join</button></div>
 <div class="foot-social" style="display:flex;gap:10px;margin-top:20px;">
