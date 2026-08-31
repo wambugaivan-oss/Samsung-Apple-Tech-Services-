@@ -215,6 +215,9 @@ document.getElementById('floatWa').href = waLink(`Hello, I have a ${brand} ${dev
 if(brand === 'Apple' && !isLaptop){
 document.querySelector('.hero-cta').insertAdjacentHTML('beforeend', `<a href="iphone-repair.html" class="btn btn-outline">Read Our Full iPhone Repair Guide →</a>`);
 }
+if(brand === 'Samsung'){
+document.querySelector('.hero-cta').insertAdjacentHTML('beforeend', `<a href="samsung-repair.html" class="btn btn-outline">Read Our Full Samsung Repair Guide →</a>`);
+}
 if(usingRealData){
 /* REAL-DATA MODE: group into models, show a browsable model grid backed by the Excel catalogue */
 document.getElementById('repCount').firstChild.textContent = new Set(invItems.map(i=>i.brand+i.model)).size;
