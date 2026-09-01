@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
+<script src="site-media.js"></script>
 <script src="inventory-data.js"></script>
 <script src="inventory.js"></script>
 <style>
@@ -98,6 +99,7 @@ textarea{resize:vertical;min-height:70px;}
 <aside class="sidebar" id="sidebar">
 <div class="logo"><img src="logo.png" alt="Samsung Apple Tech Services Uganda" class="logo-img logo-img-admin"><small id="modeIndicator">● Checking backend…</small></div>
 <div class="nav-item active" data-panel="overview">Overview</div>
+<div class="nav-item" data-panel="media">Media Library</div>
 <div class="nav-item" data-panel="services">Services &amp; Pricing</div>
 <div class="nav-item" data-panel="banners">Homepage Banners</div>
 <div class="nav-item" data-panel="reviews">Reviews</div>
@@ -125,6 +127,56 @@ textarea{resize:vertical;min-height:70px;}
 </div>
 </div>
 </section>
+<section class="panel" id="panel-media">
+<div class="top-row"><div><h1>Media Library</h1><p class="sub">Manage the hero images, category photos, and per-product images used across the live website — nothing here requires editing code.</p></div></div>
+<div class="note good">Every image you add here appears on the live site automatically. Sections with no image uploaded simply keep their current design — nothing breaks if a slot is left empty.</div>
+
+<div class="card">
+<h3>Step 1 — Choose what to update</h3>
+<div class="form-grid">
+<div class="field">
+<label>Page Section</label>
+<select id="m-slot-picker">
+<option value="">— Select a page section —</option>
+<option value="homepage.hero">Homepage — Hero Background</option>
+<option value="homepage.category.screen">Homepage — Category: Screen Replacement</option>
+<option value="homepage.category.battery">Homepage — Category: Battery</option>
+<option value="homepage.category.charging-port">Homepage — Category: Charging Port</option>
+<option value="homepage.category.back-glass-housing">Homepage — Category: Back Glass / Housing</option>
+<option value="homepage.category.camera">Homepage — Category: Camera</option>
+<option value="homepage.category.speaker-microphone">Homepage — Category: Speaker / Microphone</option>
+<option value="homepage.category.motherboard-core">Homepage — Category: Motherboard / Core</option>
+<option value="homepage.category.accessory">Homepage — Category: Accessories</option>
+<option value="iphone-repair.hero">iPhone Repair Page — Hero Background</option>
+<option value="samsung-repair.hero">Samsung Repair Page — Hero Background</option>
+<option value="__brand__">Brand Page — Hero (choose brand below)</option>
+<option value="__product__">A Specific Product / Catalogue Item (search below)</option>
+</select>
+</div>
+<div class="field" id="m-brand-field" style="display:none;">
+<label>Brand Name (must match exactly, e.g. "Samsung", "Google Pixel")</label>
+<input id="m-brand-name" placeholder="e.g. Samsung">
+</div>
+</div>
+<div class="field" id="m-product-search-field" style="display:none;">
+<label>Search for a product (by model or part name)</label>
+<input id="m-product-search" placeholder="e.g. iPhone 13 screen, Galaxy S22 battery…">
+<div id="m-product-results" style="margin-top:8px;max-height:220px;overflow-y:auto;"></div>
+<div class="note" id="m-product-selected" style="display:none;margin-top:10px;"></div>
+</div>
+</div>
+
+<div class="card" id="m-active-slot-card" style="display:none;">
+<h3 id="m-active-slot-title">Manage Images</h3>
+<div id="m-current-images" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;"></div>
+<div class="field"><label>Upload New Image</label><input id="m-file" type="file" accept="image/*">
+<img id="m-file-preview" style="display:none;max-width:200px;margin-top:10px;border:1px solid var(--line);border-radius:2px;">
+</div>
+<div class="field"><label>Alt Text (for accessibility &amp; SEO)</label><input id="m-alt-text" placeholder="Describe the image, e.g. 'Samsung Galaxy S23 screen repair'"></div>
+<button class="btn btn-copper" id="m-save-btn">Upload &amp; Save</button>
+</div>
+</section>
+
 <section class="panel" id="panel-services">
 <div class="top-row"><div><h1>Services &amp; Pricing</h1><p class="sub">These are the curated "Popular Repairs" shown on the homepage — add, edit or remove them and changes appear instantly.</p></div>
 <button class="btn btn-copper" id="addServiceBtn">+ Add Service</button></div>
@@ -295,6 +347,7 @@ wireFilePreview('f-image-file','f-image-preview');
 wireFilePreview('f-video-file','f-video-preview');
 wireFilePreview('b-image-file','b-image-preview');
 wireFilePreview('p-image-file','p-image-preview');
+wireMediaLibrary();
 await refreshAll();
 wireForms();
 go('overview');
@@ -522,6 +575,139 @@ function renderCustomers(){
 document.getElementById('customerTableBody').innerHTML = customers.map(c=>
 `<tr><td>${c.name||'—'}</td><td>${c.phone||'—'}</td><td>${c.total_bookings||1}</td></tr>`).join('')
 || '<tr><td colspan="3" style="text-align:center;color:var(--steel);">No customers logged yet.</td></tr>';
+}
+
+/* ============================= MEDIA LIBRARY ============================= */
+let mActiveSlotKey = null;
+let mActiveSlotLabel = '';
+
+function wireMediaLibrary(){
+const picker = document.getElementById('m-slot-picker');
+const brandField = document.getElementById('m-brand-field');
+const brandInput = document.getElementById('m-brand-name');
+const productSearchField = document.getElementById('m-product-search-field');
+const productSearchInput = document.getElementById('m-product-search');
+
+picker.addEventListener('change', ()=>{
+brandField.style.display = 'none';
+productSearchField.style.display = 'none';
+document.getElementById('m-active-slot-card').style.display = 'none';
+document.getElementById('m-product-selected').style.display = 'none';
+const val = picker.value;
+if(val === '__brand__'){
+brandField.style.display = 'block';
+} else if(val === '__product__'){
+productSearchField.style.display = 'block';
+} else if(val){
+selectMediaSlot(val, picker.options[picker.selectedIndex].text);
+}
+});
+
+brandInput.addEventListener('input', ()=>{
+const name = brandInput.value.trim();
+if(name.length < 2) return;
+const slug = name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+selectMediaSlot('brand.hero.'+slug, 'Brand Page Hero — '+name);
+});
+
+let searchTimer;
+productSearchInput.addEventListener('input', ()=>{
+clearTimeout(searchTimer);
+searchTimer = setTimeout(()=>{
+const q = productSearchInput.value.trim().toLowerCase();
+const resultsEl = document.getElementById('m-product-results');
+if(q.length < 2 || !window.SATSU_INV){ resultsEl.innerHTML=''; return; }
+const matches = SATSU_INV.all().filter(i=>
+i.model.toLowerCase().includes(q) || i.part.toLowerCase().includes(q) || i.brand.toLowerCase().includes(q)
+).slice(0, 15);
+resultsEl.innerHTML = matches.map(i=>
+`<div data-pick-id="${i.id}" data-pick-label="${i.brand} ${i.model} — ${i.part}" style="padding:8px 10px;border:1px solid var(--line);margin-bottom:6px;cursor:pointer;font-size:.8rem;border-radius:2px;">
+${i.brand} ${i.model} — ${i.part} <span style="color:var(--steel);font-family:var(--font-mono);float:right;">#${i.id}</span></div>`
+).join('') || '<div style="color:var(--steel);font-size:.8rem;">No matches</div>';
+document.querySelectorAll('[data-pick-id]').forEach(el=>{
+el.addEventListener('click', ()=>{
+const id = el.dataset.pickId;
+const label = el.dataset.pickLabel;
+document.getElementById('m-product-selected').style.display = 'block';
+document.getElementById('m-product-selected').textContent = 'Selected: ' + label;
+resultsEl.innerHTML = '';
+productSearchInput.value = label;
+selectMediaSlot('product.'+id+'.image', 'Product Image — '+label);
+});
+});
+}, 250);
+});
+
+document.getElementById('m-file').addEventListener('change', e=>{
+const f = e.target.files[0];
+const preview = document.getElementById('m-file-preview');
+if(!f){ preview.style.display='none'; return; }
+preview.src = URL.createObjectURL(f);
+preview.style.display = 'block';
+});
+
+document.getElementById('m-save-btn').addEventListener('click', async ()=>{
+if(!mActiveSlotKey){ showToast('Choose a page section first'); return; }
+const file = document.getElementById('m-file').files[0];
+if(!file){ showToast('Choose an image file first'); return; }
+const alt = document.getElementById('m-alt-text').value.trim();
+showToast('Uploading…');
+const result = await SATSU_DB.uploadSiteImage(file, mActiveSlotKey, alt);
+if(result.error){ showToast('Error: '+result.error); return; }
+document.getElementById('m-file').value = '';
+document.getElementById('m-file-preview').style.display = 'none';
+document.getElementById('m-alt-text').value = '';
+showToast('Image saved — live on the site now');
+loadMediaSlotImages();
+});
+
+async function selectMediaSlot(slotKey, label){
+mActiveSlotKey = slotKey;
+mActiveSlotLabel = label;
+document.getElementById('m-active-slot-card').style.display = 'block';
+document.getElementById('m-active-slot-title').textContent = 'Manage Images — ' + label;
+await loadMediaSlotImages();
+}
+
+async function loadMediaSlotImages(){
+const container = document.getElementById('m-current-images');
+container.innerHTML = '<span style="color:var(--steel);font-size:.8rem;">Loading…</span>';
+const images = await SATSU_DB.getSiteImages(mActiveSlotKey);
+if(!images.length){
+container.innerHTML = '<span style="color:var(--steel);font-size:.8rem;">No image uploaded yet for this section — the live site is currently showing its default design.</span>';
+return;
+}
+container.innerHTML = images.map((img,idx)=>`
+<div style="width:150px;">
+<img src="${img.image_url}" style="width:150px;height:110px;object-fit:cover;border:1px solid var(--line);border-radius:2px;">
+<div style="display:flex;gap:4px;margin-top:6px;justify-content:center;">
+${idx>0 ? `<button data-move-up="${img.id}" style="font-size:.65rem;background:var(--ink);color:#fff;border:none;padding:4px 7px;border-radius:2px;">↑</button>` : ''}
+${idx<images.length-1 ? `<button data-move-down="${img.id}" style="font-size:.65rem;background:var(--ink);color:#fff;border:none;padding:4px 7px;border-radius:2px;">↓</button>` : ''}
+<button data-delete-img="${img.id}" style="font-size:.65rem;background:#D64545;color:#fff;border:none;padding:4px 7px;border-radius:2px;">Delete</button>
+</div>
+</div>`).join('');
+document.querySelectorAll('[data-delete-img]').forEach(btn=>{
+btn.addEventListener('click', async ()=>{
+if(!confirm('Delete this image? It will be removed from the live site immediately.')) return;
+await SATSU_DB.deleteSiteImage(btn.dataset.deleteImg);
+showToast('Image deleted');
+loadMediaSlotImages();
+});
+});
+document.querySelectorAll('[data-move-up],[data-move-down]').forEach(btn=>{
+btn.addEventListener('click', async ()=>{
+const id = btn.dataset.moveUp || btn.dataset.moveDown;
+const dir = btn.dataset.moveUp ? -1 : 1;
+const idx = images.findIndex(i=>i.id===id);
+const swapIdx = idx + dir;
+if(swapIdx < 0 || swapIdx >= images.length) return;
+const ids = images.map(i=>i.id);
+[ids[idx], ids[swapIdx]] = [ids[swapIdx], ids[idx]];
+await SATSU_DB.reorderSiteImages(mActiveSlotKey, ids);
+showToast('Order updated');
+loadMediaSlotImages();
+});
+});
 }
 </script>
 </body>
