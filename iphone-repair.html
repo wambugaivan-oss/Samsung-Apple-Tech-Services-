@@ -18,6 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
+<script src="site-media.js"></script>
 <script type="application/ld+json">
 {
 "@context": "https://schema.org",
@@ -185,6 +186,7 @@ footer .copy{text-align:center;font-size:.72rem;}
 <div class="container breadcrumb"><a href="index.html">Home</a> / <a href="index.html#brands">Brands</a> / iPhone Repair</div>
 <!-- HERO -->
 <section class="hero">
+<div class="hero-bg-slot" id="heroBgSlot" style="position:absolute;inset:0;z-index:0;overflow:hidden;opacity:0;"></div>
 <div class="container inner">
 <div class="eyebrow">Kampala · Independent iPhone Specialists</div>
 <h1>iPhone Repair in Kampala — Screens, Batteries &amp; Charging Ports Fixed Same Day</h1>
@@ -273,6 +275,12 @@ const WA_NUMBER = "256756922058";
 function fmt(n){ return "UGX "+n.toLocaleString(); }
 function waLink(text){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`; }
 document.getElementById('heroWaBtn').href = waLink("Hello, I have an iPhone that needs repair.");
+if(window.SATSU_applySlotImage){
+const heroSlot = document.getElementById('heroBgSlot');
+SATSU_applySlotImage('iphone-repair.hero', heroSlot).then(has=>{
+if(has){ heroSlot.style.opacity='0.35'; heroSlot.insertAdjacentHTML('beforeend', '<div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 20%,transparent 80%);"></div>'); }
+});
+}
 document.getElementById('floatWa').href = waLink("Hello, I have an iPhone that needs repair.");
 const IPHONE_REPAIRS = [
 {id:"iph-screen", name:"iPhone Screen Replacement", cat:"Screen", time:"30–45 min", warranty:"30 days", price:220000,
