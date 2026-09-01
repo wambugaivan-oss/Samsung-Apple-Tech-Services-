@@ -15,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
+<script src="site-media.js"></script>
 <script src="inventory-data.js"></script>
 <script src="inventory.js"></script>
 <script src="icons.js"></script>
@@ -377,6 +378,7 @@ body{overflow-x:hidden;max-width:100vw;}
 <section class="hero">
 <div class="hero-grid"></div>
 <div class="hero-glow"></div>
+<div class="hero-bg-slot" id="heroBgSlot" style="position:absolute;inset:0;z-index:0;overflow:hidden;"></div>
 <div class="container hero-inner">
 <div>
 <div class="hero-eyebrow">Kampala · Same-Day Diagnostics</div>
@@ -623,14 +625,30 @@ if(liveReviews && liveReviews.length){ REVIEWS.length = 0; REVIEWS.push(...liveR
 function fmt(n){return "UGX "+n.toLocaleString();}
 (async function(){
 await loadLiveData();
+/* Optional admin-managed hero background image — only appears if one has been uploaded in the Admin Panel */
+if (window.SATSU_applySlotImage) {
+const heroSlot = document.getElementById('heroBgSlot');
+const heroHasImage = await SATSU_applySlotImage('homepage.hero', heroSlot);
+if (heroHasImage) {
+heroSlot.style.opacity = '0.35';
+heroSlot.insertAdjacentHTML('beforeend', '<div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 20%,transparent 80%);"></div>');
+}
+}
 /* ============================= RENDER: CATEGORIES ============================= */
 const catGrid = document.getElementById('categoryGrid');
-CATEGORIES.forEach(c=>{
+CATEGORIES.forEach((c,ci)=>{
 const count = (window.SATSU_INV ? SATSU_INV.all().filter(i=>SATSU_INV.friendlyCategory(i)===c.cat).length : null);
 catGrid.insertAdjacentHTML('beforeend', `<a class="cat-card" href="catalogue.html?c=${encodeURIComponent(c.cat)}">
-<div class="cat-icon">${ICONS[c.icon]}</div>
+<div class="cat-icon" id="catIcon${ci}">${ICONS[c.icon]}</div>
 <h3>${c.name}</h3><p>${c.desc}${count!==null ? ' · '+count+' items' : ''}</p></a>`);
 });
+/* Optional admin-managed photo per category — replaces the icon only if one has been uploaded */
+if(window.SATSU_applySlotImage){
+CATEGORIES.forEach((c,ci)=>{
+const slotKey = 'homepage.category.' + c.cat.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+SATSU_applySlotImage(slotKey, document.getElementById('catIcon'+ci));
+});
+}
 /* ============================= CATALOGUE SEARCH BAND ============================= */
 if(window.SATSU_INV){
 const s = SATSU_INV.stats();
