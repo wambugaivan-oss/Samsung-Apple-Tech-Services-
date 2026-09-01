@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
+<script src="site-media.js"></script>
 <script src="inventory-data.js"></script>
 <script src="inventory.js"></script>
 <script src="icons.js"></script>
@@ -255,7 +256,7 @@ const bg = SATSU_ICON_TILE_BG(item.brand+item.model, key);
 const retail = SATSU_INV.isRetail(item);
 return `<div class="product-card">
 <a href="product.html?id=${item.id}">
-<div class="pc-media" style="background:${bg}">
+<div class="pc-media" id="pcMedia${item.id}" style="background:${bg}">
 <span class="pc-type-badge">${item.type}</span>
 <div class="icon-wrap">${SATSU_ICON(key, `${item.brand} ${item.model} ${cat}`, item.brand+item.model)}</div>
 </div>
@@ -283,6 +284,20 @@ const wrap = document.getElementById('loadMoreWrap');
 if(shown.length < items.length){ wrap.style.display='block'; }
 else wrap.style.display='none';
 renderChips();
+applyProductImageOverrides(shown);
+}
+/* Applies admin-uploaded product photos (Admin Panel → Product Images) over the default icon tile,
+one bulk query for all visible cards rather than one request per card. */
+async function applyProductImageOverrides(items){
+if(!window.SATSU_DB || !SATSU_DB.getAllSiteImages) return;
+const grouped = await SATSU_DB.getAllSiteImages();
+items.forEach(item=>{
+const key = 'product.'+item.id+'.image';
+if(grouped[key] && grouped[key].length){
+const el = document.getElementById('pcMedia'+item.id);
+if(el) SATSU_applySlotImage(key, el);
+}
+});
 }
 document.getElementById('loadMoreBtn').addEventListener('click', ()=>{ state.page++; render(); });
 document.getElementById('statLine').innerHTML = (function(){
