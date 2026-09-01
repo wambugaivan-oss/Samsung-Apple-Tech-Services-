@@ -41,12 +41,13 @@
 :root{
 --ink:#0B0F14; /* near-black diagnostic panel */
 --ink-2:#121822;
---porcelain:#F4F2EC; /* warm page background */
---paper:#FCFBF8; /* card surface */
---signal:#12B886; /* "device is healthy" green */
---signal-dim:#0E9370;
---copper:#C1622C; /* warm CTA / Ugandan-sun accent */
---copper-2:#A8501F;
+--porcelain:#F3F6FA; /* cool neutral page background */
+--paper:#FFFFFF; /* card surface */
+--signal:#0A7D65; /* "device is healthy" green */
+--signal-dim:#0B7F68;
+--copper:#0B57D0; /* brand CTA / logo blue accent */
+--copper-2:#083F9C;
+--star:#C17F0A; /* gold, reserved for star ratings only */
 --steel:#4A5568; /* muted secondary text */
 --line:rgba(11,15,20,.10);
 --line-dark:rgba(255,255,255,.08);
@@ -77,7 +78,7 @@ top:0;animation:scan 3.2s ease-in-out infinite;opacity:.85;pointer-events:none;
 .util-bar{background:var(--ink);color:rgba(255,255,255,.65);font-family:var(--font-mono);font-size:.68rem;letter-spacing:.5px;padding:7px 0;}
 .util-bar .container{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
 .util-bar .status{display:flex;align-items:center;gap:7px;}
-.util-dot{width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px rgba(18,184,134,.18);}
+.util-dot{width:6px;height:6px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px rgba(14,155,126,.18);}
 .util-bar a{color:rgba(255,255,255,.65);text-decoration:none;}
 .util-bar a:hover{color:var(--white);}
 .util-links{display:flex;gap:18px;}
@@ -121,7 +122,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdr
 /* ============================= HERO ============================= */
 .hero{position:relative;background:var(--ink);color:var(--white);overflow:hidden;min-height:min(88vh,680px);display:flex;align-items:center;}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 60% at 60% 40%,black 40%,transparent 90%);}
-.hero-glow{position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(18,184,134,.16),transparent 70%);top:-120px;right:-140px;pointer-events:none;}
+.hero-glow{position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(14,155,126,.16),transparent 70%);top:-120px;right:-140px;pointer-events:none;}
 .hero-inner{position:relative;z-index:2;padding:96px 0 72px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;width:100%;}
 .hero-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:9px;margin-bottom:20px;}
 .hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--signal);}
@@ -145,7 +146,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdr
 .promo-slides{position:relative;height:340px;}
 .promo-slide{position:absolute;inset:0;padding:30px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transition:opacity .6s ease;}
 .promo-slide.active{opacity:1;}
-.promo-tag{font-family:var(--font-mono);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--copper);background:rgba(193,98,44,.1);padding:5px 10px;border-radius:1px;width:fit-content;}
+.promo-tag{font-family:var(--font-mono);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--copper);background:rgba(11,87,208,.1);padding:5px 10px;border-radius:1px;width:fit-content;}
 .promo-slide h3{font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-top:14px;letter-spacing:-.5px;line-height:1.15;}
 .promo-slide p{font-size:.82rem;color:var(--steel);margin-top:8px;}
 .promo-price{font-family:var(--font-mono);font-weight:700;font-size:1.05rem;color:var(--signal-dim);margin-top:14px;}
@@ -216,7 +217,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(252,251,248,.92);backdr
 .review-track-wrap{overflow:hidden;}
 .review-track{display:flex;gap:16px;}
 .review-card{min-width:290px;background:var(--paper);border:1px solid var(--line);padding:26px 24px;flex-shrink:0;}
-.stars{color:var(--copper);font-size:.85rem;letter-spacing:2px;}
+.stars{color:var(--star);font-size:.85rem;letter-spacing:2px;}
 .review-card p{font-size:.83rem;color:var(--ink);margin:14px 0;line-height:1.7;}
 .review-author{font-family:var(--font-mono);font-size:.68rem;color:var(--steel);text-transform:uppercase;letter-spacing:1px;}
 /* ============================= WHATSAPP + BUY/SELL BAND ============================= */
@@ -369,7 +370,7 @@ body{overflow-x:hidden;max-width:100vw;}
 <a href="#repairs" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Repairs</a>
 <a href="#brands" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Brands</a>
 <a href="marketplace.html" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Buy &amp; Sell</a>
-<a href="https://essimuuganda.site/" target="_blank" rel="noopener" style="color:var(--signal,#12B886);font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Buy a Phone ↗</a>
+<a href="https://essimuuganda.site/" target="_blank" rel="noopener" style="color:var(--signal,#0A7D65);font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Buy a Phone ↗</a>
 <a href="#contact" onclick="closeMobile()" style="color:#fff;font-family:var(--font-display);font-size:1.4rem;text-decoration:none;">Contact</a>
 </div>
 <!-- HERO -->
