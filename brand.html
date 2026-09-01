@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <script src="db.js"></script>
+<script src="site-media.js"></script>
 <script src="inventory-data.js"></script>
 <script src="inventory.js"></script>
 <script src="icons.js"></script>
@@ -95,6 +96,7 @@ footer .copy{text-align:center;font-size:.72rem;}
 </header>
 <div class="container breadcrumb" id="breadcrumb"></div>
 <section class="brand-hero">
+<div class="hero-bg-slot" id="heroBgSlot" style="position:absolute;inset:0;z-index:0;overflow:hidden;opacity:0;"></div>
 <div class="container inner">
 <div class="eyebrow">Kampala · Certified Technicians</div>
 <h1 id="brandTitle">Brand Repairs</h1>
@@ -214,6 +216,13 @@ document.getElementById('brandTitle').textContent = `${brand} Repair Specialists
 document.getElementById('brandDesc').textContent = `Certified ${brand} repair in Kampala — from cracked screens to water damage — backed by a 30-day warranty and same-day turnaround.`;
 document.getElementById('brandWaBtn').href = waLink(`Hello, I have a ${brand} ${deviceWord} that needs repair.`);
 document.getElementById('floatWa').href = waLink(`Hello, I have a ${brand} ${deviceWord} that needs repair.`);
+if(window.SATSU_applySlotImage){
+const heroSlot = document.getElementById('heroBgSlot');
+const brandSlotKey = 'brand.hero.' + brand.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+SATSU_applySlotImage(brandSlotKey, heroSlot).then(has=>{
+if(has){ heroSlot.style.opacity='0.35'; heroSlot.insertAdjacentHTML('beforeend', '<div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 20%,transparent 80%);"></div>'); }
+});
+}
 if(brand === 'Apple' && !isLaptop){
 document.querySelector('.hero-cta').insertAdjacentHTML('beforeend', `<a href="iphone-repair.html" class="btn btn-outline">Read Our Full iPhone Repair Guide →</a>`);
 }
@@ -244,11 +253,24 @@ const min = Math.min(...prices), max = Math.max(...prices);
 const key = SATSU_INV.iconKey(m.items[0]);
 const bg = SATSU_ICON_TILE_BG(m.brand+m.model, key);
 const rangeLabel = min===max ? fmt(min) : `${fmt(min)} – ${fmt(max)}`;
+const slotSlug = (m.brand+'-'+m.model).toLowerCase().replace(/[^a-z0-9]+/g,'-');
 return `<a class="model-card" href="catalogue.html?b=${encodeURIComponent(m.brand)}&t=${encodeURIComponent(m.type)}&q=${encodeURIComponent(m.model)}">
-<div class="mc-media" style="background:${bg}"><div class="icon-wrap">${SATSU_ICON(key, m.model, m.brand+m.model)}</div></div>
+<div class="mc-media" id="mcMedia${slotSlug}" style="background:${bg}"><div class="icon-wrap">${SATSU_ICON(key, m.model, m.brand+m.model)}</div></div>
 <div class="mc-body"><h4>${m.model}</h4><div class="count">${m.items.length} repair option${m.items.length!==1?'s':''}</div><div class="range">${rangeLabel}</div></div>
 </a>`;
 }).join('') || '<p style="color:var(--steel);font-size:.85rem;grid-column:1/-1;">No models match that search.</p>';
+if(window.SATSU_DB && SATSU_DB.getAllSiteImages){
+SATSU_DB.getAllSiteImages().then(grouped=>{
+filtered.forEach(m=>{
+const slotSlug = (m.brand+'-'+m.model).toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const key = 'model.'+slotSlug+'.image';
+if(grouped[key] && grouped[key].length){
+const el = document.getElementById('mcMedia'+slotSlug);
+if(el) SATSU_applySlotImage(key, el);
+}
+});
+});
+}
 }
 renderModels('');
 document.getElementById('modelSearch').addEventListener('input', e=>renderModels(e.target.value));
